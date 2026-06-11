@@ -33,6 +33,11 @@
 **openSUSE**：以强大的包管理系统和YaST配置工具闻名。
 # 虚拟机
 ***
+
+> 控制命令行输入 ipconfig
 ![[Pasted image 20260611124440.png|514]]
 
+> VMWare 
 ![[Pasted image 20260611125558.png]]
+
+> Win + R 输入 ncpa.cpl
