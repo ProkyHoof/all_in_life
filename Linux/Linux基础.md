@@ -31,6 +31,8 @@
 **Debian**：Ubuntu的上游发行版，以其严谨和自由著称。
 **Fedora**：由Red Hat赞助，更新较快，新技术的试验田。
 **openSUSE**：以强大的包管理系统和YaST配置工具闻名。
-# 虚拟机介绍
+# 虚拟机
 ***
-## 虚拟机
+![[Pasted image 20260611124440.png|514]]
+
+![[Pasted image 20260611125558.png]]
