@@ -37,7 +37,7 @@
 > 控制命令行输入 ipconfig
 ![[Pasted image 20260611124440.png|514]]
 
-> VMWare 
+> VMWare 进入虚拟网络编辑器
 ![[Pasted image 20260611125558.png]]
 
 > Win + R 输入 ncpa.cpl
