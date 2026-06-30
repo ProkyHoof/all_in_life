@@ -5,14 +5,14 @@
 ## 常见的操作系统
 ***
 **PC端**
->Windows
->Linux
->macOS
+	Windows
+	Linux
+	macOS
 
 **移动端**
->Android
->iOS
->鸿蒙（HarmonyOS）
+	Android
+	iOS
+	鸿蒙（HarmonyOS）
 # 系统简介与发行版
 
 ## Linux的诞生
@@ -66,16 +66,16 @@
 ## 命令格式示例
 ***
 ls：列出目录内容。以列表的详细格式，显示指定目录下的所有内容。
->-l：以长格式（列表）显示详细信息。
->参数（/home/itcast）：指定要查看的目录路径。
+	-l：以长格式（列表）显示详细信息。
+	参数（/home/itcast）：指定要查看的目录路径。
 
 ``` CLI
 ls -l /home/itcast
 ```
 
 cp：复制文件或目录。将test1目录及其内容递归复制为test2。
->-r：递归复制，用于复制目录及其内容。
->参数（test1, test2）：源文件/目录和目标文件/目录。
+	-r：递归复制，用于复制目录及其内容。
+	参数（test1, test2）：源文件/目录和目标文件/目录。
 
 ```CLI
 cp -r test1 test2
@@ -100,3 +100,4 @@ ls -l \home\itcast
 **用户主目录（Home Directory）**
 1. 定义与作用：是Linux系统为每个用户创建的专属目录。存放个人文件、配置，用户拥有完全控制权。
 2. 路径与表示：默认路径是 **/home/用户名**。命令行中用波浪号 **~** 快速表示。
+
