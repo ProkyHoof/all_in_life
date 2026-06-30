@@ -48,7 +48,7 @@
 ![[Pasted image 20260611125558.png|697]]
 
 3. 打开“网络连接”文件夹。
-   Win + R 输入 ncpa.cpl（CPL是Control Panel Item的缩写，ncpa代表Network Control Panel Applet 网络控制面板小程序）。
+	Win + R 输入 ncpa.cpl（CPL是Control Panel Item的缩写，ncpa代表Network Control Panel Applet 网络控制面板小程序）。
 ## 操作系统的两种操作模式
 ***
 **图形化界面（GUI）**：直观办公、桌面应用。日常办公、桌面应用。
