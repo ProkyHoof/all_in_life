@@ -39,10 +39,11 @@
 # 虚拟机
 1. 控制命令行输入 ipconfig。
 
-![[Pasted image 20260611124440.png|514]]
+![[Pasted image 20260611124440.png|697]]
+
 
 2. VMWare 进入虚拟网络编辑器。
-![[Pasted image 20260611125558.png]]
+![[Pasted image 20260611125558.png|697]]
 
 3. 打开“网络连接”文件夹。
    Win + R 输入 ncpa.cpl（CPL是Control Panel Item的缩写，ncpa）
