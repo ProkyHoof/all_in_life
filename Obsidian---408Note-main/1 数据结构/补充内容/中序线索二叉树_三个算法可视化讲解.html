@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>中序线索二叉树：三个算法可视化</title>
+<style>
+  :root{
+    --bg:#f5f7fb;
+    --panel:#ffffff;
+    --ink:#172033;
+    --muted:#667085;
+    --line:#d7deea;
+    --blue:#2563eb;
+    --blue-soft:#dbeafe;
+    --orange:#ea580c;
+    --orange-soft:#ffedd5;
+    --green:#16a34a;
+    --green-soft:#dcfce7;
+    --purple:#7c3aed;
+    --purple-soft:#ede9fe;
+    --red:#dc2626;
+    --shadow:0 14px 40px rgba(24,39,75,.08);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    color:var(--ink);
+    background:
+      radial-gradient(circle at 15% 5%, #e8efff 0, transparent 26rem),
+      radial-gradient(circle at 92% 16%, #fff0e7 0, transparent 23rem),
+      var(--bg);
+    font-family:Inter, "PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  }
+  .page{max-width:1440px;margin:0 auto;padding:28px}
+  header{
+    display:flex;justify-content:space-between;gap:24px;align-items:flex-start;
+    margin-bottom:20px;
+  }
+  h1{margin:0 0 8px;font-size:clamp(25px,3vw,42px);letter-spacing:-.03em}
+  .subtitle{color:var(--muted);line-height:1.7;max-width:900px}
+  .legend{
+    display:flex;flex-wrap:wrap;gap:10px;padding:12px 14px;
+    background:rgba(255,255,255,.82);border:1px solid #e7ebf2;border-radius:14px;
+    box-shadow:var(--shadow);font-size:13px;min-width:285px
+  }
+  .legend span{display:flex;align-items:center;gap:7px;white-space:nowrap}
+  .dot{width:11px;height:11px;border-radius:50%}
+  .dot.real{background:var(--ink)}
+  .dot.thread{background:var(--orange)}
+  .dot.current{background:var(--blue)}
+  .dot.visited{background:var(--green)}
+  .tabs{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
+    padding:8px;background:#eaf0f8;border-radius:17px;margin-bottom:18px
+  }
+  .tab{
+    border:0;border-radius:12px;padding:13px 14px;background:transparent;
+    color:#48566d;font-weight:750;font-size:15px;cursor:pointer;transition:.2s
+  }
+  .tab.active{background:#fff;color:var(--blue);box-shadow:0 6px 18px rgba(37,99,235,.12)}
+  .workspace{display:grid;grid-template-columns:minmax(650px,1.35fr) minmax(390px,.8fr);gap:18px}
+  .panel{
+    background:rgba(255,255,255,.93);border:1px solid #e5eaf2;border-radius:22px;
+    box-shadow:var(--shadow);overflow:hidden
+  }
+  .panel-title{
+    padding:17px 20px;border-bottom:1px solid #edf0f5;display:flex;
+    justify-content:space-between;align-items:center;gap:14px
+  }
+  .panel-title h2,.panel-title h3{margin:0;font-size:18px}
+  .panel-body{padding:18px}
+  .controls{
+    display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:14px
+  }
+  select,button.action{
+    height:42px;border-radius:11px;border:1px solid #cad3e1;background:#fff;
+    padding:0 13px;font-size:14px;color:var(--ink)
+  }
+  button.action{cursor:pointer;font-weight:700}
+  button.primary{background:var(--blue);border-color:var(--blue);color:#fff}
+  button.secondary{background:#f8fafc}
+  button.warn{background:var(--orange-soft);border-color:#fdba74;color:#9a3412}
+  button.action:disabled{opacity:.45;cursor:not-allowed}
+  .switch{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:13px;margin-left:auto}
+  .switch input{accent-color:var(--blue)}
+  .svg-wrap{
+    border:1px solid #e5eaf2;border-radius:18px;background:
+      linear-gradient(#fff,#fbfcff);overflow:hidden;min-height:520px;position:relative
+  }
+  svg{width:100%;height:520px;display:block}
+  .edge{stroke:#263347;stroke-width:4;fill:none;stroke-linecap:round}
+  .thread-edge{stroke:var(--orange);stroke-width:2.6;fill:none;stroke-dasharray:7 7;opacity:.76}
+  .thread-edge.hidden{display:none}
+  .edge.active,.thread-edge.active{stroke:var(--blue);stroke-width:6;opacity:1;filter:drop-shadow(0 0 5px #93c5fd)}
+  .node circle{fill:#fff;stroke:#344054;stroke-width:3;transition:.22s}
+  .node text{font-weight:800;font-size:20px;text-anchor:middle;dominant-baseline:middle;pointer-events:none}
+  .node .tag{
+    font-size:11px;font-weight:700;fill:#667085;paint-order:stroke;stroke:#fff;stroke-width:4px
+  }
+  .node.current circle{fill:var(--blue-soft);stroke:var(--blue);stroke-width:5;filter:drop-shadow(0 6px 7px rgba(37,99,235,.22))}
+  .node.target circle{fill:var(--orange-soft);stroke:var(--orange);stroke-width:5}
+  .node.visited circle{fill:var(--green-soft);stroke:var(--green)}
+  .node.done circle{fill:var(--purple-soft);stroke:var(--purple)}
+  .null-label{font-size:14px;fill:var(--orange);font-weight:800}
+  .status{
+    margin-top:14px;border-radius:15px;padding:15px 16px;background:#f7f9fc;
+    border-left:5px solid var(--blue);line-height:1.75;min-height:86px
+  }
+  .status strong{color:var(--blue)}
+  .path{
+    display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:12px;
+    padding:12px;border-radius:14px;background:#f8fafc;border:1px solid #e5eaf2;min-height:56px
+  }
+  .chip{
+    min-width:38px;height:38px;border-radius:10px;display:inline-flex;align-items:center;
+    justify-content:center;font-weight:800;background:#fff;border:1px solid #d9e0ea
+  }
+  .chip.active{background:var(--blue);border-color:var(--blue);color:white}
+  .chip.visited{background:var(--green-soft);border-color:#86efac;color:#166534}
+  .arrow{color:#98a2b3;font-weight:800}
+  .code{
+    background:#101828;color:#d0d5dd;border-radius:16px;padding:12px;
+    font:14px/1.65 ui-monospace,SFMono-Regular,Consolas,monospace;overflow:auto
+  }
+  .code-line{display:block;padding:2px 9px;border-radius:7px;white-space:pre}
+  .code-line.active{background:#1d4ed8;color:#fff}
+  .code-line.comment{color:#98a2b3}
+  .explain-grid{display:grid;gap:12px;margin-top:14px}
+  .card{border:1px solid #e5eaf2;border-radius:15px;padding:14px;background:#fff}
+  .card h4{margin:0 0 8px;font-size:15px}
+  .card p{margin:0;color:#58657a;line-height:1.7}
+  .decision{
+    margin-top:12px;border-radius:15px;background:#fbfcfe;border:1px solid #e4e9f1;padding:14px
+  }
+  .decision-row{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:9px}
+  .decision-box{padding:12px;border-radius:12px;text-align:center;font-weight:750}
+  .decision-box.left{background:var(--green-soft);color:#166534}
+  .decision-box.right{background:var(--orange-soft);color:#9a3412}
+  .decision-mid{color:#667085;font-weight:800}
+  .hidden-section{display:none}
+  .formula{
+    padding:13px 15px;border-radius:14px;background:var(--purple-soft);
+    color:#5b21b6;font-weight:750;line-height:1.7
+  }
+  .tag-table{width:100%;border-collapse:collapse;margin-top:12px;font-size:13px}
+  .tag-table th,.tag-table td{padding:9px;border-bottom:1px solid #edf0f4;text-align:center}
+  .tag-table th{color:#667085;background:#f8fafc}
+  .tag-table td:first-child{font-weight:800}
+  footer{margin-top:18px;text-align:center;color:#697586;font-size:13px;padding:12px}
+  @media(max-width:1050px){
+    .workspace{grid-template-columns:1fr}
+    header{flex-direction:column}
+    .legend{width:100%}
+  }
+  @media(max-width:680px){
+    .page{padding:14px}
+    .tabs{grid-template-columns:1fr}
+    .workspace{display:block}
+    .panel{margin-bottom:14px}
+    .switch{margin-left:0}
+    svg{height:470px}
+    .svg-wrap{min-height:470px}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <div>
+      <h1>中序线索二叉树 · 三个算法可视化</h1>
+      <div class="subtitle">
+        在同一棵树上观察 <b>Firstnode</b>、<b>Nextnode</b> 与 <b>Inorder</b>。
+        实线代表真实孩子，橙色虚线代表前驱/后继线索。点击“下一步”观察指针如何移动。
+      </div>
+    </div>
+    <div class="legend">
+      <span><i class="dot real"></i>真实孩子边</span>
+      <span><i class="dot thread"></i>线索边</span>
+      <span><i class="dot current"></i>当前结点</span>
+      <span><i class="dot visited"></i>已访问结点</span>
+    </div>
+  </header>
+
+  <div class="tabs">
+    <button class="tab active" data-tab="first">1. Firstnode：找子树中序起点</button>
+    <button class="tab" data-tab="next">2. Nextnode：找中序后继</button>
+    <button class="tab" data-tab="inorder">3. Inorder：完成整棵树遍历</button>
+  </div>
+
+  <div class="workspace">
+    <section class="panel">
+      <div class="panel-title">
+        <h2 id="visualTitle">Firstnode：不断沿真实左孩子下降</h2>
+        <label class="switch"><input id="threadToggle" type="checkbox" checked>显示线索</label>
+      </div>
+      <div class="panel-body">
+        <div id="controlsFirst" class="controls">
+          <label>起始根结点：
+            <select id="firstStart">
+              <option value="A">A（整棵树）</option>
+              <option value="B">B 子树</option>
+              <option value="E">E 子树</option>
+              <option value="C">C 子树</option>
+              <option value="F">F 子树</option>
+            </select>
+          </label>
+          <button id="firstReset" class="action secondary">重置</button>
+          <button id="firstStep" class="action primary">下一步</button>
+          <button id="firstAuto" class="action warn">自动演示</button>
+        </div>
+
+        <div id="controlsNext" class="controls hidden-section">
+          <label>求哪个结点的后继：
+            <select id="nextStart">
+              <option value="D">D：走右线索到 B</option>
+              <option value="B">B：进入右子树，再找最左结点</option>
+              <option value="G">G：走右线索到 E</option>
+              <option value="E">E：走右线索到 A</option>
+              <option value="A">A：进入右子树 C</option>
+              <option value="C">C：进入右子树 F</option>
+              <option value="F">F：后继为 NULL</option>
+            </select>
+          </label>
+          <button id="nextReset" class="action secondary">重置</button>
+          <button id="nextStep" class="action primary">下一步</button>
+          <button id="nextAuto" class="action warn">自动演示</button>
+        </div>
+
+        <div id="controlsInorder" class="controls hidden-section">
+          <button id="inorderReset" class="action secondary">重置</button>
+          <button id="inorderStep" class="action primary">访问下一结点</button>
+          <button id="inorderAuto" class="action warn">自动遍历</button>
+        </div>
+
+        <div class="svg-wrap">
+          <svg viewBox="0 0 860 520" aria-label="中序线索二叉树">
+            <defs>
+              <marker id="arrowOrange" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L9,3 z" fill="#ea580c"/>
+              </marker>
+              <marker id="arrowBlue" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L9,3 z" fill="#2563eb"/>
+              </marker>
+            </defs>
+
+            <!-- 真实孩子 -->
+            <path id="edge-A-B" class="edge" d="M430 83 L270 172"/>
+            <path id="edge-A-C" class="edge" d="M430 83 L615 172"/>
+            <path id="edge-B-D" class="edge" d="M270 218 L155 315"/>
+            <path id="edge-B-E" class="edge" d="M270 218 L355 315"/>
+            <path id="edge-E-G" class="edge" d="M355 361 L290 438"/>
+            <path id="edge-C-F" class="edge" d="M615 218 L705 315"/>
+
+            <!-- 后继线索，略微弯曲避免重叠 -->
+            <path id="thread-D-B" class="thread-edge" marker-end="url(#arrowOrange)" d="M175 337 Q230 290 252 228"/>
+            <path id="thread-G-E" class="thread-edge" marker-end="url(#arrowOrange)" d="M310 457 Q355 425 354 368"/>
+            <path id="thread-E-A" class="thread-edge" marker-end="url(#arrowOrange)" d="M379 333 Q500 300 446 105"/>
+            <path id="thread-F-null" class="thread-edge" marker-end="url(#arrowOrange)" d="M729 337 Q798 330 808 390"/>
+
+            <!-- 前驱线索 -->
+            <path id="thread-G-B" class="thread-edge" marker-end="url(#arrowOrange)" d="M274 448 Q225 405 252 231"/>
+            <path id="thread-C-A" class="thread-edge" marker-end="url(#arrowOrange)" d="M596 182 Q525 112 456 91"/>
+            <path id="thread-F-C" class="thread-edge" marker-end="url(#arrowOrange)" d="M687 326 Q645 285 625 229"/>
+
+            <text x="800" y="412" class="null-label">NULL</text>
+
+            <g id="node-A" class="node" transform="translate(430,60)">
+              <circle r="31"/><text y="1">A</text><text class="tag" x="-44" y="-22">L0</text><text class="tag" x="44" y="-22">R0</text>
+            </g>
+            <g id="node-B" class="node" transform="translate(270,195)">
+              <circle r="31"/><text y="1">B</text><text class="tag" x="-44" y="-22">L0</text><text class="tag" x="44" y="-22">R0</text>
+            </g>
+            <g id="node-C" class="node" transform="translate(615,195)">
+              <circle r="31"/><text y="1">C</text><text class="tag" x="-44" y="-22">L1</text><text class="tag" x="44" y="-22">R0</text>
+            </g>
+            <g id="node-D" class="node" transform="translate(155,338)">
+              <circle r="31"/><text y="1">D</text><text class="tag" x="-44" y="-22">L1</text><text class="tag" x="44" y="-22">R1</text>
+            </g>
+            <g id="node-E" class="node" transform="translate(355,338)">
+              <circle r="31"/><text y="1">E</text><text class="tag" x="-44" y="-22">L0</text><text class="tag" x="44" y="-22">R1</text>
+            </g>
+            <g id="node-F" class="node" transform="translate(705,338)">
+              <circle r="31"/><text y="1">F</text><text class="tag" x="-44" y="-22">L1</text><text class="tag" x="44" y="-22">R1</text>
+            </g>
+            <g id="node-G" class="node" transform="translate(290,462)">
+              <circle r="31"/><text y="1">G</text><text class="tag" x="-44" y="-22">L1</text><text class="tag" x="44" y="-22">R1</text>
+            </g>
+          </svg>
+        </div>
+
+        <div id="status" class="status">
+          <strong>准备：</strong>从 A 开始。检查 A 的 ltag；只要 ltag=0，就沿真正的左孩子继续向下。
+        </div>
+        <div id="path" class="path"></div>
+      </div>
+    </section>
+
+    <aside class="panel">
+      <div class="panel-title"><h3 id="codeTitle">当前算法代码</h3></div>
+      <div class="panel-body">
+        <div id="codeFirst" class="code">
+          <span class="code-line" data-line="f1">ThreadNode *Firstnode(ThreadNode *p){</span>
+          <span class="code-line" data-line="f2">    while(p-&gt;ltag == 0)</span>
+          <span class="code-line" data-line="f3">        p = p-&gt;lChild;</span>
+          <span class="code-line" data-line="f4">    return p;</span>
+          <span class="code-line" data-line="f5">}</span>
+        </div>
+
+        <div id="codeNext" class="code hidden-section">
+          <span class="code-line" data-line="n1">ThreadNode *Nextnode(ThreadNode *p){</span>
+          <span class="code-line" data-line="n2">    if(p-&gt;rtag == 0)</span>
+          <span class="code-line" data-line="n3">        return Firstnode(p-&gt;rChild);</span>
+          <span class="code-line" data-line="n4">    else</span>
+          <span class="code-line" data-line="n5">        return p-&gt;rChild;</span>
+          <span class="code-line" data-line="n6">}</span>
+        </div>
+
+        <div id="codeInorder" class="code hidden-section">
+          <span class="code-line" data-line="i1">void Inorder(ThreadNode *T){</span>
+          <span class="code-line" data-line="i2">    for(ThreadNode *p = Firstnode(T);</span>
+          <span class="code-line" data-line="i3">        p != NULL;</span>
+          <span class="code-line" data-line="i4">        p = Nextnode(p))</span>
+          <span class="code-line" data-line="i5">        visit(p);</span>
+          <span class="code-line" data-line="i6">}</span>
+        </div>
+
+        <div id="explainFirst" class="explain-grid">
+          <div class="formula">Firstnode 的核心：<br>只沿着 <b>ltag = 0</b> 的真实左孩子边走。</div>
+          <div class="card">
+            <h4>为什么不能判断 lChild != NULL？</h4>
+            <p>线索化以后，lChild 即使非空，也可能指向“前驱线索”。必须查看 ltag，才能区分真实孩子与线索。</p>
+          </div>
+          <div class="card">
+            <h4>停止条件</h4>
+            <p>遇到 ltag=1，说明当前结点没有真实左孩子。它就是该子树中第一个被中序访问的结点。</p>
+          </div>
+        </div>
+
+        <div id="explainNext" class="explain-grid hidden-section">
+          <div class="decision">
+            <div class="decision-row">
+              <div class="decision-box left">rtag = 0<br>有真实右子树</div>
+              <div class="decision-mid">检查 p</div>
+              <div class="decision-box right">rtag = 1<br>右指针是线索</div>
+            </div>
+          </div>
+          <div class="card">
+            <h4>有右子树</h4>
+            <p>进入右子树后，不能直接返回右孩子；还要继续找该右子树的最左结点。</p>
+          </div>
+          <div class="card">
+            <h4>没有右子树</h4>
+            <p>rChild 已被改造成中序后继线索，可以直接返回。若为 NULL，说明 p 是中序序列最后一个结点。</p>
+          </div>
+        </div>
+
+        <div id="explainInorder" class="explain-grid hidden-section">
+          <div class="formula">整体思路：<br>先找起点，再不断执行 p = Nextnode(p)。</div>
+          <div class="card">
+            <h4>它像遍历数组</h4>
+            <p>数组用 i++ 找下一个元素；线索二叉树用 Nextnode(p) 找下一个中序结点。</p>
+          </div>
+          <div class="card">
+            <h4>为什么不需要递归栈？</h4>
+            <p>原本由递归栈保存的“返回到哪个祖先”信息，部分被存入空指针形成的线索中。</p>
+          </div>
+        </div>
+
+        <table class="tag-table">
+          <thead><tr><th>标志</th><th>0</th><th>1</th></tr></thead>
+          <tbody>
+            <tr><td>ltag</td><td>lChild 是左孩子</td><td>lChild 是前驱线索</td></tr>
+            <tr><td>rtag</td><td>rChild 是右孩子</td><td>rChild 是后继线索</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </aside>
+  </div>
+
+  <footer>示例中序序列：D → B → G → E → A → C → F</footer>
+</div>
+
+<script>
+const tree = {
+  A:{l:'B',ltag:0,r:'C',rtag:0},
+  B:{l:'D',ltag:0,r:'E',rtag:0},
+  C:{l:'A',ltag:1,r:'F',rtag:0},
+  D:{l:null,ltag:1,r:'B',rtag:1},
+  E:{l:'G',ltag:0,r:'A',rtag:1},
+  F:{l:'C',ltag:1,r:null,rtag:1},
+  G:{l:'B',ltag:1,r:'E',rtag:1}
+};
+const inorderSeq = ['D','B','G','E','A','C','F'];
+const childEdges = {
+  'A-B':'edge-A-B','A-C':'edge-A-C','B-D':'edge-B-D',
+  'B-E':'edge-B-E','E-G':'edge-E-G','C-F':'edge-C-F'
+};
+const threadEdges = {
+  'D-B':'thread-D-B','G-E':'thread-G-E','E-A':'thread-E-A',
+  'F-null':'thread-F-null','G-B':'thread-G-B','C-A':'thread-C-A','F-C':'thread-F-C'
+};
+
+let activeTab = 'first';
+let timer = null;
+let firstState = {};
+let nextState = {};
+let inorderState = {};
+
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+
+function stopAuto(){
+  if(timer){ clearInterval(timer); timer=null; }
+  $('#firstAuto').textContent='自动演示';
+  $('#nextAuto').textContent='自动演示';
+  $('#inorderAuto').textContent='自动遍历';
+}
+
+function clearVisual(){
+  $$('.node').forEach(n=>n.setAttribute('class','node'));
+  $$('.edge,.thread-edge').forEach(e=>e.classList.remove('active'));
+  $$('.code-line').forEach(l=>l.classList.remove('active'));
+}
+
+function markNode(name, cls='current'){
+  if(!name) return;
+  $('#node-'+name)?.classList.add(cls);
+}
+function markEdge(from,to,isThread=false){
+  const id = (isThread?threadEdges:childEdges)[`${from}-${to ?? 'null'}`];
+  if(id) $('#'+id)?.classList.add('active');
+}
+function highlight(line){ $('[data-line="'+line+'"]')?.classList.add('active'); }
+function setStatus(html){ $('#status').innerHTML=html; }
+
+function renderPath(items, currentIndex=-1, visitedUntil=-1){
+  const box=$('#path'); box.innerHTML='';
+  if(!items.length){ box.innerHTML='<span style="color:#98a2b3">路径将在这里显示</span>'; return; }
+  items.forEach((x,i)=>{
+    const c=document.createElement('span');
+    c.className='chip'+(i===currentIndex?' active':'')+(i<=visitedUntil?' visited':'');
+    c.textContent=x;
+    box.appendChild(c);
+    if(i<items.length-1){
+      const a=document.createElement('span');a.className='arrow';a.textContent='→';box.appendChild(a);
+    }
+  });
+}
+
+function buildFirstSteps(start){
+  const steps=[];
+  let p=start;
+  steps.push({type:'check',node:p,line:'f2',
+    text:`检查 <b>${p}</b>：ltag=${tree[p].ltag}。`});
+  while(tree[p].ltag===0){
+    const q=tree[p].l;
+    steps.push({type:'move',from:p,to:q,line:'f3',
+      text:`${p}.ltag=0，lChild 是真实左孩子，因此沿实线移动：<b>${p} → ${q}</b>。`});
+    p=q;
+    steps.push({type:'check',node:p,line:'f2',
+      text:`到达 <b>${p}</b>，继续检查 ltag=${tree[p].ltag}。`});
+  }
+  steps.push({type:'return',node:p,line:'f4',
+    text:`${p}.ltag=1，没有真实左孩子，停止下降。<b>Firstnode(${start}) = ${p}</b>。`});
+  return steps;
+}
+
+function resetFirst(){
+  stopAuto(); clearVisual();
+  const start=$('#firstStart').value;
+  firstState={start,steps:buildFirstSteps(start),index:0,path:[start]};
+  markNode(start); highlight('f2');
+  setStatus(`<strong>准备：</strong>从 ${start} 开始。检查 ${start} 的 ltag；只要 ltag=0，就沿真正的左孩子继续向下。`);
+  renderPath(firstState.path,0);
+  $('#firstStep').disabled=false;
+}
+function stepFirst(){
+  if(firstState.index>=firstState.steps.length){ $('#firstStep').disabled=true; return true; }
+  clearVisual();
+  const s=firstState.steps[firstState.index++];
+  highlight(s.line);
+  if(s.type==='move'){
+    markNode(s.from,'done'); markNode(s.to,'current'); markEdge(s.from,s.to,false);
+    if(firstState.path.at(-1)!==s.to) firstState.path.push(s.to);
+  } else if(s.type==='return'){
+    markNode(s.node,'target');
+  } else markNode(s.node,'current');
+  setStatus(`<strong>步骤 ${firstState.index}：</strong>${s.text}`);
+  renderPath(firstState.path, firstState.path.length-1);
+  if(firstState.index>=firstState.steps.length) $('#firstStep').disabled=true;
+  return firstState.index>=firstState.steps.length;
+}
+
+function firstnodePath(start){
+  const path=[start]; let p=start;
+  while(tree[p].ltag===0){ p=tree[p].l; path.push(p); }
+  return path;
+}
+function buildNextSteps(start){
+  const t=tree[start], steps=[];
+  steps.push({type:'check',node:start,line:'n2',
+    text:`检查 <b>${start}</b> 的 rtag=${t.rtag}。`});
+  if(t.rtag===1){
+    steps.push({type:'thread',from:start,to:t.r,line:'n5',
+      text:t.r
+        ? `${start}.rtag=1，rChild 是后继线索，直接得到 <b>Nextnode(${start}) = ${t.r}</b>。`
+        : `${start}.rtag=1，且 rChild=NULL，说明它是最后一个中序结点。<b>Nextnode(${start}) = NULL</b>。`});
+  }else{
+    const r=t.r;
+    steps.push({type:'right',from:start,to:r,line:'n3',
+      text:`${start}.rtag=0，先进入真实右子树：<b>${start} → ${r}</b>。随后执行 Firstnode(${r})。`});
+    const path=firstnodePath(r);
+    for(let i=0;i<path.length-1;i++){
+      steps.push({type:'left',from:path[i],to:path[i+1],line:'n3',
+        text:`在右子树中，${path[i]}.ltag=0，继续向左：<b>${path[i]} → ${path[i+1]}</b>。`});
+    }
+    const ans=path.at(-1);
+    steps.push({type:'return',node:ans,line:'n3',
+      text:`${ans}.ltag=1，右子树的最左结点是 ${ans}。<b>Nextnode(${start}) = ${ans}</b>。`});
+  }
+  return steps;
+}
+function resetNext(){
+  stopAuto(); clearVisual();
+  const start=$('#nextStart').value;
+  nextState={start,steps:buildNextSteps(start),index:0,path:[start]};
+  markNode(start); highlight('n2');
+  setStatus(`<strong>准备：</strong>求 ${start} 的中序后继。第一步先看 rtag，而不是直接看 rChild。`);
+  renderPath(nextState.path,0);
+  $('#nextStep').disabled=false;
+}
+function stepNext(){
+  if(nextState.index>=nextState.steps.length){ $('#nextStep').disabled=true; return true; }
+  clearVisual();
+  const s=nextState.steps[nextState.index++];
+  highlight(s.line);
+  if(['right','left'].includes(s.type)){
+    markNode(s.from,'done'); markNode(s.to,'current'); markEdge(s.from,s.to,false);
+    if(nextState.path.at(-1)!==s.to) nextState.path.push(s.to);
+  }else if(s.type==='thread'){
+    markNode(s.from,'done');
+    if(s.to){markNode(s.to,'target');markEdge(s.from,s.to,true);nextState.path.push(s.to);}
+    else {markEdge(s.from,null,true);nextState.path.push('NULL');}
+  }else if(s.type==='return') markNode(s.node,'target');
+  else markNode(s.node,'current');
+  setStatus(`<strong>步骤 ${nextState.index}：</strong>${s.text}`);
+  renderPath(nextState.path,nextState.path.length-1);
+  if(nextState.index>=nextState.steps.length) $('#nextStep').disabled=true;
+  return nextState.index>=nextState.steps.length;
+}
+
+function nextInfo(p){
+  const t=tree[p];
+  if(t.rtag===1) return {next:t.r,kind:'thread',detail:t.r?`${p} 沿右线索直接到 ${t.r}`:`${p} 的右线索指向 NULL`};
+  const path=firstnodePath(t.r);
+  return {next:path.at(-1),kind:'subtree',right:t.r,path,detail:`${p} 先进入右子树 ${t.r}，再找最左结点 ${path.at(-1)}`};
+}
+function resetInorder(){
+  stopAuto(); clearVisual();
+  inorderState={phase:'init',index:-1,visited:[],current:null};
+  highlight('i2'); markNode('A');
+  setStatus(`<strong>初始化：</strong>先执行 Firstnode(T)。从根 A 沿真实左孩子 A → B → D，得到第一个中序结点 D。`);
+  renderPath(inorderSeq,-1,-1);
+  $('#inorderStep').disabled=false;
+}
+function stepInorder(){
+  clearVisual();
+  if(inorderState.phase==='done'){ $('#inorderStep').disabled=true; return true; }
+
+  if(inorderState.phase==='init'){
+    markEdge('A','B'); markEdge('B','D');
+    markNode('A','done'); markNode('B','done'); markNode('D','current');
+    inorderState.current='D'; inorderState.index=0; inorderState.phase='visit';
+    highlight('i2');
+    setStatus(`<strong>找到起点：</strong>Firstnode(A)=D。现在 p 指向 D，循环条件 p!=NULL 成立。`);
+    renderPath(inorderSeq,0,-1);
+    return false;
+  }
+
+  if(inorderState.phase==='visit'){
+    const p=inorderState.current;
+    inorderState.visited.push(p);
+    markNode(p,'visited');
+    highlight('i5');
+    setStatus(`<strong>访问：</strong>执行 visit(${p})，当前输出为 <b>${inorderState.visited.join(' → ')}</b>。`);
+    renderPath(inorderSeq,inorderState.index,inorderState.index);
+    inorderState.phase='move';
+    return false;
+  }
+
+  if(inorderState.phase==='move'){
+    const p=inorderState.current, info=nextInfo(p);
+    inorderSeq.forEach((n,i)=>{ if(i<=inorderState.index) markNode(n,'visited'); });
+    highlight('i4');
+    if(info.kind==='thread'){
+      markEdge(p,info.next,true);
+    }else{
+      markEdge(p,info.right,false);
+      for(let i=0;i<info.path.length-1;i++) markEdge(info.path[i],info.path[i+1],false);
+    }
+    if(info.next){
+      markNode(info.next,'current');
+      inorderState.current=info.next;
+      inorderState.index++;
+      inorderState.phase='visit';
+      setStatus(`<strong>寻找后继：</strong>${info.detail}，因此 p 更新为 <b>${info.next}</b>。`);
+      renderPath(inorderSeq,inorderState.index,inorderState.index-1);
+      return false;
+    }else{
+      inorderState.current=null; inorderState.phase='finish';
+      setStatus(`<strong>寻找后继：</strong>${info.detail}，所以 p 更新为 NULL。`);
+      renderPath(inorderSeq,-1,inorderSeq.length-1);
+      return false;
+    }
+  }
+
+  if(inorderState.phase==='finish'){
+    inorderSeq.forEach(n=>markNode(n,'visited'));
+    highlight('i3');
+    setStatus(`<strong>结束：</strong>p=NULL，循环条件失败。最终中序序列为 <b>${inorderSeq.join(' → ')}</b>。`);
+    renderPath(inorderSeq,-1,inorderSeq.length-1);
+    inorderState.phase='done'; $('#inorderStep').disabled=true;
+    return true;
+  }
+}
+
+function switchTab(tab){
+  stopAuto(); activeTab=tab;
+  $$('.tab').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));
+  ['First','Next','Inorder'].forEach(name=>{
+    $('#controls'+name).classList.toggle('hidden-section',name.toLowerCase()!==tab);
+    $('#code'+name).classList.toggle('hidden-section',name.toLowerCase()!==tab);
+    $('#explain'+name).classList.toggle('hidden-section',name.toLowerCase()!==tab);
+  });
+  const titles={
+    first:'Firstnode：不断沿真实左孩子下降',
+    next:'Nextnode：根据 rtag 选择两条路线',
+    inorder:'Inorder：从起点开始，不断寻找后继'
+  };
+  $('#visualTitle').textContent=titles[tab];
+  if(tab==='first')resetFirst();
+  if(tab==='next')resetNext();
+  if(tab==='inorder')resetInorder();
+}
+
+function autoRun(which){
+  stopAuto();
+  const map={
+    first:{step:stepFirst,reset:resetFirst,button:$('#firstAuto'),text:'自动演示'},
+    next:{step:stepNext,reset:resetNext,button:$('#nextAuto'),text:'自动演示'},
+    inorder:{step:stepInorder,reset:resetInorder,button:$('#inorderAuto'),text:'自动遍历'}
+  };
+  const x=map[which]; x.reset(); x.button.textContent='暂停';
+  timer=setInterval(()=>{
+    const done=x.step();
+    if(done){stopAuto();x.button.textContent=x.text;}
+  },900);
+}
+
+$$('.tab').forEach(b=>b.addEventListener('click',()=>switchTab(b.dataset.tab)));
+$('#threadToggle').addEventListener('change',e=>{
+  $$('.thread-edge').forEach(x=>x.classList.toggle('hidden',!e.target.checked));
+});
+$('#firstStart').addEventListener('change',resetFirst);
+$('#firstReset').addEventListener('click',resetFirst);
+$('#firstStep').addEventListener('click',stepFirst);
+$('#firstAuto').addEventListener('click',()=>timer?stopAuto():autoRun('first'));
+$('#nextStart').addEventListener('change',resetNext);
+$('#nextReset').addEventListener('click',resetNext);
+$('#nextStep').addEventListener('click',stepNext);
+$('#nextAuto').addEventListener('click',()=>timer?stopAuto():autoRun('next'));
+$('#inorderReset').addEventListener('click',resetInorder);
+$('#inorderStep').addEventListener('click',stepInorder);
+$('#inorderAuto').addEventListener('click',()=>timer?stopAuto():autoRun('inorder'));
+
+resetFirst();
+</script>
+</body>
+</html>
