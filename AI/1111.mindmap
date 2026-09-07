@@ -1,0 +1,41 @@
+---
+type: mindmap
+---
+
+```json
+{
+  "root": {
+    "id": "root",
+    "text": "qishi1",
+    "children": [
+      {
+        "id": "1788758577707",
+        "text": "New child",
+        "children": [],
+        "parent": "root",
+        "x": 300,
+        "y": 210
+      },
+      {
+        "id": "1788758583293",
+        "text": "New sibling",
+        "children": [],
+        "parent": "root",
+        "x": 300,
+        "y": 300
+      },
+      {
+        "id": "1788758585250",
+        "text": "New sibling",
+        "children": [],
+        "parent": "root",
+        "x": 300,
+        "y": 390
+      }
+    ],
+    "x": 100,
+    "y": 300,
+    "collapsed": false
+  }
+}
+```
