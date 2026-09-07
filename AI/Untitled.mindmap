@@ -1,0 +1,15 @@
+---
+type: mindmap
+---
+
+```json
+{
+  "root": {
+    "id": "root",
+    "text": "",
+    "children": [],
+    "x": 100,
+    "y": 300
+  }
+}
+```
