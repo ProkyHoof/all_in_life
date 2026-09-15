@@ -10,7 +10,7 @@ tags:
 
 ## Record  
 ### Computer English  
-frashman
+freshman: I'm a frashman with to your think
 
 ## 反思
 - 
