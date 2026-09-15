@@ -10,7 +10,8 @@ tags:
 
 ## Record  
 ### Computer English  
-freshman: I'm a frashman with to your think
+freshman: He was a senior at the University of Minnesota, she was a freshman.  
+
 
 ## 反思
 - 
