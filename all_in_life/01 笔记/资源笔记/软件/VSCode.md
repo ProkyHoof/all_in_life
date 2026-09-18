@@ -30,33 +30,45 @@ VSCode（Visual Studio Code）是微软开发的一款免费、开源的“代�
 	3. Panel：面板区，也就是底边的调式输出等地方。
 	4. Sidebar：侧边区，也就是唤出拓展的地方。
 3. 编写 CSS 代码。
+局部布局的背景设置：
 
 ``` json
 "background.editor": {
 	"useFront": false,  // 决定图片是否显示在代码的前面
 	"style": {
 		"background-position": "0% 50%",  // 图片对齐位置。0% 50% 表示水平对齐，垂直居中
-		"background-size": "auto",  // 图片缩放方式。auto 表示按图片原
-		"opacity": 0.1
+		"background-size": "auto",  // 图片缩放方式。auto 表示按图片原尺寸显示。
+		"opacity": 0.1  // 透明度，数值范围 0 ~ 1。 
 	},
-	"style": [],
-	"image": ["file:///E:/documents/wallpaper/vscode.jpg"],
-	"interval": 0,
-	"random": false
+	"style": [],  // 留空的数组，用于写额外的自定义 CSS 样式。
+	"image": ["file:///E:/documents/wallpaper/vscode.jpg"],  // 图片的绝对路径数组。
+	"interval": 0,  // 轮播间隔，0 表示不自动轮播。
+	"random": false  // 是否随机切换图片。false 表示按照顺序切换（目前只有一张图，所以没区别）
 }
 ```
 
 > 如果 `"useFront" = true`，图片会覆盖在代码上，可能会影响你看代码。通常建议设为 `false`，让图片作为底层背景。  
 
+全局布局的背景设置：  
 
-
-
+``` json
+"background.fullscreen": {
+    "images": [  // 背景图片的路径。
+        "file:///E:/documents/wallpaper/vscode.jpg"
+    ],
+    "opacity": 0.1,  // 透明度，范围是 0~1。
+    "size": "cover",  // 缩放方式。cover bi'a
+    "position": "center",
+    "styles": [],
+    "interval": 0,
+    "random": false
+}
+```
 ## 快捷键  
 
 ```vtable
 {"rows":[[{"t":"快捷键","rs":1,"cs":1},{"t":"作用","rs":1,"cs":1}],[{"t":"Ctrl + ,","rs":1,"cs":1},{"t":"打开设置","rs":1,"cs":1}],[{"t":"<br>","rs":1,"cs":1},{"t":"","rs":1,"cs":1}]]}
 ```
-
 
 ## 使用心得
 - 
