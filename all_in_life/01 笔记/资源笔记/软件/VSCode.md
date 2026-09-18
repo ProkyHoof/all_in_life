@@ -24,7 +24,7 @@ VSCode（Visual Studio Code）是微软开发的一款免费、开源的“代�
 ### background  
 作用：设置 VSCode 中的背景图片。  
 1. 设置 background 的 json 文件。
-2. “设置” $\to$ “扩展”
+2. “设置” $\to$ “扩展” $\to$ “background” $\to$ “”
 
 ## 快捷键  
 
