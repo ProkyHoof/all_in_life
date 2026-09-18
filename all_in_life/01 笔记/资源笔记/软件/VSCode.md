@@ -24,7 +24,14 @@ VSCode（Visual Studio Code）是微软开发的一款免费、开源的“代�
 ### background  
 作用：设置 VSCode 中的背景图片。  
 1. 设置 background 的 json 文件。
-2. “设置” $\to$ “扩展” $\to$ “background” $\to$ “”
+2. “设置” $\to$ “扩展” $\to$ “background”。
+	1. Editor：编辑器，也就是你编写代码的背景。
+	2. Fullscreen：全屏，如果应用这个就不能再写其他的设备了，不然会重叠，这个全屏包括了能够看到的全部界面。
+	3. Panel：面板区，也就是底边的调式输出等地方。
+	4. Sidebar：侧边区，也就是唤出拓展的地方。
+3. 编写 CSS 代码。
+
+
 
 ## 快捷键  
 
