@@ -31,6 +31,24 @@ VSCode（Visual Studio Code）是微软开发的一款免费、开源的“代�
 	4. Sidebar：侧边区，也就是唤出拓展的地方。
 3. 编写 CSS 代码。
 
+``` json
+"background.editor": {
+	"useFront": false,  // 决定图片是否显示在代码的前面
+	"style": {
+		"background-position": "0% 50%",  // 图片对齐位置。0% 50% 表示水平对齐，垂直居中
+		"background-size": "auto",  // 图片缩放方式。auto 表示按图片原
+		"opacity": 0.1
+	},
+	"style": [],
+	"image": ["file:///E:/documents/wallpaper/vscode.jpg"],
+	"interval": 0,
+	"random": false
+}
+```
+
+> 如果 `"useFront" = true`，图片会覆盖在代码上，可能会影响你看代码。通常建议设为 `false`，让图片作为底层背景。  
+
+
 
 
 ## 快捷键  
