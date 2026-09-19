@@ -57,11 +57,11 @@ VSCode（Visual Studio Code）是微软开发的一款免费、开源的“代�
         "file:///E:/documents/wallpaper/vscode.jpg"
     ],
     "opacity": 0.1,  // 透明度，范围是 0~1。
-    "size": "cover",  // 缩放方式。cover bi'a
-    "position": "center",
-    "styles": [],
-    "interval": 0,
-    "random": false
+    "size": "cover",  // 缩放方式。cover 表示等比缩放图片以铺满整个窗口，超出部分会被裁剪。
+    "position": "center",  // 图片位置。center 表示居中显示。
+    "styles": [],  // 自定义 CSS 数组，目前是空的。如果需要额外调整（比如加模糊效果），可以再这里写 CSS。
+    "interval": 0,  // 轮播间隔。0 表示不自动轮播。
+    "random": false  // 是否随机切换图片。false 表示按顺序切换。
 }
 ```
 ## 快捷键  
