@@ -7,8 +7,6 @@ tags:
 日期: 2026-09-18
 ---
 
-# VSCode
-
 ## 简介
 VSCode（Visual Studio Code）是微软开发的一款免费、开源的“代码编辑器”。  
 你可以理解为一个超级智能的记事本——专门用来写代码，但本身不像 Pycharm，IDEA 那样复杂。  
