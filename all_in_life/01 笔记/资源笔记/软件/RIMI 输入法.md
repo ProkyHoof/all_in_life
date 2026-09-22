@@ -8,7 +8,7 @@ tags:
 ---
 
 # 简介
-RIMIshu ru
+RIMI 输入法是一款免费开源的输入法，没有广告，适配多端操作，包括 Windows、macOS、Linux、Android 等平台上创造了不同对输入法
 
 # 用途
 - 
