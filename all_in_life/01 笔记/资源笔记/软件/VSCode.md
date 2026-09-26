@@ -7,10 +7,10 @@ tags:
 日期: 2026-09-18
 ---
 
-## 简介
+# 1 简介
 VSCode（Visual Studio Code）是微软开发的一款免费、开源的“代码编辑器”。  
 你可以理解为一个超级智能的记事本——专门用来写代码，但本身不像 Pycharm，IDEA 那样复杂。  
-## 用途
+# 2 用途
 - 插件生态：装 Python 插件就支持 Python，装 Java 插件就支持 Java，装 C++ 插件就支持 C++。
 - 内置终端：不用切窗口，直接在 VSCode 里运行命令。
 - 内置 Git：可以提交、拉取、查看历史。
@@ -18,8 +18,8 @@ VSCode（Visual Studio Code）是微软开发的一款免费、开源的“代�
 - 智能提示：补全、跳转定义、查找引用。
 - 远程开发：可以连服务器、连 WSL、连 Docker。
 
-## 插件推荐  
-### background  
+# 3 插件推荐  
+## 3.1 background  
 作用：设置 VSCode 中的背景图片。  
 1. 设置 background 的 json 文件。
 2. “设置” $\to$ “扩展” $\to$ “background”。
@@ -62,11 +62,11 @@ VSCode（Visual Studio Code）是微软开发的一款免费、开源的“代�
     "random": false  // 是否随机切换图片。false 表示按顺序切换。
 }
 ```
-## 快捷键  
+# 4 快捷键  
 
 ```vtable
 {"rows":[[{"t":"快捷键","rs":1,"cs":1},{"t":"作用","rs":1,"cs":1}],[{"t":"Ctrl + ,","rs":1,"cs":1},{"t":"打开设置","rs":1,"cs":1}],[{"t":"<br>","rs":1,"cs":1},{"t":"","rs":1,"cs":1}]]}
 ```
 
-## 使用心得
+# 5 使用心得
 - 
