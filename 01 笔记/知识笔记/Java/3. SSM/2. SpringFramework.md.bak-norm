@@ -1,0 +1,958 @@
+---
+onenote-id: 0-484d6a560bbe45ef96d687bf4cd02e90!1-DBD29CD2C5C95FE5!s971d26051d5a448e8cec05c95f8a1cc3
+---
+# 技术体系结构
+
+## 总体技术体系
+
+1 单一架构  
+一个项目，一个工程，导出为一个war包，在一个Tomcat上运行。也叫all in one  
+单一架构，项目主要应用技术框架：Spring SpringMVC Mybatis
+
+![](../../../../03%20附件/attachments/知识附件/Java/3.%20SSM/SpringFramework%20image%20840dff07f8853363.png)
+
+2 分布式架构  
+一个项目（对应IDEA中的一个project），拆分成很多个模块，每个模块是一个IDEA中的一个module，每一个工程都是运行在自己的Tomcat上，模块之间可以互相调用，每一个模块内部可以看成是一个架构的应用  
+分布式架构、项目主要应用技术框架：SpringBoot（SSM） SpringCloud，中间件等
+
+## 框架概念和理解
+
+框架（Framework）是一个集成了基本结构、规范、设计模式、编程语言和程序库等基础组件的软件系统，它可以用来构建更高级别的应用程序。框架的设计和实现旨在解决特定领域中的常见问题，帮助开发人员更搞笑、更稳定地实现软件开发目标  
+框架的优点包括以下几点  
+1 提高开发效率  
+2 降低开发成本  
+3 提高应用程序的稳定性  
+4 提高标准化的解决方案  
+站在文件结构的角度理解框架，可以将框架总结：框架 = jar包 + 配置文件  
+常见的单一框架JavaEE项目框架演进，从SSH、SSH2过渡到了SSM：SpringMVC、Spring、MyBatis
+ 
+# SpringFramework介绍
+
+## Spring和SpringFramework概念
+
+Spring技术栈（全家桶）：广义上的Spring泛指以SpringFramework为基础的Spring技术栈  
+SpringFramework、Spring MVC、SpringBoot、Spring Cloud、Spring Data、Spring Security等，其中Spring Framework是其他子项目的基础  
+SpringFramework（基础框架）：狭义上的Spring特指Spring Framework，通常将它称为Spring框架
+
+## SpringFramework主要功能模块
+
+Core Container：核心容器，在Spring环境下使用任何功能都必须基于IOC容器  
+AOP&Aspects：面向切面编程  
+TX：声明式事务管理  
+SpringMVC：提供了面向Web应用程序的继承功能
+
+## SpringFramework主要优势
+
+1 丰富的生态系统  
+2 模块化的设计  
+3 简化Java开发  
+4 不断创新和发展
+ 
+# SpringIoC容器和核心概念
+
+## 组件和组件管理概念
+
+### 什么是组件
+
+Controller：控制层组件  
+Service：业务逻辑层组件  
+Dao：持久化层组件
+
+### Spring充当组件管理角色（IoS）
+
+组件可以完全交给Spring框架进行管理，Spring框架替代了程序员原有的new对象和对象属性赋值等动作等  
+注意：组件是映射到应用程序中所有可重用组件的Java对象，应该是可复用的功能对象  
+1 组件一定是对象  
+2 对象不一定是组件
+
+### 组件交给Spring管理优势
+
+1 降低了组件之间的耦合性  
+2 提高了代码的可重用性和可维护性  
+3 方便了配置和管理  
+4 交给Spring管理的对象（组件），方可享受Spring框架的其他功能（AOP，声明事务管理）等
+
+## Spring IoC容器和容器实现
+
+### 普通和复杂容器
+
+普通容器：数组、集合List、集合Set  
+复杂容器：Servlet容器能够管理Servlet（init，service，destroy）、Filter、Listener这样的组件的一生，所以它是一个复杂容器  
+创建对象 | 默认情况：接收到第一次请求 修改启动顺序后：Web应用启动过程中 | 一次  
+初始化操作 | 创建对象之后 | 一次  
+处理请求 | 接收到请求 | 多次  
+销毁操作 | Web应用卸载之前 | 一次  
+总结：Spring管理组件的容器，就是一个复杂容器，不仅存储组件，也可以管理组件之间依赖关系，并且创建和销毁组件等
+
+### SpringIoC容器介绍
+
+Spring IoC容器，负责实例化、配置和组装bean（组件）。容器通过读取配置元数据来获取有关要实例化、配置和组装组件的指令。配置元数据以XML、Java注解或Java代码形式表现。它允许表达组成应用程序的组件以及这些组件之间丰富的相互依赖关系
+
+### SpringIoC容器具体接口和实现类
+
+SpringIoC容器接口  
+BeanFactory接口提供了一种高级配置机制，能够管理任何类型的对象，它是Spring IoC容器标准化超接口  
+ApplicationContext是BeanFactory的子接口，它扩展了以下功能  
+1 更容易与Spring的AOP功能集成  
+2 消息资源处理（用于国际化）  
+3 特定于应用程序给予此接口实现，例如Web应用程序的WebApplicationContext  
+BeanFactory提供了配置框架和基本功能，而ApplicationContext添加了更多特定于企业的功能。ApplicationContext是BeanFactory的完整超集  
+ClassPathXmlApplicationContext | 通过读取类路径下的XML格式的配置文件创建IoC容器对象  
+FileSystemXmlApplicationContext | 通过文件系统路径读取XML格式的配置文件创建  
+AnnotationConfigApplicationContext | 通过读取Java配置类创建IoC容器对象  
+WebApplicationContext | 专门为Web应用准备，基于Web环境创建IoC容器对象，并将对象引入存入ServletContext域中  
+Spring框架提供了多种配置方式：XML配置方式、注解方式和Java配置类方式
+
+## Spring IoC/DI概念总结
+
+### IoC容器
+
+Spring IoC容器，负责实例化、配置和组装bean（组件）核心容器。容器通过读取配置元数据来获取有关要实例化、配置和组装组件的指令
+
+### IoC（Inversion of Control）控制反转
+
+IoC主要是针对对象的创建和调用控制而言的，也就是说，当应用程序需要使用一个对象时，不再是应用程序直接创建该对象，而是由IoC容器来创建容器来创建和管理，即控制权由程序转移到IoC容器中，也就是“反转”了控制权  
+这种方式基本上是通过依赖查找的方式来实现的，即IoC容器维护着构成应用程序的对象，并负责创建这些对象
+
+### DI（Dependency Injection）依赖注入
+
+DI是指在组件之间传递依赖关系的过程中，将依赖关系在容器内部进行处理，这样就不必在应用程序代码中硬编码对象之间的依赖关系，实现了对象之间的解耦合，在Spring中，DI是通过XML配置文件或注解的方式实现的  
+它提供了三种形式的依赖注入：构造函数注入、Setter方法注入和接口注入
+ 
+# Spring IoC实践和应用
+
+## Spring IoC/DI实现步骤
+
+### 基于xml的IoC配置
+
+1 配置元数据  
+1 基于XML的配置元数据的基本结构
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8|// 添加一些约束，配置文件等便签并不是随意命名  <br>**\<beans** **xmlns**="http://www.springframework.org.schema/beans"  <br>        xmlns:**xsi**="http://www.w3.org/2001/XMLSchema-instance"  <br>        xsi:**schemaLocation**="http://www.springframework.org/schema/beans  <br>         [https://www.springframework.org/schema/beans/spring-beans.xsd](https://www.springframework.org/schema/beans/spring-beans.xsd)"**\>**  <br>        **\<bean** **id**="" [**1**] **class**="" [**2**]**\>**  <br>        **\</bean\>**  <br>**\</beans\>**|
+
+Spring IoC容器管理一个或多个组件，这些组件是使用你提供给容器的配置元数据（例如，以XML\<bean/\>定义的形式）创建的  
+\<bean/\>标签 == 组件信息声明  
+1 id属性是标志单个Bean定义的字符串  
+2 class属性定义Bean的类型并使用完全限定的类名  
+2 实例化IoC容器  
+提供给ApplicationContext构造函数的位置路径是资源字符串地址，允许容器从各种外部资源（如本地文件系统、Java CLASSPATH等）加载配置元数据
+
+3 获取Bean（组件）  
+ApplicationContext是一个高级工厂的接口，能够维护不同bean及其依赖项的注册表，通过使用T getBean(String name, Class\<T\> requiredType)，您可以检索bean的实例
+
+|   |   |
+|---|---|
+|1  <br>2|// 实例化IoC容器，读取外部配置文件，最终会在容器内进行IoC和DI动作  <br>ApplicationContext context **=** **new** ClassPathXmlApplicationContext**(**"services.xml"**,** "daos.xml"**);**|
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6|// 创建IoC容器对象，指定配置文件，IoC也开始实例组件对象  <br>ApplicationContext context **=** **new** ClassPathXmlApplicationContext**(**"services.xml"**,** "daos.xml"**);**  <br>// 获取IoC容器的组件对象  <br>PetStoreService service **=** context**.**getBean**(**"petStore"**,** PetStoreService**.****class****);**  <br>// 使用组件对象  <br>List**\<**String**\>** userList **=** service**.**getUsernameList**();**|
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8  <br>9  <br>10  <br>11  <br>12  <br>13  <br>14  <br>15  <br>16|**//** pom**.**xml  <br>**\<**dependencies**\>**  <br>                **//** spring context依赖  <br>                **//** 当你引入Spring Context依赖之后，表示将Spring的基础依赖引入了  <br>        **\<**dependency**\>**  <br>                **\<**groupId**\>**org**.**springframework**\</**groupId**\>**  <br>                **\<**artifactId**\>**spring-context**\</**artifactId**\>**  <br>                **\<**version**\>****6.0.6****\</**version**\>**  <br>        **\</**dependency**\>**  <br>        **//** junit5测试  <br>        **\<**dependency**\>**  <br>                        **\<**groupId**\>**org**.**junit**.**jupiter**\</**groupId**\>**  <br>                        **\<**artifactId**\>**junit-jupiter-api**\</**artifactId**\>**  <br>                        **\<**version**\>****5.3.1****\</**version**\>**  <br>        **\</**dependency**\>**  <br>**\</**dependencies**\>**|
+
+4 基于无参构造  
+当通过构造函数方法创建一个bean（组件对象）时，所有普通类都可以由Spring使用并与之兼容，也就是说，正在开发的类不需要实现任何特定的接口或以特定的方式进行编码，只需指定Bean类信息就足够了，但是，默认情况下，我们需要一个默认（空）构造函数  
+1 准备组件类
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6|**public class** HappyComponent **{**  <br>        // 默认包含无参数构造函数  <br>        **public void** doWork**() {**  <br>                System**.**out**.**println**(**"HappyComponent.doWork"**);**  <br>        **}**  <br>**}**|
+
+2 xml配置文件编写  
+创建携带Spring约束的xml配置文件  
+编写配置文件：resources/spring-bean-01.xml
+
+|   |   |
+|---|---|
+|1  <br>2|// 创建bean  <br>**\<bean** **id**="happyComponent class="com.atguigu.ioc.HappyComponent"/\>|
+
+1 bean标签：通过配置bean标签告诉IoC容器需要创建对象的组件信息  
+2 id属性：bean的唯一标识，方便后期获取Bean  
+3 class属性：组件类的权限定符  
+4 注意：要求当前组件类必须包含无参数构造函数  
+5 基于静态工厂方法实例化  
+除了使用构造函数实例化对象，还有一类是通过工厂模式实例化对象，接下来我们讲解如何定义使用静态工厂方法创建Bean的配置  
+1 准备组件类
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8|**public class** ClientService **{**  <br>        **private static** ClientService clientService **=** **new** ClientService**();**  <br>        **private** ClientService**() {}**  <br>          <br>        **public static** ClientService createInstance**() {**  <br>                **return** clientService**;**  <br>        **}**  <br>**}**|
+
+2 xml配置文件编写  
+文件：resources/spring-bean-01.xml
+
+|   |   |
+|---|---|
+|1|**\<**bean id**=**"clientService" **class****=**"example.ClientService" factory**-**method**=**"createInstance"**/\>**|
+
+1 class属性：指定工厂类的权限定符  
+2 factory-method：指定静态工厂方法，注意，该方法必须是static方法  
+6 基于实例工厂方法实例化  
+1 准备组建类
+ 
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7|**public class** DefaultServiceLocator **{**  <br>        **private static** ClientService clientService **=** **new** ClientServiceImpl**();**  <br>          <br>        **public** ClientService createClientServiceInstance**() {**  <br>                **return** clientService**;**  <br>        **}**  <br>**}**|
+
+2 xml配置文件编写  
+文件：resources/spring-bean-01.xml
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4|// 工厂类进行IoC配置  <br>**\<bean** **id**="serviceLocator" **class**="example.DefaultServiceLocator"**\>\</bean\>**  <br>// 根据工厂对象的实例工厂进行实例化组件对象  <br>**\<bean** **id**="clientService" **factory-bean**="serviceLocator" **factory-method**="createClientServiceInstance"**/\>**|
+
+1 factory-bean属性：指定当前容器中工厂Bean的名称  
+2 factory-method：指定实例工厂方法名。注意，实例方法必须是非static的
+
+### 依赖注入配置DI
+
+1 目标  
+通过配置文件，实现IoC容器中Bean之间的引用（依赖注入DI配置）  
+主要涉及注入场景，基于构造函数的依赖注入和基于Setter的依赖注入  
+2 基于构造函数的依赖注入（单个构造参数）  
+1 介绍  
+基于构造函数的DI是通过容器调用具有多个参数的构造函数来完成的，每个参数表示一个依赖项  
+2 准备组件类
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8  <br>9|**public class** UserDao **{}**<br><br>  <br><br>**public class** UserService **{**  <br>        **private** UserDao userDao**;**  <br>          <br>        **public** UserService**(**UserDao userDao**) {**  <br>                **this****.**userDao **=** userDao**;**  <br>        **}**  <br>**}**|
+
+3 编写配置文件  
+文件：resources/spring-02.xml
+ 
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8  <br>9|**\<beans\>**  <br>        // 应用类bean声明  <br>        **\<bean** **id**="userService" **class**="x.y.UserService"**\>**  <br>                // 构造函数引用  <br>                **\<constructor-arg** **ref**="userDao"**/\>**  <br>        **\</bean\>**  <br>        // 被引用类bean声明  <br>        **\<bean** **id**="userDao" **class**="x.y.userDao"**/\>**  <br>**\</beans\>**|
+
+1 constructor-arg标签：可以引用构造参数ref引用其他bean的标志  
+3 基于构造函数的依赖注入（多构造参数解析）  
+1 介绍  
+基于构造函数的DI是通过容器调用具有多个参数的构造函数来完成的，每个参数表示一个依赖项  
+2 准备组件类
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8  <br>9  <br>10  <br>11  <br>12  <br>13|**public class** UserDao **{}**<br><br>  <br><br>**public class** UserService **{**  <br>        **private** UserDao userDao**;**  <br>        **private int** age**;**  <br>        **private** String name**;**  <br>          <br>        **public** UserService**(****int** age**,** String name**,** UserDao userDao**) {**  <br>                **this****.**userDao **=** userDao**;**  <br>                **this****.**age **=** age**;**  <br>                **this****.**name **=** name**;**  <br>        **}**  <br>**}**|
+
+3 编写配置文件
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8  <br>9  <br>10  <br>11  <br>12  <br>13  <br>14  <br>15  <br>16  <br>17  <br>18  <br>19  <br>20  <br>21  <br>22  <br>23  <br>24  <br>25  <br>26  <br>27  <br>28  <br>29  <br>30  <br>31  <br>32  <br>33  <br>34|// 场景**1** 多参数，可以按照相应构造函数的顺序注入数据  <br>**\<beans\>**  <br>        **\<bean** **id**="userService" **class**="x.y.UserService"**\>**  <br>                // value直接注入基本类型值  <br>                **\<constructor-arg** **value**="18"**/\>**  <br>                **\<constructor-arg** **value**="张三"**/\>**  <br>                **\<constructor-arg** **ref**="userDao"**/\>**  <br>        **\</bean\>**  <br>        // 被引用类bean声明  <br>        **\<bean** **id**="userDao" **class**="x.y.UserDao"**/\>**  <br>**\<beans\>**<br><br>  <br><br>// 场景**2** 多参数，可以按照相应构造函数的名称注入数据  <br>**\<beans\>**  <br>        **\<bean** **id**="userService" **class**="x.y.UserService"**\>**  <br>                // value直接注入基本类型值  <br>                **\<constructor-arg** **name**="name" **value**="张三"**/\>**  <br>                **\<constructor-arg** **name**="userDao" **ref**="userDao"**/\>**  <br>                **\<constructor-arg** **name**="age" **value**="18"**/\>**  <br>        **\</bean\>**  <br>        // 被引用类bean声明  <br>        **\<bean** **id**="userDao" **class**="x.y.UserDao"**/\>**  <br>**\</beans\>**<br><br>  <br><br>// 场景**3** 多参数，可以按照相应构造函数的角标注入数据 index从**0**开始，构造函数（**0**,**1**,**2**,**3**...）  <br>**\<beans\>**  <br>        **\<bean** **id**="userService" **class**="x.y.UserService"**\>**  <br>        **\<constructor-arg** **index**="1" **value**="张三"**/\>**  <br>        **\<constructor-arg** **index**="2" **ref**="userDao"**/\>**  <br>        **\<constructor-arg** **index**="0" **value**="18"**/\>**  <br>        **\</bean\>**  <br>        // 被引用类bean声明  <br>        **\<bean** **id**="userDao" **class**="x.y.UserDao"**/\>**  <br>**\</beans\>**|
+
+5 基于Setter方法依赖注入  
+1 介绍  
+开发中，除了构造函数注入（DI），更多的使用的Setter（方法进行注入）  
+2 准备组件类
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8  <br>9  <br>10  <br>11  <br>12  <br>13  <br>14  <br>15|**public class** MovieFinder **{}**<br><br>  <br><br>**public class** SimpleMovieLister **{**  <br>        **private** MovieFinder movieFinder**;**  <br>          <br>        **private** String movieName**;**  <br>          <br>        **public void** setMovieFinder**(**MovieFinder movieFinder**) {**  <br>                **this****.**movieFinder **=** movieFinder**;**  <br>        **}**  <br>          <br>        **public void** setMovieName**(**String movieName**) {**  <br>                **this****.**movieName **=** movieName**;**  <br>        **}**  <br>**}**|
+
+3 编写配置文件
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8  <br>9|**\<beans\>**  <br>        **\<bean** **id**="movieFinder" **class**="x.y.MovieFinder"**/\>**  <br>        **\<bean** **id**="simpleMovieFinder" **class**="x.y.SimpleMovieFinder"**\>**  <br>                // Setter方法，注入movieFinder对象的标志Id name=属性名 ref=引用bean的Id值  <br>                **\<property** **name**="movieFinder" **ref**="movieFinder"**\>**  <br>                // Setter方法，注入基本数据类型movieName name=属性名 value=基本类型值  <br>                **\<property** **name**="movieName" **value**="怎么是猪脚"**\>**  <br>        **\<bean/\>**  <br>**\</beans\>**|
+
+1 property标签：可以给Setter方法对应的属性赋值  
+2 property标签：name属性代表set方法标识、ref代表引用bean的标识Id、value属性代表基本属性值  
+总结：  
+依赖注入（DI）包含引用类型和基本数据类型、同时注入的方法也有很多种。主流的注入方法为Setter方法注入和构造函数注入  
+注意：引用其他bean，使用ref属性，直接注入基本类型值，使用value属性
+
+### IoC容器创建和使用
+
+1 介绍  
+想要配置文件中声明组件类信息真正的进行实例化成Bean对象和形式Bean之间的引用关系，我们需要声明IoC容器对象，读取配置文件，实例化组件和关系维护的过程都是在IoC容器中实现  
+2 容器实例化
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8  <br>9  <br>10  <br>11  <br>12  <br>13  <br>14  <br>15  <br>16  <br>17  <br>18  <br>19  <br>20  <br>21  <br>22  <br>23  <br>24  <br>25  <br>26  <br>27  <br>28  <br>29  <br>30  <br>31  <br>32  <br>33  <br>34  <br>35  <br>36  <br>37  <br>38  <br>39  <br>40  <br>41  <br>42  <br>43  <br>44|// 创建IoC容器并且读取配置文件  <br>**public void** createIoC**() {**  <br>        // 创建容器 选择合适的容器即可  <br>        // 接口 BeanFactory ApplicationContext  <br>        // ------------------------------------------------------------------------  <br>        // 实现类 可以直接通过构造函数进行实例化  <br>        // ClassPathXmlApplicationContext 读取类路径下的xml配置方式 classes  <br>        // FileSystemXmlApplicationContext 读取指定文件位置的xml配置方式  <br>        // AnnotationConfigApplication 读取配置类方式的IoC容器  <br>        // WebApplicationContext web项目专属的配置的IoC容器  <br>          <br>        // 方式1：直接创建容器并且指定配置文件即可 [推荐]  <br>        // 构造函数（String...配置文件）可以填写一个或者多个  <br>        ApplicationContext applicationContext1 **=** **new** ClassPathXmlApplicationContext**(**"spring-03.xml"**);**  <br>          <br>        // 方式2：先创建IoC容器对象，再指定配置文件，再刷新  <br>        // 源码的配置过程 创建容器[spring]和配置文件指定分开[自己指定]  <br>        ClassPathXmlApplicationContext2 applicationContext **=** **new** ClassPathXmlApplicationContext**();**  <br>        // 外部配置文件的设置  <br>        applicationContext2**.**setConfigLocations**(**"spring-03.xml"**);**  <br>        // 调用IoC和DI的流程  <br>        applicationContext2**.**refresh**();**  <br>**}**<br><br>  <br><br>// 在IoC容器中读取组件Bean  <br>**public void** getBeanFromIoC**() {**  <br>        // 1 创建IoC容器对象  <br>        ClassPathXmlApplicationContext applicationContext **=** **new** ClassPathXmlApplicationContext**();**  <br>        applicationContext**.**setConfigLocations**(**"spring-03.xml"**);**  <br>        applicationContext**.**refresh**();**  <br>          <br>        // 2 读取IoC容器的组件  <br>        // 方案1：直接根据BeanId获取即可 返回值类型是Object 需要强转[不推荐]  <br>        HappyComponent happyComponent1 **= (**HappyComponent**)** applicationContext**.**getBean**(**"happyComponent"**);**  <br>        // 方案2：根据beanId 同时指定Bean的类型class  <br>        HappyComponent happyComponent2 **=** applicationContext**.**getBean**(**"happyComponent"**,** HappyComponent**.****class****);**  <br>        // 方案3：直接根据类型接收  <br>        // TODO 根据Bean的类型获取，同一个类型，在IoC容器中只能有一个Bean  <br>        // TODO 如果IoC容器中存在多个同类型的Bean会出现：NoUniqueBeanDefinitionException  <br>        // TODO IoC的配置一定是实现类，但是可以根据接口类型取值  <br>        HappyComponent happyComponent3 **=** applicationContext**.**getBean**(**HappyComponent**.****class****);**  <br>          <br>        happyComponent2**.**doWork**();**  <br>**}**|
+
+### 组件（Bean）作用域和周期方法配置
+
+1 组件周期方法配置  
+1 周期方法概念  
+在组件中定义方法，然后当IoC容器实例化和销毁组件对象的时候进行调用，这两个方法称为生命周期方法  
+类似于Servlet的init/destroy方法  
+2 周期方法生命
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8  <br>9|**public class** JavaBean **{**  <br>        // 周期方法要求：方法命名随意，但是要求方法必须是public void 无形参列表  <br>        **public void** init**() {**  <br>                // 初始化逻辑  <br>        **}**  <br>        **public void** cleanup**() {**  <br>                // 释放销毁逻辑  <br>        **}**  <br>**}**|
+
+3 周期方法配置
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6|**\<beans\>**  <br>        // **init-method**="初始化方法名"  <br>        // **destroy-method**="销毁方法名"  <br>        // SpringIoC容器就会在对应的时间节点回调对应的方法，可以在其中写对应的业务  <br>        **\<bean** **id**="javaBean" **class**="com.atguigu.ioc-04.JavaBean" **init-method**="init" **destroy-method**="cleanup"**/\>**  <br>**\</beans\>**|
+
+2 组件作用域配置  
+1 Bean作用域概念  
+\<bean\>标签声明Bean，只是将Bean的信息配置给SpringIoC容器  
+在IoC容器中，这些\<bean\>标签对应的信息转成Spring内部BeanDefinition对象，BeanDefinition对象内，包含定义的信息（id，class属性等等）  
+这意味着，BeanDefinition与类概念一样，SpringIoC容器可以根据BeanDefinition对象反射创建多个Bean对象实例  
+具体创建多少个Bean的实例对象，由Bean的作用域Scope属性指定  
+2 作用域可选值
+
+|   |   |   |   |
+|---|---|---|---|
+|取值|含义|创建对象的时机|默认值|
+|singleton|在IoC容器中，这个Bean的对象始终为单实例|IoC容器初始化时|是|
+|prototype|这个Bean在IoC容器中有多个实例|获取Bean时|否|
+
+如果是在WebApplicationContext环境下还会有另外两个作用域（但不常用）
+
+|   |   |   |   |
+|---|---|---|---|
+|取值|含义|创建对象的时机|默认值|
+|request|请求范围内有效的实例|每次请求|否|
+|session|会话范围内有效的实例|每次会话|否|
+
+|   |   |
+|---|---|
+|1  <br>2|// 声明一个组件信息，默认就是单例模式 一个Bean标签对应一个beanDefinition组件对象  <br>**\<bean** **id**="javaBean" **class**="com.prokyhoof.ioc-04.JavaBean" **scope**="singleton"**/\>**|
+
+### FactoryBean特征和使用
+
+1 FactoryBean简介  
+Factory接口是SpringIoC容器实例化逻辑的可插拔特点  
+用于配置复杂的Bean对象，可以见创建过程存储在FactoryBean的getObject方法  
+FactoryBean\<T\>接口提供三种方法  
+1 T getObject()  
+返回此工厂创建的对象的实例，该返回值会被存储到IoC容器  
+2 boolean isSingleton()  
+如果此Factory返回单例，则返回true，否则返回false，此方法的默认实现返回true（注意，lombok插件使用，可能会影响效果）  
+3 Class\<?\> getObjectType()  
+返回getObject()方法返回的对象类型，如果事先不知道类型，则返回null  
+2 FactoryBean使用场景  
+1 代理类的创建  
+2 第三方框架整合  
+3 复杂对象实例化等  
+3 FactoryBean应用  
+1 准备FactoryBean实现类
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8  <br>9  <br>10  <br>11|**public class** JavaBean **{**  <br>        **private** String name**;**  <br>          <br>        **public** String getName**() {**  <br>                **return** name**;**  <br>        **}**  <br>          <br>        **public void** setName**(**String name**) {**  <br>                **this****.**name **=** name**;**  <br>        **}**  <br>**}**|
+
+2 准备FactoryBean类
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8  <br>9  <br>10  <br>11  <br>12  <br>13  <br>14|// 1 实现FactoryBean接口\<返回值类型\>  <br>**public class** JavaBeanFactoryBean **implements** FactoryBean**\<**JavaBean**\> {**  <br>        @Override  <br>        **public** JavaBean getObject**()** **throws** Exception **{**  <br>                // 使用自己的方式实例化对象就可以了  <br>                JavaBean javaBean **=** **new** JavaBean**();**  <br>                **return** javaBean**;**  <br>        **}**  <br>          <br>        @Override  <br>        **public** Class**\<**?**\>** getObjectType**() {**  <br>                **return** JavaBean**.****class****;**  <br>        **}**  <br>**}**|
+
+3 xml配置
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3|// id getObject方法返回的对象的标识  <br>// class FactoryBean标准工厂类  <br>**\<bean** **id**="javaBean" **class**="com.prokyhoof.ioc-05.JavaBeanFactoryBean"**/\>**|
+
+4 FactoryBean和BeanFactory区别  
+FactoryBean是Spring中一种特殊的Bean，可以在getObject()工厂方法自定义的逻辑创建Bean。是一种能够生产其他Bean的Bean。FactoryBean在容器启动时被创建，而在实际使用时则是调用getObject()方法来得到其所生产的Bean。因此，FactoryBean可以自定义任何所需的初始化逻辑，生产出一些定制化的Bean  
+一般情况下，整合第三方框架，都是通过定义FactoryBean实现  
+BeanFactory是Spring框架的基础，其作为一个顶级接口定义了容器的基本行为，例如管理Bean的生命周期、配置文件的加载和解析，Bean的装配和依赖注入等。BeanFactory接口提供了访问Bean的方式，例如getBean()方法获取指定的Bean实例。它可以从不同的来源（例如MySQL数据库、XML文件、Java配置类等）获取Bean定义、并将其转换为Bean实例。同时，BeanFactory还包含很多子类（例如，ApplicationContext接口）提供了额外的强大功能  
+总得来说，FactoryBean和BeanFactory的区别主要在于前者是用于创建Bean的接口，它提供了更加灵活的初始化定制功能，而后者是用于管理Bean的架构基础接口，提供了基本的容器功能和Bean生命周期管理
+
+### 基于XML方式整合三层架构组件
+
+## 基于注解方式管理Bean
+
+1 注解理解  
+和XML配置文件一样，注解本身并不能执行，注解本身仅仅只是做一个标记，具体的功能是框架检测到注解标记的位置，然后针对这个位置按照注解标记的功能来执行具体操作  
+本质上，所有一切的操作都是Java代码来完成的，XML和注解只是告诉框架中的Java代码如何执行  
+2 扫描理解  
+Spring为了知道程序员在哪些地方标记了什么注解，就需要通过扫描的方式，来进行检测。然后根据注解进行后续操作  
+3 准备Spring项目和组件  
+1 准备项目pom.xml
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8  <br>9  <br>10  <br>11  <br>12  <br>13  <br>14  <br>15  <br>16|**\<dependencies\>**  <br>        // Spring Context依赖  <br>        // 当你引用Spring Context依赖之后，表示将Spring的基础依赖引入了  <br>        **\<dependence\>**  <br>                **\<groupId\>**org.springframework**\</groupId\>**  <br>                **\<artifactId\>**spring-context**\<artifactId\>**  <br>                **\<version\>****6.0.6****\</version\>**  <br>        **\</dependence\>**  <br>          <br>        // junit5测试  <br>        **\<dependence\>**  <br>                **\<groupId\>**org.junit.jupiter**\</groupId\>**  <br>                **\<artifactId\>**junit-jupiter-api**\</artifactId\>**  <br>                **\<version\>****5.3.1****\</version\>**  <br>        **\</dependence\>**  <br>**\</dependencies\>**|
+
+2 准备组件类  
+普通组件
+
+|   |   |
+|---|---|
+|1|**public class** CommonComponent **{}**|
+
+Controller组件
+
+|   |   |
+|---|---|
+|1|**public class** XxxController **{}**|
+
+Service组件
+
+|   |   |
+|---|---|
+|1|**public class** XxxService **{}**|
+
+Dao组件
+
+|   |   |
+|---|---|
+|1|**public class** XxxDao **{}**|
+
+4 组件添加标记注解  
+1 组件标记注解和区别  
+Spring提供了以下多个注解，这些注解可以直接标注在Java类上，将它们定义成SpringBean
+
+|   |   |
+|---|---|
+|注解|说明|
+|@Component|该注解用于描述Spring中的Bean，它是一个泛化的概念，仅仅表示容器中的一个组件（Bean），并且可以作用在引用的任何层次，例如Service层、Dao层等，使用时只需将注解标注在相应类上即可|
+|@Repository|该注解用于将数值访问层（Dao层）的类标识为Spring中的Bean，其功能与@Component相同|
+|@Service|该注解通常作用在业务层（Service层），用于将业务层的类标识为Spring中的Bean，其功能与@Component相同|
+|@Controller|该注解通常作用在控制层（Controller层），用于将控制层的类标识为Spring中的Bean，其功能与@Component相同|
+
+@Controller、@Service、@Repository这三个注解只是在@Component注解的基础上起了三个新的名字  
+对于Spring使用IoC容器管理这些组件来说没有区别，也就是语法层面没有区别，所以@Controller、@Service、@Repository这三个注解只是给开发人员看的，让我们能够便于分辨组件的作用  
+注意：虽然他们本质上一样，但是为了代码的可读性，程序结构严谨，不能乱标记  
+2 使用注解标记  
+5 配置文件确定扫描范围  
+情况 1：基本扫描配置
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7|// 配置自动扫描的包  <br>// **1** 包要精准  <br>// **2** 会扫描指定的包和子包内容  <br>// **3** 多个包可以使用","分割  <br>**\<beans\>**  <br>        **\<context:component-scan** **base-package**="com.peokyhoof.components"**/\>**  <br>**\</beans\>**|
+
+情况 2：指定排除组件
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8|**\<beans\>**  <br>        **\<context:component-scan** **base-package**="com.prokyhoof.components"**\>**  <br>                // context:exclude-filter标签：指定排除规则  <br>                // type属性：指定根据什么来进行排除，annotation取值表示根据注解来排除  <br>                // expression属性：指定排除规则的表达式，对于注释来说指定全类名即可  <br>                **\<context:exclude-filter** **type**="annotation" **expression**="org.springframework.stereotype.Controller"**/\>**  <br>        **\</context:components-scan\>**  <br>**\</beans\>**|
+
+情况 3：指定扫描文件
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6|// 仅扫描 = 关闭默认规则 + 追加规则  <br>// use-default-filters属性：取值false表示关闭默认扫描规则  <br>**\<context:component-scan** **base-package**="com.prokyhoof.ioc.components" **use-default-filter**="false"**\>**  <br>        // context:include-filter标签：指定在原有扫描规则的基础上追加规则  <br>        **\<context:include-filter** **type**="annotation" **expression**="org.springframework.stereotype.Controller"**/\>**  <br>**\</context:component-scan\>**|
+
+6 组件BeanName问题  
+在我们使用XML方式管理Bean的时候，每个Bean都有一个唯一标识——id属性的值，便于在其他地方引用，现在使用注解后，每个组件仍然应该有一个唯一标识  
+默认情况：  
+类名首字母小写就是Bean的id。例如：SoldierController类对应的Bean的id就是soldierController  
+使用value属性指定
+
+|   |   |
+|---|---|
+|1  <br>2|@Controller**(**value **=** "tianDog"**)**  <br>**public class** SoldierController **{}**|
+
+当注解中只设置一个属性时，value属性的属性名可以省略
+
+### 组件（Bean）作用域和周期方法注解
+
+1 组件周期方法配置  
+1 周期方法概念  
+在组件类中定义方法，然后当IoC容器实例化和销毁组件对象的时候进行调用。这两个方法我们成为生命周期方法  
+类似于Servlet的init/destroy方法可以在周期方法完成初始化和释放资源等工作  
+2 周期方法声明
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8  <br>9  <br>10  <br>11  <br>12  <br>13  <br>14|**public class** BeanOne **{**  <br>        // 周期方法要求：方法命名随意，但是要求发必须是public class 无形参列表  <br>        @PostConstruct // 注解制指定初始化方法  <br>        **public class** init**() {**  <br>                // 初始化逻辑  <br>        **}**  <br>**}**<br><br>  <br><br>**public class** BeanTwo **{**  <br>        @PreDestroy // 注解指定销毁方法  <br>        **public void** cleanup**() {**  <br>                // 释放资源逻辑  <br>        **}**  <br>**}**|
+
+2 组件作用域配置  
+1 Bean作用域概念  
+\<bean\>标签声明Bean、只是将Bean的信息配置给SpringIoC容器  
+在IoC容器中，这些\<bean\>标签对应的信息转成Spring内部BeanDefinition对象，BeanDefinition对象内，包含定义的信息（id，class属性等等）  
+这意味着，BeanDefinition与类概念一样，SpringIoC容器可以根据BeanDefinition对象反射创建多个Bean对象实例  
+具体创建多少个Bean的实例对象，由Bean的作用域Scope属性指定  
+2 作用域可选值
+
+|   |   |   |   |
+|---|---|---|---|
+|取值|含义|创建对象的时机|默认值|
+|singleton|在IoC容器中，这个Bean的对象初始为单实例|IoC容器初始化时|是|
+|prototype|这个Bean在IoC容器中有多个实例|获取Bean时|否|
+
+如果是在WebApplicationContext环境下还会有另外两个作用域（不常用）
+
+|   |   |   |   |
+|---|---|---|---|
+|取值|含义|创建对象的时机|默认值|
+|request|请求范围内有效的实例|每次请求|否|
+|session|会话范围内有效的实例|每次会话|否|
+
+3 作用域配置
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8  <br>9|@Scope**(**scopeName **=** ConfigurableBeanFactory**.**SCOPE_SINGLETON**)** // 单例，默认值  <br>@Scope**(**scopeName **=** ConfigurableBeanFactory**.**SCOPE_PROTOTYPE**)** // 多例，二选一  <br>**public class** BeanOne **{**  <br>        // 周期方法要求：方法命名随意，但是要求发必须是public class无形参列表  <br>        @PostConstruct // 注释制指定初始化方法  <br>        **public void** init**() {**  <br>                // 初始化逻辑  <br>        **}**  <br>**}**|
+
+### Bean属性赋值：引用类型自动装配（DI）
+
+1 设定场景  
+1 SoldierController需要SoldierService  
+2 SoldierService需要SoldierDao  
+同时在各个组件中声明要调用的方法  
+3 SoldierController中声明方法
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8  <br>9|**import** org**.**springframework**.**stereotype**.**Controller**;**  <br>@Controller**(**value **=** "tianDog"**)**  <br>**public class** SoldierController **{**  <br>        **private** SoldierService soldierService**;**  <br>          <br>        **public void** getMessage**() {**  <br>                soldierService**.**getMessage**();**  <br>        **}**  <br>**}**|
+
+4 SoldierService中声明方法
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8|@Service**(**"smallDog"**)**  <br>**public class** SoldierService **{**  <br>        **private** SoldierDao soldierDao**;**  <br>          <br>        **public void** getMessage**() {**  <br>                soldierDao**.**getMessage**();**  <br>        **}**  <br>**}**|
+
+5 SoldierDao中声明方法
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6|@Repository  <br>**public class** SoldierDao **{**  <br>        **public void** getMessage**() {**  <br>                System**.**out**.**println**(**"I am a soldier"**);**  <br>        **}**  <br>**}**|
+
+2 自动装配实现  
+1 前提  
+参与自动装配的组件（需要装配、被装配）全部都必须在IoC容器中  
+注意：不区分IoC的方式，XML和注解都可以  
+2 @Autowired注解  
+在成员变量上直接标记@Autowired注解即可，不需要提供setXxx()方法  
+4 佛系装配  
+给@Autowired注解设置required = false属性表示：能装就装，装不上就不装，但是实际开发时，基本上所有需要装配件的地方都是必须装装配的
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6|@Controller**(**value **=** "tainDog"**)**  <br>**public class** SoldierController **{**  <br>        // 给@Autowired注解设置required = false属性表示，能装就装，装不上就不装  <br>        @Autowired**(**required **=** **false****)**  <br>        **private** ISoldierService soldierService**;**  <br>**}**|
+
+5 扩展JSR-250注解@Resource  
+1 理解JSR系列注解  
+JSR（Java Specification Requests）是Java平台标准化进程中的一种技术规范，而JSR注解是其中一部分重要的内容  
+
+![](../../../../03%20附件/attachments/知识附件/Java/3.%20SSM/SpringFramework%20image%209ed89dbd303bda94.png)  
+![](../../../../03%20附件/attachments/知识附件/Java/3.%20SSM/SpringFramework%20image%2047782c4287f71813.png)
+
+@Resource注解属于JDK扩展包，所以不在JDK当中，需要额外引入以下依赖（高于JDK11或低于JDK8需要引入以下依赖）
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5|**\<dependency\>**  <br>        **\<groupId\>**jakarta.annotation**\</groupId\>**  <br>        **\<artifactId\>**jakarta.annotation-api**\</artifactId\>**  <br>        **\<version\>****2.1.1****\</version\>**  <br>**\</dependency\>**|
+
+2 @Resource使用
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8|@Controller  <br>**public class** XxxController **{**  <br>        // 1 如果没有指定name，先根据属性名查找IoC中组件XxxService  <br>        // 2 如果没有指定name，并且属性名没有对应的组件，会根据属性类型查找  <br>        // 3 可以指定name名称查找。@Resource(name = "test") == @Autowired + @Qualifier(value = "test")  <br>        @Resource  <br>        **private** XxxService xxxService**;**  <br>**}**|
+
+### Bean属性赋值：基本类型属性赋值（DI）
+
+@Value通常用于注入外部化属性  
+声明外部配置  
+application.properties
+
+|   |   |
+|---|---|
+|1|catalog**.**name **=** MovieCatalog|
+
+xml引入外部配置
+
+|   |   |
+|---|---|
+|1  <br>2|// 引入外部配置文件  <br>**\<context:property-placeholder** **location**="application.properties"**/\>**|
+
+@Value注解读取配置
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8  <br>9  <br>10  <br>11  <br>12  <br>13  <br>14  <br>15  <br>16  <br>17  <br>18|**import** org**.**framework**.**beans**.**factory**.**annotation**.**value**;**  <br>**import** org**.**framework**.**stereotype**.**Component**;**<br><br>  <br><br>@Component  <br>**public class** CommonComponent **{**  <br>        // 情况1：${key} 取外部配置key对应的值  <br>        // 情况2：${key:defaultValue} 没有key，可以给与默认值  <br>        @Value**(**"${catalog.name:prokyhoof}"**)**  <br>        **private** String name**;**  <br>          <br>        **public** String getName**() {**  <br>                **return** name**;**  <br>        **}**  <br>          <br>        **public void** setName**(**String name**) {**  <br>                **this****.**name **=** name**;**  <br>        **}**  <br>**}**|
+
+## 基于配置类方法管理Bean
+
+### 完全注解开发理解
+
+Spring完全注解配重（Fully Annotation-based Configuration）是指通过Java配置类代码来配置Spring应用程序，使用注解来替代原本在XML配置文件中的配置，相对于XML配置，完全注解配置具有更强的类型安全性和更好的可读性
+
+### 配置类和扫描注解
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7|// 添加@Configuration代表配置类  <br>@Configuration  <br>@ComponentScan**(**value **= {**"com.prokyhoof.ioc01"**,** "com.prokyhoof.ioc02"**})**  <br>@PropertySource**(**value **=** "classpath:jdbc.properties"**)**  <br>**public class** JavaConfiguration **{**  <br>          <br>**}**|
+
+测试创建IoC容器
+
+|   |   |
+|---|---|
+|1  <br>2|// AnnotationConfigApplicationContext根据配置类创建IoC容器对象  <br>ApplicationContext iocContainerAnnotation **=** **new** AnnotationConfigApplicationContext**(**JavaConfiguration**.****class****);**|
+
+可以使用no-arg构造函数实例化AnnotationConfigApplicationContext，然后使用register()方法对其进行配置。此方法在以编程方法生成AnnotationConfigApplicationContext时特别有用。
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6|// AnnotationConfigApplicationContext-IoC容器对象  <br>ApplicationContext iocContainerAnnotation **=** **new** AnnotationConfigApplicationContext**();**  <br>// 外部设置配置类  <br>iocContainerAnnotation**.**register**(**JavaConfiguration**.****class****);**  <br>// 刷新后方可生效  <br>iocContainerAnnotation**.**refresh**();**|
+
+总结：  
+@Configuration指定一个类为配置类，可以添加配置注解，替代配置xml文件  
+@ComponentScan(basePackage = {“包","包"})替代\<context:component-scan\>标签实现注解扫描  
+@PropertySource("classpath:配置文件地址")替代\<context:property-placeholder\>标签  
+配合IoC/DI注解：可以进行完整注解开发
+
+### @Bean定义组件
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8  <br>9  <br>10  <br>11  <br>12  <br>13  <br>14  <br>15  <br>16  <br>17  <br>18  <br>19  <br>20  <br>21  <br>22  <br>23  <br>24  <br>25  <br>26|@ComponentScan**(**value **= {**"com.prokyhoof.ioc_01"**,** "com.prokyhoof.ioc_02"**})**  <br>@PropertySource**(**value **=** "classpath:jdbc.properties"**)**  <br>@Configuration  <br>**public class** JavaConfiguration **{**<br><br>  <br><br>        // 方法的返回值类型 = Bean组件的类型或者他的接口和父类  <br>        // 方法的名字 = BeanId<br><br>  <br><br>        @Value**(**"${prokyhoof.url}"**)**  <br>        **private** String url**;**  <br>        @Value**(**"${prokyhoof.driverClassName}"**)**  <br>        **private** String driverClassName**;**  <br>        @Value**(**"${prokyhoof.username}"**)**  <br>        **private** String username**;**  <br>        @Value**(**"${rpokyhoof.password}"**)**  <br>        **private** String password**;**  <br>        @Bean  <br>        **public** DruidDataSource dataSource**() {**  <br>                DruidDataSource druidDataSource **=** **new** DruidDataSource**();**  <br>                druidDataSource**.**setUrl**(**url**);**  <br>                druidDataSource**.**setDriverClassName**(**driverClassName**);**  <br>                druidDataSource**.**setUsername**(**username**);**  <br>                druidDataSource**.**setPassword**(**password**);**  <br>                **return** druidDataSource**;**  <br>        **}**  <br>**}**|
+
+### 高级特性：@Bean注解细节
+
+1 @Bean生成BeanName问题  
+@Bean注解源码
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8  <br>9  <br>10  <br>11  <br>12  <br>13  <br>14  <br>15  <br>16  <br>17|**public** @interface Bean **{**  <br>        // 前两个注解可以指定Bean的标识  <br>        @AliasFor**(**"name"**)**  <br>        String**[]** value**()** **default** **{};**  <br>        @AliasFor**(**"value"**)**  <br>        String**[]** name**()** **default** **{};**  <br>          <br>        // autowireCandidate 属性来指定该Bean是否候选用于自动装配  <br>        // autowireCandidate 属性默认值为true，表示该Bean是一个默认的装配目标  <br>        // 可被候选用于自动装配，如果将autowireCandidate属性设置为false，则说明该Bean不是默认的装配目标，不会被候选用于自动装配  <br>        **boolean** autowireCandidate**()** **default** **true****;**  <br>          <br>        // 指定初始化方法  <br>        String initMethod**()** **default** ""**;**  <br>        // 指定销毁方法  <br>        String destroyMethod**()** **default** "(inferred)"**;**  <br>**}**|
+
+问题1 BeanName的问题  
+默认：方法名  
+指定：name/value属性起名字，覆盖方法名  
+问题2 周期方法如何制定  
+原有注解方案：PostConstruct + PerDestroy注解指定  
+Bean属性指定：initMethod/destroyMethod指定  
+问题3 作用域  
+和以前还是一样@Scope注解，默认是单例  
+问题4 如何引用其他的ioc组件  
+直接调用对方的Bean方法即可  
+直接形参变量进行引入，要求必须有对应的组件，如果有多个形参名，组件id标识即可
+
+### 高级特性：@Import扩展
+
+@Import注释允许从另一个配置类加载@Bean定义。
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8  <br>9  <br>10  <br>11  <br>12  <br>13  <br>14  <br>15  <br>16|@Configuration  <br>**public class** ConfigA **{**  <br>        @Bean  <br>        **public** A a**() {**  <br>                **return new** A**();**  <br>        **}**  <br>**}**<br><br>  <br><br>@Configuration  <br>@Import**(**ConfigA**.****class****)**  <br>**public class** ConfigB **{**  <br>        @Bean  <br>        **public** B b**() {**  <br>                **return new** B**();**  <br>        **}**  <br>**}**|
+
+现在，在实例化上下文时不需要同时指定ConfigA.class和ConfigB.class，只需显示提供ConfigB
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6|**public static void** main**(**String**[]** args**) {**  <br>        ApplicationContext ctx **=** **new** AnnotationConfigApplicationContext**(**ConfigB**.****class****);**  <br>        // now both beans A and B will be available  <br>        A a **=** ctx**.**getBean**(**A**.****class****);**  <br>        B b **=** ctx**.**getBean**(**B**.****class****);**  <br>**}**|
+
+此方法简化了容器实例化，因为只需要处理一个类，而不是要求在构建期间记住可能大量的@Configuration类
+
+## 三种配置方式总结
+
+### XML方式配置总结
+
+1 所有内容写到xml格式配置文件中  
+2 声明bean通过\<bean\>标签  
+3 \<bean\>标签包含基本信息（id.class）和属性信息\<property name value/ref\>  
+4 引入外部的properties文件可以通过\<context:property-placeholder\>  
+5 IoC具体容器实现选择ClassPathXmlApplicationContext对象
+
+### XML + 注解方式配置总结
+
+1 注解负责标记IoC的类和进行属性装配  
+2 xml文件依然需要，需要通过\<context:component-scan\>标签指定注解范围  
+3 标记IoC注解：@Component\@Service\@Controller\@Repository  
+4 标签DI注解：@Autowired @Qualifier @Resource @Value  
+5 IoC具体容器实现选择ClassPathXmlApplicationContext对象
+
+### 完全注释方式配置总结
+
+1 完全注解方式指的是去掉xml文件，使用配置类 + 注解实现  
+2 xml文件替换成使用@Configuration注解标记的类  
+3 标记IoC注解：@Component @Service @Controller @Repository  
+4 标记DI注解：@Autowired @Qualifier @Resource @Value  
+5 \<context:component-scan\>标签指定注解范围使用@ComponentScan(basePackages = {"com.prokyhoof.components"})替代  
+6 \<context:property-placeholder\>引入外部配置文件使用@PropertySource({"classpath:application.properties", "classpath:jdbc.properties"})替代  
+7 \<bean\>标签使用@Bean注解和方法实现  
+8 IoC具体容器实现选择AnnotationConfigApplicationContext对象
+
+## 整合Spring5-Text5搭建测试环境
+
+1 导入相关依赖
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8  <br>9  <br>10  <br>11  <br>12|// junit5测试  <br>**\<dependency\>**  <br>        **\<groupId\>**org.junit.jupiter**\</groupId\>**  <br>        **\<artifactId\>**junit-jupiter-api**\</artifactId\>**  <br>        **\<version\>****5.3.1****\</version\>**  <br>**\</dependency\>**  <br>**\<dependency\>**  <br>        **\<groupId\>**org.springframework**\<groupId\>**  <br>        **\<artifactId\>**spring-test**\</artifactId\>**  <br>        **\<version\>****6.0.6****\</version\>**  <br>        **\<scope\>**test**\</scope\>**  <br>**\</dependency\>**|
+
+2 整合测试注解使用
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8  <br>9  <br>10|// @SpringJunitConfig(locations = {"classpath:spring-context.xml"}) // 指定配置文件xml  <br>@SpringJunitConfig**(**value **= {**BeanConfig**.****class****})** // 指定配置类  <br>**public class** Junit5IntegrationTest **{**  <br>        @Autowired  <br>        **private** User user**;**  <br>        @Test  <br>        **public void** testJunit5**() {**  <br>                System**.**out**.**println**(**user**);**  <br>        **}**  <br>**}**|
+
+# Spring AOP面向切面编程
+
+## 解决技术代理模式
+
+1 代理模式  
+二十三种设计模式中的一种，属于结构型模式。他的作用就是通过提供一个代理类，让我们在调用目标方法的时候，不再是直接对目标方法进行调用，而是通过代理类间接调用。让不属于目标方法核心逻辑的代码从目标方法中剥离出来——解耦。调用目标方法时先调用代理对象的方法，减少对目标方法的调用和打扰，同时让附加功能能够集中在一起也有利于统一维护  
+2 静态代理  
+主动创建代理类
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8  <br>9  <br>10  <br>11  <br>12  <br>13  <br>14  <br>15  <br>16  <br>17  <br>18  <br>19  <br>20  <br>21|**public class** CalculatorStaticProxy **implements** Calculator **{**  <br>        // 将换代理的目标对象声明为成员变量  <br>        **private** Calculator target**;**  <br>          <br>        **public** CalculatorStaticProxy**(**Calculator target**) {**  <br>                **this****.**target **=** target**;**  <br>        **}**  <br>          <br>        @Override  <br>        **public int** add**(****int** i**,** **int** j**) {**  <br>                // 附加功能由代理类中的代理方法来实现  <br>                System**.**out**.**println**(**"参数是：" **+** i **+** ", " **+** j**);**  <br>                  <br>                // 通过目标对象来实现核心业务逻辑  <br>                **int** addResult **=** target**.**add**(**i**,** j**);**  <br>                  <br>                System**.**out**.**println**(**"方法内部 result = " **+** result**);**  <br>                  <br>                **return** addResult**;**  <br>        **}**  <br>**}**|
+
+静态代理确定实现了解耦，但是由于代码都是写死的，完全不具备任何的灵活性，就拿日志功能来说，将来其他地方也需要附加日志，那还得再声明更多个静态代理类，那就是产生了大量重复的代码，日志功能还是分散的，没有统一管理  
+3 动态代理  
+动态代理技术分类  
+1 JDK动态代理，JDK原生的实现方式，需要被代理的目标类必须实现接口，会根据目标嘞的接口动态生成一个代理对象。代理对象和目标对象有相同的接口  
+2 cglib：通过继承被代理的目标类实现代理，所以不需要目标类实现接口
+   
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8  <br>9  <br>10  <br>11  <br>12  <br>13  <br>14  <br>15  <br>16  <br>17  <br>18  <br>19  <br>20  <br>21  <br>22  <br>23  <br>24  <br>25  <br>26  <br>27  <br>28  <br>29  <br>30  <br>31  <br>32  <br>33  <br>34  <br>35|**public class** ProxyFactory **{**  <br>        **private** Object target**;**  <br>          <br>        **public** ProxyFactory**(**Object target**) {**  <br>                **this****.**target **=** target**;**  <br>        **}**  <br>          <br>        **public** Object getProxy**() {**  <br>                // newProxyInstance()：创建一个代理实例  <br>                // 其中有三个参数：  <br>                // 1 classloader：加载动态生成的代理类的类加载器  <br>                // 2 interfaces：目标对象实现的所有接口的class对象所组成的数组  <br>                // 3 invocationHandler：设置代理对象实现目标对象方法的过程，即代理类中如何重写接口中的抽象方法  <br>                ClassLoader classLoader **=** target**.**getClass**().**getClassLoader**;**  <br>                Class**\<**?**\>[]** interfaces **=** target**.**getClass**().**getInterfaces**();**  <br>                InvocationHandler invocationHandler **=** **new** InvocationHandler**() {**  <br>                        @Override  <br>                        **public** Object invoke**(**Object proxy**,** Method method**,** Object**[]** args**)** **throws** Throwable **{**  <br>                                Object result **=** **null****;**  <br>                                **try** **{**  <br>                                        System**.**out**.**println**(**"[动态代理][日志]" **+** method**.**getName**() +** "，参数：" **+** Arrays**.**toString**(**args**));**  <br>                                        result **=** method**.**invoke**(**target**,** args**);**  <br>                                        System**.**out**.**println**(**"[动态代理][日志]" **+** method**.**getName**() +** "，结果：" **+** result**);**  <br>                                **}** **catch****(**Exception e**) {**  <br>                                        e**.**printStackTrace**();**  <br>                                        System**.**out**.**println**(**"[动态代理][日志]" **+** method**.**getName**() +** "，异常：" **+** e**.**getMessage**());**  <br>                                **}** **finally** **{**  <br>                                        System**.**out**.**println**(**"[动态代理][日志]" **+** method**.**getName**() +** "，方法执行完毕"**);**  <br>                                **}**  <br>                                **return** result**;**  <br>                        **}**  <br>                **};**  <br>                **return** Proxy**.**newProxyInstance**(**classloader**,** interfaces**,** invocationHandler**);**  <br>        **}**  <br>**}**|
+
+## 面向切面编程思维（AOP）
+
+1 面向切面编程思想AOP  
+AOP（Aspect Oriented Programming）面向切面编程  
+2 AOP术语名词介绍  
+1 横切关注点  
+从每个方法中抽取出来的同一类非核心业务。在同一个项目中，我们开始使用多个横切关注点对相关方法进行多个不同方面的增强  
+2 通知（增强）  
+每一个横切关注点上要做的事情都需要写一个方法来实现，这样的方法就叫通知方法  
+1 前置通知：在被代理的目标方法前执行  
+2 返回通知：在被代理的目标方法成功结束后执行  
+3 异常通知：在被代理的目标方法异常结束后执行  
+4 环境通知：使用try…catch…finally结构围绕整个被代理的目标方法，包括上面四种通知对应的所有位置  
+3 连接点joinpoint  
+这也是一个纯逻辑概念，不是语法定义的  
+指那些被拦截到的点。在Spring中，可以被动态代理拦截目标类的方法  
+4 切入点pointcut  
+定位连接点的方式，或者可以理解成被选中的连接点  
+是一个表达式，比如execution()。符合条件的每个方法都是一个具体的连接点  
+5 切面aspect  
+切入点和通知的结合。是一个类  
+6 目标target  
+被代理的目标对象  
+7 代理proxy  
+向目标对象应用通知之后创建的代理对象  
+8 织入  
+指把通知应用到目标上，生成代理对象的过程。可以在编译期织入，也可以在运行期织入，Spring采用后者
+
+## Spring AOP框架介绍和关系梳理
+
+1 AOP一种区别于OOP的编程思维，用来完善和解决OOP的非核心代码冗余和不方便统一维护问题  
+2 代理技术（动态代理 | 静态代理）是实现AOP思维编程的具体技术，但是自己使用动态代理实现代码比较繁琐  
+3 Spring AOP框架，基于AOP编程思维，封装动态代理技术，简化动态代理技术实现的框架！Spring AOP内部版主我们实现动态代理，我们只需写少量的配置，指定生效范围即可，即可完成面向切面思维编程的实现
+
+## Spring AOP基于注解方式实现和细节
+
+### Spring AOP底层技术组成
+
+![](../../../../03%20附件/attachments/知识附件/Java/3.%20SSM/SpringFramework%20image%209a44fd5c25773cfb.png)
+
+1 动态代理（InvocationHandler）：JDK原生的实现方式，需要被代理的目标嘞必须实现接口，因为这个技术要求代理对象和目标对象实现同样的接口  
+2 cglib：通过继承被代理的目标类实现代理，所以不需要目标类实现接口  
+3 AspectJ：早期的AOP实现的框架，SpringAOP借用了AspectJ中的AOP注解
+
+### 初步实现
+
+1 加入依赖
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8  <br>9  <br>10  <br>11|// spring-aspects会帮我们传递过来aspectjweaver  <br>**\<dependency\>**  <br>        **\<groupId\>**org.springframework**\</groupId\>**  <br>        **\<artifactId\>**spring-aop**\</artifactId\>**  <br>        **\<version\>****6.0.6****\</version\>**  <br>**\</dependency\>**  <br>**\<dependency\>**  <br>        **\<group\>**Idorg.springframework**\</groupId\>**  <br>        **\<artifactId\>**spring-aspects**\</artifactId\>**  <br>        **\<version\>****6.0.6****\</version\>**  <br>**\</dependency\>**|
+
+2 准备接口
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6|**public interface** Calculator **{**  <br>        **int** add**(****int** i**,** **int** j**);**  <br>        **int** sub**(****int** i**,** **int** j**);**  <br>        **int** mul**(****int** i**,** **int** j**);**  <br>        **int** div**(****int** i**,** **int** j**);**  <br>**}**|
+
+3 纯净实现类
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8  <br>9  <br>10  <br>11  <br>12  <br>13  <br>14  <br>15  <br>16  <br>17  <br>18  <br>19  <br>20  <br>21  <br>22|@Component  <br>**public class** CalculatorImpl **implements** Calculator **{**  <br>        @Override  <br>        **public int** add**(****int** i**,** **int** j**) {**  <br>                **return** i **+** j**;**  <br>        **}**  <br>          <br>        @Override  <br>        **public int** sub**(****int** i**,** **int** j**) {**  <br>                **return** i **-** j**;**  <br>        **}**  <br>          <br>        @Override  <br>        **public int** mul**(****int** i**,** **int** j**) {**  <br>                **return** i ***** j**;**  <br>        **}**  <br>          <br>        @Override  <br>        **public int** div**(****int** i**,** **int** j**) {**  <br>                **return** i **/** j**;**  <br>        **}**  <br>**}**|
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5|@Configuration  <br>@ComponentScan**(**"com.prokyhoof"**)**  <br>@EnableAspectJAutoProxy // 开启aspectj的注解\<aop:aspectj-autoproxy/\>  <br>**public class** JavaConfig **{**  <br>**}**|
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8|@Component  <br>@Aspect  <br>**public class** LogAdvice **{**  <br>        @Before**(**"execution(* com.prokyhoof.service.impl.*.*(..))"**)**  <br>        **public void** start**() {**  <br>                System**.**out**.**println**(**"方法开始了"**);**  <br>        **}**  <br>**}**|
+
+4 配置类
+
+5 增强类
+
+### 获取通知细节信息
+
+1 JointPoint接口  
+需要获取方法签名，传入的实参等信息时，可以在通知方法声明JointPoint类型的行参  
+1 JointPoint接口通过getSignature()方法获取目标方法的签名（方法声明时的完整信息）  
+2 通过目标方法签名对象获取方法名  
+3 通过JointPoint对象获取外界调用目标方法时传入的实参列表组成的数组
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8  <br>9  <br>10  <br>11  <br>12  <br>13  <br>14  <br>15  <br>16  <br>17  <br>18  <br>19  <br>20  <br>21  <br>22  <br>23  <br>24  <br>25  <br>26  <br>27|// @Before注解标注前置通知方法  <br>// value属性：切入点表达式，告诉Spring当前通知方法要套用哪个目标方法上  <br>// 在前置通知方法形参位置声明一个JointPoint类型的参数，Spring就会将这个独享传入  <br>// 根据JointPoint对象就可以获取目标方法名称，实际参数列表  <br>@Before**(**value **=** "execution(public int com.prokyhoof.aop.api.Calculator.add(int, int))"**)**  <br>**public void** printLogBeforeCore**(**JoinPoint joinPoint**) {**  <br>        // 1 通过JointPoint对象获取目标方法签名对象  <br>        // 方法的签名：一个方法的全部声明信息  <br>        Signature signature **=** JoinPoint**.**getSignature**();**  <br>          <br>        // 2 通过方法的签名对戏那个获取目标方法的详细信息  <br>        String methodName **=** signature**.**getName**();**  <br>        System**.**out**.**println**(**"methodName = " **+** methodName**);**  <br>          <br>        **int** modifiers **=** signature**.**getModifiers**();**  <br>        System**.**out**.**println**(**"modifiers = " **+** modifiers**);**  <br>          <br>        String declaringTypeName **=** signature**.**getDeclaringTypeName**();**  <br>        System**.**out**.**println**(**"declaringTypeName = " **+** declaringTypeName**);**  <br>          <br>        // 3 通过JointPoint对象获取外界通用目标方法传入的实参列表  <br>        Object**[]** argList **=** joinPoint**.**getArgs**();**  <br>          <br>        // 4 由于数组直接打印看不到具体数据，所以转换为List集合  <br>        System**.**out**.**println**(**"[AOP前置通知]" **+** methodName **+** "方法开始了，参数列表：" **+** argList**);**  <br>**}**|
+
+2 方法返回值  
+在返回通知中，通过@AfterReturning注解的returning属性获取目标方法的返回值
+ 
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8  <br>9  <br>10|// @AfterReturning注解标记返回通知方法  <br>// 在返回通知中获取目标方法返回值分两步  <br>// 1 在@AfterReturning注解中通过Returning属性设置一个名称  <br>// 2 使用returning属性设置的名称在通知方法中声明一个对应的形参  <br>@AfterReturning**(**value **=** "execution(public int com.prokyhoof.aop.api.Calculator.add(int, int))"**,**  <br>                                returning **=** "targetMethodReturnValue"**)**  <br>**public void** printLogAfterCoreSuccess**(**JoinPoint joinPoint**,** Object targetMethodReturnValue**) {**  <br>        String methodName **=** joinPoint**.**getSignature**().**getName**();**  <br>        System**.**out**.**println**(**"[AOP返回通知]" **+** methodName **+** "方法成功结束了，返回值是：" **+** targetMethodReturnValue**);**  <br>**}**|
+
+3 异常对象捕捉  
+在异常通知中，通过@AfterThrowing注解的throwing属性获取目标方法抛出异常对象
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8  <br>9|// @AfterThrowing注解标记异常通知方法  <br>// 在异常通知中获取目标方法做出的异常分两步  <br>// 1 在@AfterThrowing注解中声明一个throwing属性设定形参名称  <br>// 2 使用throwing属性指定的名称在通知方法声明对象，Spring会将目标方法抛出的异常对象从这里传给我们  <br>@AfterThrowing**(**value **=** "execution(public int com.prokyhoof.aop.api.Calculator.add(int, int))"**,** throwing **=** "targetMethodException"**)**  <br>**public void** printLogAfterCoreException**(**JoinPoint joinPoint**,** Throwable targetMethodException**) {**  <br>        String methodName **=** joinPoint**.**getSignature**().**getName**();**  <br>        System**.**out**.**println**(**"[AOP异常通知]" **+** methodName **+** "方法抛异常了，异常数量是：" **+** targetMethodException**.**getClass**().**incrementAndGet**());**  <br>**}**|
+
+### 切点表达式语法
+
+1 切点表达式作用  
+AOP切点表达式（Pointcut Expression）是一种用于指定切点的语言，它可以通过定义匹配规则，来选择需要被切入的目标对象  
+2 切点表达式语法
+
+![](../../../../03%20附件/attachments/知识附件/Java/3.%20SSM/SpringFramework%20image%2094ea0ea4238a20a2.png)
+
+### 重用（提取）切点表达式
+ 
+|   |   |
+|---|---|
+|1  <br>2|@Pointcut**(**"execution(* com.prokyhoof.service.impl.*.*(..))"**)**  <br>**public void** pc**() {}**|
+
+### 环绕通知
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8  <br>9  <br>10  <br>11  <br>12  <br>13  <br>14  <br>15  <br>16  <br>17  <br>18  <br>19  <br>20|@Component  <br>@Aspect**(**"com.prokyhoof.pointcut.MyPointCut.pc()"**)**  <br>**public class** TxAroundAdvice **{**  <br>        **public** Object transaction**(**ProceedingJoinPoint joinPoint**) {**  <br>                // 保证目标方法被执行即可  <br>                Object**[]** args **=** joinPoint**.**getArgs**();**  <br>                Object result **=** jointPoint**.**proceed**(**args**);**  <br>                **try** **{**  <br>                        System**.**out**.**println**(**"开启事务"**);**  <br>                        result **=** joinPoint**.**proceed**(**args**);**  <br>                        System**.**out**.**println**(**"结束事务"**);**  <br>                **}** **catch****(**Throwable e**) {**  <br>                        System**.**out**.**println**(**"事务回滚"**);**  <br>                        **throw new** RuntimeException**(**e**);**  <br>                **}** **finally** **{**  <br>                  <br>                **}**  <br>                **return** result**;**  <br>        **}**  <br>**}**|
+
+### 切面优先级设置
+
+相同目标方法上同时存在多个切面时，切面的优先级控制切面的内外嵌套顺序  
+1 优先级高的切面：外面  
+2 优先级低的切面：里面  
+使用@Order注解可以控制切面的优先级  
+1 @Order（较小的数）：优先级高  
+2 @Order（较大的数）：优先级低
+
+# Spring声明式事务
+
+## 声明式事务概念
+
+### 编程式事务
+
+编程式事务是指手动编写程序来管理事务，即通过编写代码的方式直接控制事务的提交和回滚，在Java中，通常使用事务管理器（如Spring中的PlatformTransactionManager）来实现编程式事务  
+编程式事务的主要优点是灵活性高，可以按照自己的需要来控制事务的粒度，模式等等，但是，编写大量的事务控制代码容易出现问题，对代码的可读性和可维护性有一定影响
+
+### 声明式事务
+
+声明式事务是指使用注解或XML配置的方法来控制事务的提交和回滚  
+开发者只需要添加配置即可，具体事物的实现由第三方框架实现，避免我们直接进行事务操作  
+使用声明式事务可以将事务的控制和业务逻辑分离开来，提高代码的可读性和可维护性  
+区别：  
+1 编程式事务需要手动编写代码来管理事务  
+2 而声明式事务可以通过配置文件或注解来控制事务
+
+### Spring事务管理器
+
+1 声明式事务对应依赖  
+1 spring-tx：包含声明式事务实现的基本规定（事务管理器规范接口和事务增强等等）  
+2 spring-jdbc：包含DataSource方法事务管理器实现类DataSourceTransactionManager  
+3 spring-orm：包含其他持久层框架的事务管理器实现类例如：Hibernate/Jpa等  
+2
+
+## 基于注解的声明式事务
+
+![](../../../../03%20附件/attachments/知识附件/Java/3.%20SSM/SpringFramework%20image%20306cf72a75d9fe86.png)
+
+我们现在使用的事务管理器是org.springframework.jdbc.datasource.DataSourceTransactionManager，将来整合JDBC方式，JdbcTemplate方式，Mybatis方式的事务实现  
+DataSourceTransactionManager类中的主要方法  
+1 doBegin()：开启事务  
+2 doSuspend()：挂起事务  
+3 doResume()：恢复挂起的事务  
+4 doCommit()：提交事务  
+5 doRollback()：回滚事务
+
+## 基于注解的声明式事务
+
+### 事务实现
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8  <br>9  <br>10  <br>11  <br>12  <br>13  <br>14|@Configuration  <br>@ComponentScan**(**"com.prokyhoof"**)**  <br>@PropertySource**(**"classpath:jdbc.properties"**)**  <br>@EnableTransactionManager // 开启事务注解的支持  <br>**public class** JavaConfig **{**  <br>@Bean  <br>**public** TransactionManager transactionManager**(**DataSource dataSource**) {**  <br>// 内部要进行事务的操作，基于的连接池  <br>DataSourceTransactionManager dataSourceTransactionManager **=** **new** DataSourceTransactionManager**();**  <br>// 需要连接池对象  <br>dataSourceTransactionManager**.**setDataSource**(**dataSource**);**  <br>**return** dataSourceTransactionManager**;**  <br>**}**  <br>**}**|
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8  <br>9  <br>10  <br>11  <br>12  <br>13  <br>14  <br>15|// @Transactional  <br>// 方法上：当前方法有事务  <br>// 类上：类下所有方法有事务<br><br>  <br><br>@Service  <br>**public class** StudentService **{**  <br>@Autowired  <br>**private** StudentDao studentDao**;**  <br>@Transactional  <br>**public void** changeInfo**() {**  <br>studentDao**.**updateAgeById**(****88****,** **1****);**  <br>**int** i **=** **1** **/** **0****;**  <br>studentDao**.**updateNameById**(**"test2"**,** **1****);**  <br>**}**  <br>**}**|
+
+### 事务属性：只读
+
+1 只读介绍  
+对一个查询操作来说，如果我们把它设置成只读，就能够明确告诉数据库，这个操作不涉及写操作，这样数据库就能够针对查询操作来进行优化  
+2 设置方式
+
+|   |   |
+|---|---|
+|1  <br>2|// readOnly = true把当前事务设置为只读，默认是false  <br>@Transactional**(**readOnly **=** **true****)**|
+
+3 针对DML动作设置只读模式  
+会抛出下面异常：  
+Caused by：java.sql…..Queries leading to data modification are not allowed  
+注意：一般情况下，都是通过类添加注解添加事务，类下的所有方法都是事务，查询方法可以通过再次添加注解，设置为只读模式，提高效率
+
+### 超时时间
+
+1 需求  
+事务在执行过程中，有可能因为遇到某些问题，导致程序卡住，从而长时间占用数据库资源，而长时间占用资源，大概率是因为程序运行出现了问题（可能是Java程序或MySQL数据库或网络连接等）  
+此时这个很可能出问题的程度应该被回滚，撤销它已做的操作，事务结束，把资源让出来，让其他正常程序可以执行  
+2 设置超时时间
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8  <br>9  <br>10  <br>11  <br>12  <br>13  <br>14  <br>15  <br>16  <br>17  <br>18  <br>19|// timeout  <br>// 超过时间，就会回滚事务和释放异常  <br>@Service  <br>**public class** StudentService **{**  <br>@Autowired  <br>**private** StudentDao studentDao**;**  <br>// timeout设置事务超时时间，单位秒，默认是-1，永不超时，不限制事务时间  <br>@Transactional**(**readOnly **=** **false****,** timeout **=** **5****)**  <br>**public void** changeInfo**() {**  <br>studentDao**.**updateAgeById**(****100****,** **1****);**  <br>// 休眠4秒，等待方法超时  <br>**try** **{**  <br>Thread**.**sleep**(****4000****);**  <br>**}** **catch****(**InterruptedException e**) {**  <br>**throw new** RuntimeException**(**e**);**  <br>**}**  <br>studentDao**.**updateNameById**(**"test"**,** **1****);**  <br>**}**  <br>**}**|
+
+### 事务异常指定
+
+指定异常回滚和指定异常不回滚  
+默认情况下，指定发生运行时间时异常（RuntimeException）事务才会回滚  
+我们可以指定Exception异常来控制所有异常都回滚
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6|@Transactional**(**rollbackFor **=** Exception**.****class****)**  <br>**public void** changeInfo**()** **throw** FileNotFoundException **{**  <br>studentDao**.**updateAgeById**(****99****,** **1****);**  <br>**new** FileInputStream**(**"xxxx"**);**  <br>studentDao**.**updateNameById**(**"test"**,** **1****);**  <br>**}**|
+
+### 事务隔离级别
+
+1 事务隔离级别  
+数据库事务的隔离级别是指在多个事务并发执行时，数据系统为了保证数据一致性所遵循的规定  
+1 读未提交（Read Uncommitted）：事务可以读取未被提交的数据，容易产生脏读，不可重复读和幻读等问题，实现简单但不太安全，一般不用  
+2 读已提交（Read Committed）：事务只能读取已经提交的数据，可以避免脏读问题，但可能引发不可重读读和幻读（推荐）  
+3 可重复读（Repeatable Read）：在一个事务中，相同的查询将返回相同的结果集，不管其他事务对数据做了什么修改，可以避免脏读和不可重读读，但仍有幻读的问题  
+4 串行化（Serializable）：最高的隔离级别，完全禁止了并发，值允许一个事务执行完毕之后才能执行另一个事物，可以避免以上所有问题，但效率低，不适用于高并发场景
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8  <br>9|@Service  <br>**public class** StudentService **{**  <br>**private** StudentDao studentDao**;**  <br>// ioslation = 设置事务的隔离级别，mysql默认是repeatable read  <br>@Transactional**(**isolation **=** Isolation**.**REPEATABLE_READ**)**  <br>**public void** changeInfo**() {**  <br>studentDao**.**updateAgeById**(****100****,** **1****);**  <br>**}**  <br>**}**|
+
+### 事务传播行为
+
+1 事务传播行为要研究的问题
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8|@Transactional  <br>**public void** MethodA**() {**  <br>MethodB**();**  <br>**}**<br><br>  <br><br>// 在被调用的子方法中设置传播行为，代表如何处理调用的事务。是加入，还是新事物等  <br>@Transactional**(**propagation **=** Propagation**.**REQUIRES_NEW**)**  <br>**public void** MethodB**() {}**|
+
+2 propagation属性  
+@Transactional注解通过propagation属性设置事务的传播行为，它的默认值是 Propagation propagation() default Propagation.REQUIRED  
+propagation属性的可选值由org.springframework.transaction.Propagation枚举类提供
+
+|   |   |
+|---|---|
+|名称|含义|
+|REQUIRED（默认值）|当前方法必须工作在事务中，如果当前线程上有已经开启的事务可用，那么就在这个事务中运行，如果当前线程上没有已经开启的事务，那么就自己开启新事务，在新事务中运行  <br>所以当前方法有可能和其他方法共用事务  <br>在共用事务的情况下：当前方法会因为其他方法回滚而受连累|
+|REQUIRES_NEW|当前方法必须工作在事务中  <br>不管当前线程上是否有已经开启的事务，都要开启新事务  <br>在新事务中运行  <br>不会和其他方法共用事务，避免被其他方法连累|
+
+注意：￼ 在同一个类中，对于@Transactional注解的方法调用，事务传播行为不会生效。这是因为Spring框架中使用代理模式实现类事务机制，在同一个类中的方法调用并不经过代理，而是通过对象的方法调用，因此@Transactional注解的设置不会被代理捕获，也就不会产生任何事务传播行为的效果

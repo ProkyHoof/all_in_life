@@ -1,0 +1,524 @@
+---
+onenote-id: 0-df54ba0877e9032c2be65d316e8cba2b!1-DBD29CD2C5C95FE5!se4e140a7c9e643aeac1c77b25db7eb21
+---
+# 前端工程化
+
+前端工程化是使用软件工程的方法来单独解决前端的开发流程中 模块化、组件化、规范化、自动化 的问题，其主要目的是为了提高效率和降低成本
+ 
+# ECMA6Script
+
+## es6的简介
+
+是JavaScript语言的一次重大更新，是原来的ECMAScript标准的第六个版本。
+
+## es6的变量和模板字符串
+
+let 和 var的差别  
+1 let不能重复声明  
+2 let有块级作用域，非函数的花括号遇见let会有块级作用域，也就是只能在花括号里面访问  
+3 let不会预解析进行变量提升  
+4 let定义的全局变量不会作为window的属性  
+5 let在es6中推荐优先使用  
+6 const就是不可修改的let final修饰的变量
+ 
+模板字符串：就是为了解决字符串换行和字符串拼接问题  
+使用""处理字符串是不支持多行  
+可以使用``来拼接字符串
+ 
+```HTML  
+let city = "猪脚";  
+let str = `zhu${city}jiao`;  
+```
+ 
+## es6的结构表达式
+ 
+```HTML  
+let arr = [11, 22, 33, 44];  
+// 使用结构表达式取出数据中的元素  
+let [a, b, c, d, e = 10] = arr;
+ 
+let person = {  
+name: "prokyhoof",  
+age: 18  
+};  
+// 使用结构表达式获取对象的属性值  
+let {name, age} = person;
+ 
+// 结构表达式应用在方法的参数列表  
+function showArr([a, b, c]) {  
+console.log(a, b, c);  
+}  
+```
+ 
+## es6中的箭头函数
+
+ES6中的“箭头”函数，类似于Java中的Lambda表达式
+ 
+```HTML  
+let fun1 = function() {} // 普通的函数声明  
+let fun2 = () =\> {} // 箭头函数声明 lambda  
+let fun3 = (x) =\> {return x + 1}  
+let fun4 = x =\> {return x + 1} // 参数列表中有且仅有一个参数，()可以省略不写  
+let fun5 = x =\> console.log(x); // 如果方法体中只有一行代码，{}可以省略不写  
+let fun6 = x =\> x + 1; // 方法体中，有且只有一行代码，这行代码是return返回结果的代码，那么{}和return都可以省略不写  
+```
+ 
+注意：  
+箭头函数没有自己的this  
+箭头函数中的this是外层上下文环境中的this
+ 
+## rest和spread
+
+rest参数在形参上使用和Java中的可变参数几乎一样  
+spread参数在实参上使用rest
+ 
+```HTML  
+// rest 剩余的，解决剩余的参数接收问题  
+let fun1 = (a, b, c, d, … arr) =\> {  
+console.log(a, b, c, d);  
+console.log(arr);  
+}
+ 
+// spread 展开 rest 在实参上的使用  
+let arr = [1, 2, 3];  
+let fun1 = (a, b, c) =\> {  
+console.log(a, b, c);  
+}  
+fun1(… arr);
+ 
+// 快速合并数组  
+let a = [1, 2, 3];  
+let b = [4, 5, 6];  
+let c = […a, …b];
+ 
+// 快速合并对象  
+let person1 = {name: "猪脚"};  
+let person2 = {age: 10};  
+let person3 = {…person1, …person2}  
+```
+ 
+## 分别导出
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8  <br>9  <br>10  <br>11  <br>12  <br>13  <br>14  <br>15  <br>16  <br>17|// module.js  <br>// 变量  <br>**export** **const** PI **=** **3.14****;**  <br>// 方法  <br>**export** **function** sum**(**a**,** b**) {**  <br>        **return** a **+** b**;**  <br>**}**  <br>// 类  <br>**export** **class** Person **{**  <br>        **constructor****(**name**,** age**) {**  <br>                **this****.**name **=** name**;**  <br>                **this****.**age **=** gae**;**  <br>        **}**  <br>        sayHello**() {**  <br>                console**.**log**(**`hello, my name is ${this.name}, I am ${this.age} years old`**);**  <br>        **}**  <br>**}**|
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3|// index.html  <br>// 引入app.js文件  <br>**\<script** **src**="./app.js" **type**="module"**\>\</script\>**|
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7|// app.js  <br>// 导入module.js文件  <br>// *代表module.js的所有成员  <br>// 无论何种方式导入，导入的内容都会被当成一个对象处理  <br>// 使用一个对象来接收所有的成员  <br>**import** ***** as m1 **from** './module.js'  <br>console**.**log**(**m1**.**PI**);**|
+
+## 统一导出
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8  <br>9  <br>10  <br>11  <br>12  <br>13  <br>14  <br>15  <br>16  <br>17  <br>18  <br>19|// module.js  <br>// 变量  <br>**const** PI **=** **3.14****;**  <br>// 方法  <br>**function** sum**(**a**,** b**) {**  <br>        **return** a **+** b**;**  <br>**}**  <br>// 类  <br>**class** Person **{**  <br>        **constructor****(**name**,** age**) {**  <br>                **this****.**name **=** name**;**  <br>                **this****.**age **=** gae**;**  <br>        **}**  <br>        sayHello**() {**  <br>                console**.**log**(**`hello, my name is ${this.name}, I am ${this.age} years old`**);**  <br>        **}**  <br>**}**<br><br>  <br><br>**export** **{**PI**,** sum**,** Person**};**|
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8  <br>9  <br>10  <br>11  <br>12|// app.js  <br>// 导入module.js文件  <br>// *代表module.js的所有成员  <br>// 无论何种方式导入，导入的内容都会被当成一个对象处理  <br>// 使用一个对象来接收所有的成员<br><br>  <br><br>// import * as m1 from './module.js'  <br>// console.log(m1.PI);<br><br>  <br><br>**import** **{**PI**,** PI as pi**,** sum**,** Person**}** **from** './module.js'  <br>console**.**log**(**PI**);**  <br>console**.**log**(**pi**);**|
+
+## 默认导出
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8  <br>9  <br>10  <br>11  <br>12  <br>13  <br>14|// app.js  <br>// 导入module.js文件  <br>// *代表module.js的所有成员  <br>// 无论何种方式导入，导入的内容都会被当成一个对象处理  <br>// 使用一个对象来接收所有的成员<br><br>  <br><br>**import** ***** as m1 **from** './module.js'**;**  <br>console**.**log**(**m1**.****default****(****10****,** **20****));**<br><br>  <br><br>**import** **{****default** as add**}** **from** './module.js'**;**  <br>console**.**log**(**add**(****10****,** **30****));**<br><br>  <br><br>**import** add **from** './module.js'**;**  <br>console**.**log**(**add**(****10****,** **30****));**|
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8  <br>9  <br>10  <br>11  <br>12  <br>13  <br>14  <br>15  <br>16  <br>17  <br>18  <br>19  <br>20|// module.js  <br>// 变量  <br>**const** PI **=** **3.14****;**  <br>// 方法  <br>**function** sum**(**a**,** b**) {**  <br>        **return** a **+** b**;**  <br>**}**  <br>// 类  <br>**class** Person **{**  <br>        **constructor****(**name**,** age**) {**  <br>                **this****.**name **=** name**;**  <br>                **this****.**age **=** gae**;**  <br>        **}**  <br>        sayHello**() {**  <br>                console**.**log**(**`hello, my name is ${this.name}, I am ${this.age} years old`**);**  <br>        **}**  <br>**}**<br><br>  <br><br>// 默认导出在一个js中只能有一个  <br>**export default** sum**;**|
+
+# nodejs
+
+Node.js是一个基于Chrome V8引擎的JavaScript运行时环境，可以使JavaScript运行在服务器端。  
+特点：  
+1 单线程，但是采用了时间驱动、异步I/O模型，可以处理高并发请求。  
+2 轻量级，使用C++编写的V8引擎让Node.js的运行速度很快。  
+3 模块化，Node.js内置了大量模块、同时也可以通过第三方模块扩展功能。  
+4 跨平台，可以在Windwos、Linux、Mac等多个平台下运行。
+ 
+# npm
+
+NPM全称Node Package Manage，是Node.js包管理工具，是全球最大的模块生态系统，里面所有的模块都是开源免费的，也是Node.js的包管理工具，相当于后端的Maven。  
+npm软件：  
+1 前端框架的下载工具  
+2 前端项目的管理工具
+
+## npm常用命令
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8  <br>9  <br>10  <br>11  <br>12  <br>13  <br>14  <br>15  <br>16  <br>17  <br>18  <br>19  <br>20  <br>21  <br>22  <br>23  <br>24  <br>25  <br>26  <br>27  <br>28  <br>29  <br>30  <br>31  <br>32  <br>33  <br>34  <br>35  <br>36  <br>37  <br>38  <br>39  <br>40  <br>41  <br>42  <br>43  <br>44  <br>45  <br>46  <br>47  <br>48  <br>49  <br>50  <br>51  <br>52  <br>53  <br>54  <br>55  <br>56  <br>57|**1** 项目初始化  <br>npm init  <br>        进入一个vscode创建好的项目中，执行npm init命令后，npm会引导您在命令行界面上  <br>        回答一些问题，例如项目名称，版本号、作者、许可证等信息，并最终生成一个package**.**json  <br>        文件。package**.**json信息会包含项目基本信息！类似maven的pom**.**xml  <br>npm init **-**y  <br>        执行，**-**y yes的意思，所有信息使用当前文件夹的默认值！不用挨个写<br><br>  <br><br>**2** 安装依赖 （ [https](https://www.npmjs.com）)**://**www**.**npmjs**.**com）  <br>npm install 包名 或者 npm install 包名@版本号  <br>        安装包或者指定版本的依赖包（安装到当前项目中）  <br>npm install **-**g 包名  <br>        安装全局依赖包则可以在任何项目中使用它，而无需在每个项目中独立安装该包。  <br>npm install  <br>        安装package**.**json中的所有记录的依赖<br><br>  <br><br>**3** 升级依赖  <br>npm update 包名  <br>        将依赖升级到最新版本<br><br>  <br><br>**4** 卸载依赖  <br>npm uninstall 包名<br><br>  <br><br>**5** 查看依赖  <br>npm **ls**  <br>        查看项目依赖  <br>npm list **-**g  <br>        查看全局依赖<br><br>  <br><br>**6** 运行命令  <br>npm run  <br>        命令是在执行npm脚本时使用的命令。npm脚本是一组在package**.**json文件中定义的可执  <br>        行命令。npm脚本可用于启动应用程序，运行测试，生成文档等，还可以自定义命令以及  <br>        运行的脚本。  <br>        在package**.**json文件中，scripts字段是一个对象，其中包含一组键值对，键是要运行的  <br>        脚本的名称，值是要执行的命令。<br><br>  <br><br>**{**  <br>        "name"**:** "my-app"**,**  <br>        "version"**:** "1.0.0"**,**  <br>        "script"**: {**  <br>                "start"**:** "node index.js"**,**  <br>                "test"**:** "jest"**,**  <br>                "build"**:** "webpack"  <br>        **},**  <br>        "dependencies"**: {**  <br>                "express"**:** "^4.17.1"**,**  <br>                "jest"**:** "^27.1.0"**,**  <br>                "webpack"**:** "^5.39.0"  <br>        **}**  <br>**}**<br><br>  <br><br>        scripts对象包含start、test和build三个脚本。当您运行npm run start 时，将运行  <br>        node index**.**js，并启动启用程序。同样，运行npm run test 时，将运行Jest测试套件，  <br>        而npm run build将运行webpack命令以生成最终的构建输出。  <br>        总之，npm run 命令为您提供了一种在package**.**json文件中定义和管理一组指令的方式，  <br>        可以在项目中快速且灵活地运行各种操作。|
+
+# Vue3
+
+1 声明式渲染：Vue基于标准HTML拓展了一套模板语法，使得我们可以声明式地描述最终输出的HTML和JavaScript状态之间的关系。  
+2 响应性：Vue会自动跟踪JavaScript状态并在其发生变化时响应式地更新DOM。
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8  <br>9  <br>10  <br>11  <br>12  <br>13  <br>14  <br>15  <br>16  <br>17  <br>18  <br>19  <br>20  <br>21  <br>22  <br>23  <br>24  <br>25  <br>26|**\<div** **id**="app"**\>**  <br>        **\<h1** **v-text**="message" **v-bind:style**="colorStyle"**\>**hello vue**\</h1\>**  <br>        **\<button** @**click**="fun1()"**\>**change**\</button\>**  <br>**\</div\>**<br><br>  <br><br>**\<script\>**  <br>        **const** app **=** Vue**.**createApp**({**  <br>                setup**() {**  <br>                        // 定义数据 以变量/对象形式  <br>                        **let** message **=** "hello"**;**  <br>                        **let** colorStyle **= {**"bcakground-color"**:**"yellow"**};**  <br>                        // 在return中返回的变量/方法 才能够和HTML元素关联  <br>                        **let** fun1 **=** **function****() {**  <br>                                alert**(**"hello"**);**  <br>                        **};**  <br>                        **return** **{**  <br>                                message**,**  <br>                                colorStyle**,**  <br>                                fun1  <br>                        **};**  <br>                **}**  <br>        **});**  <br>        // 将app对象挂载在指定的元素上，被挂载的元素内部就可以通过vue框架实现数据的  <br>        // 渲染  <br>        app**.**mount**(**"#app"**);**  <br>**\</script\>**|
+
+# Vite
+
+## Vite创建Vue3工程化项目
+
+1 使用命令行创建工程  
+1 在磁盘的合法位置上创建一个空目录用于存储多个前端项目  
+2 用vscode打开该目录  
+3 在vscode中打开命令行运行如下命令
+
+|   |   |
+|---|---|
+|1|npm create vite@latest|
+
+4 第一次使用vite时会提示下载vite，输入y回车即可，下次使用vite就不会出现了  
+注意：选择vue + JavaScript选项即可  
+2 安装项目所需依赖  
+1 cd 进入刚刚创建的项目目录  
+2 npm install 命令安装基础依赖  
+3 创建项目  
+1 查看项目下的package.json  
+2 npm run dev
+
+## 关于JS和TS选择的问题
+
+TS是JS的一个超集，使用TS之后，JS的语法更加的像JAVA，实际开发中用的确实更多。
+
+## Vite + Vue3项目的目录结构
+
+1 public/目录：用于存放一些公共资源，如HTML文件，图像、字体等，这些资源会被直接复制到构建出的目标目录中  
+2 src/目录：存放项目的源代码，包括JavaScript、CSS、Vue组件，图像和字体等资源。在开发过程中，这些文件会被Vite实时编译和处理，并在浏览器中进行实时浏览和调试。一下是src内部划分建议：  
+1 assets/目录：用于存放一些项目中用到的静态资源，如图片、字体、样式文件等  
+2 components/目录：用于存放组件相关的文件。组件是代码复用的一种方式，用于抽象出一个可复用的UI部件，方便在不同的场景中进行重复使用  
+3 layout/目录：用于存放布局组件的文件，布局组件通常负责整个应用程序的整体布局，如头部、底部、导航菜单等  
+4 pages/目录：用于存放页面级别的组件文件，通常是路由对应的组件文件。在这个目录下，可以创建对应的文件夹，用于存储不同的页面组件  
+5 plugins/目录：用于存放Vite插件相关的文件，可以按需加载不同的插件来实现不同的功能，如自动化测试、代码压缩等  
+6 router/目录：用于存放Vue.js的路由配置文件，负责管理视图和URL之间的映射关系，方便实现页面之间的跳转和数据传递  
+7 store/目录：用于存放Vuex状态管理相关的文件，负责管理应用程序中的数据和状态，方便统一管理和共享数据，提高开发效率  
+8 utils/目录：用于存放一些通用的工具函数，如日期处理函数、字符串操作函数等
+
+## Vite + Vue3项目组件（SFC）
+
+.vue文件  
+1 传说的页面有.html文件.css文件和.js文件三个文件组成（多个组件）  
+2 vue将这文件合并成一个.vue文件（Single-File Component，简称SFC，单文件组件）  
+3 .vue文件对js/css/html统一封装，这是VUE中的概念，该文件由三个部分组合\<script\>\<template\>\<style\>  
+1 template标签 代表组件的html部分代码，代替传统的.html文件  
+2 script标签 代表组件的js代码，代替传统的.html文件  
+3 style标签 代表组件的css样式代码代替传统的.css文件  
+工程化vue项目如何阻止这些组件  
+1 index.html是项目的入口，其中\<div id="app"\>\</div\>是用于挂载所有组件的元素  
+2 index.html中的script标签引入了一个main.js文件，具体的挂载过程在main.js中执行  
+3 main.js是vue工程中非常重要的文件，它决定这项目使用哪些依赖，导入的第一个组件  
+4 App.vue是vue中核心组件，所有的其他组件都要通过该组件进行导入，该组件通过路由可以控制页面的切换
+
+注意：语法上，要求templete只能有一个一级子标签
+ 
+css样式的导入方式  
+1 在.vue文件中的style标签中  
+2 将css样式保存到独立的css文件中，哪个.vue文件需要，就在哪里导入即可  
+1 script标签中可以导入
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8  <br>9  <br>10  <br>11|// main.js  <br>// 从vue框架中导入一个createApp函数  <br>**import** **{**createApp**}** **from** 'vue'**;**  <br>// 导入全局的css样式文件，该文件中的样式或作用到所有的.vue元素上  <br>**import** './style.css'  <br>// 导入了一个App.vue的组件，并起了一个别名为App  <br>**import** App **from** './App.vue'  <br>// 使用导入的App组件生成一个对象  <br>**let** app **=** createApp**(**App**);**  <br>// 将app对象挂载到id值为app的元素上  <br>app**.**mount**(**'#app'**);**|
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3|**\<script** setup**\>**  <br>        import "./style/test.css";  <br>**\</script\>**|
+
+2 style标签中可以导入
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3|**\<style** scoped**\>**  <br>        @import "./style/test.css";  <br>**\</style\>**|
+
+3 如果某个样式要在所有的.vue文件中生效，那么可以在main.js中导入
+
+## Vite + Vue3响应式入门和setup函数
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8  <br>9  <br>10  <br>11  <br>12  <br>13  <br>14  <br>15  <br>16  <br>17  <br>18  <br>19  <br>20  <br>21  <br>22  <br>23  <br>24  <br>25  <br>26  <br>27  <br>28  <br>29  <br>30  <br>31  <br>32  <br>33  <br>34  <br>35  <br>36  <br>37  <br>38  <br>39  <br>40  <br>41  <br>42  <br>43  <br>44  <br>45  <br>46  <br>47|// App.vue  <br>**\<script\>**  <br>        **import** **{**ref**}** **from** "vue"**;**  <br>          <br>        **export default** **{**  <br>                setup**() {**  <br>                        // 定义一些要展示到html上的一些数据 变量/对象  <br>                        // 响应式数据：在数据变化时，vue框架会将变量最新的值更新到dom树中，  <br>                        //                         页面数据就是实时最新的  <br>                        // 非响应式数据：在数据变量时，vue框架不会将变量最新的值更新到dom树  <br>                        //                         中，页面数据就不是实时最新的  <br>                        // vue2中，数据不做特殊处理，默认就是响应式的  <br>                        // vue3中，数据要经过ref/reactive函数的处理才是响应式的  <br>                        //                 ref/reactive函数是vue框架给我们提供的方法，导入进来即可  <br>                        //                 使用  <br>                        // ref处理的响应式数据，在操作时需要注意  <br>                        //         在script标签中，操作ref的响应式数据需要通过.value的形式操作  <br>                        //         在template标签中，操作ref的响应式数据，无需使用.value  <br>                          <br>                        **let** counter **=** ref**(****1****);**  <br>                          <br>                        // 让counter自增的方法  <br>                        **function** counterIncre**() {**  <br>                                counter**.**value**++;**  <br>                        **}**  <br>                          <br>                        // 让counter自减的方法  <br>                        **function** counterDecre**() {**  <br>                                counter**.**value**--;**  <br>                        **}**  <br>                        **return** **{**  <br>                                counter**,**  <br>                                counterIncre**,**  <br>                                counterDecre  <br>                        **};**  <br>                **}**  <br>        **}**  <br>**\</script\>**  <br>**\<template\>**  <br>        **\<div\>**  <br>                **\<button** @**click**="counterIncre()"**\>**+**\</button\>**  <br>                **\<span** **v-text**="counter"**\>\</span\>**  <br>                **\<button** @**click**="counterDecre()"**\>**-**\</button\>**  <br>        **\</div\>**  <br>**\</template\>**  <br>**\<style\>**  <br>**\</style\>**|
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8  <br>9  <br>10  <br>11  <br>12  <br>13  <br>14  <br>15  <br>16  <br>17  <br>18  <br>19  <br>20  <br>21  <br>22  <br>23|// App.vue  <br>**\<script** setup**\>**  <br>        import {ref} from "vue";<br><br>  <br><br>        let counter = ref(**1**);<br><br>  <br><br>        function counterIncre() {  <br>                counter.value++;  <br>        }  <br>                          <br>        function counterDecre() {  <br>                counter.value--;  <br>        }  <br>**\</script\>**  <br>**\<template\>**  <br>        **\<div\>**  <br>                **\<button** @**click**="counterIncre()"**\>**+**\</button\>**  <br>                **\<span** **v-text**="counter"**\>\</span\>**  <br>                **\<button** @**click**="counterDecre()"**\>**-**\</button\>**  <br>        **\</div\>**  <br>**\</template\>**  <br>**\<style\>**  <br>**\</style\>**|
+
+# Vue3视图渲染技术
+
+## 插值表达式和文本渲染
+
+插值表达式 语法 {{数据名称/函数/对象调用API}}  
+插值表达式不依赖标签，没有标签可以单独使用的  
+1 插值表达式中可以调用函数，将函数的返回值渲染到指定的位置  
+2 插值表达式支持一些常见的运算符  
+3 插值表达式中支持对象调用一些API
+ 
+v-**** vue的指令  
+1 命令必须依赖标签，在开始标签中使用  
+2 命令支持字符串模板  
+3 命令中支持常见的运算符  
+4 命令中支持常见对象的API调用  
+5 命令中支持函数的调用  
+v-text 不识别html结构的文本  
+v-html 识别文本中的html代码到命令
+
+## Attribute属性渲染
+
+1 由于插值表达式不能直接放在标签的属性中，所有要渲染元素的属性就应该使用v-bind  
+2 v-bind可以用于渲染任何元素的属性，语法为v-bind:属性名="数据名"，可以简写为:属性名="数据名"
+
+## 事件的绑定
+
+我们可以使用v-on来监听DOM事件，并在事件触发时执行对应的JavaScript代码  
+1 用法：v-on:click="handler"或简写为@click="handler"  
+2 vue中的事件名=原生事件名去掉on前缀 如onClick --\> click  
+3 handler的值可以是方法事件吹器，也可以是内联事件处理器
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8  <br>9  <br>10  <br>11  <br>12  <br>13  <br>14  <br>15  <br>16  <br>17  <br>18  <br>19  <br>20  <br>21  <br>22  <br>23  <br>24  <br>25  <br>26  <br>27  <br>28  <br>29  <br>30  <br>31  <br>32  <br>33  <br>34  <br>35  <br>36|// App.vue  <br>**\<script** setup**\>**  <br>        import {ref} from "vue";  <br>        let counter = ref(**1**);  <br>        function fun1() {  <br>                alert("hi");  <br>        }  <br>        function fun2() {  <br>                counter.value++;  <br>        }  <br>        function fun3() {  <br>                let flag = confirm("确定要访问目标链接吗");  <br>                if (!flag) {  <br>                        // 原生js编码方式阻止组件的默认行为  <br>                        evnet.preventDefault();  <br>                }  <br>        }  <br>        function fun4() {  <br>                alert("超链接被点击了");  <br>        }  <br>**\</script\>**  <br>**\<template\>**  <br>        // 事件的绑定函数  <br>        **\<button** **v-on:click**="fun1()"**\>**hello**\</button\>**  <br>        **\<button** **v-on:click**="fun2()"**\>**+**\<button\>**  <br>        // 内联事件处理器  <br>        **\<button** **v-on:click**="counter++"**\>**+**\<button\>**  <br>        // 事件的修饰符 .once事件只绑定依次 prevent修饰符阻止组件的默认行为  <br>        **\<button** @**click.once**="counter++"**\>**+**\</button\>**  <br>        {{counter}}  <br>        **\<br\>**  <br>        **\<a** **href**="https://www.prokyhoof.com" @**click**="fun3()"**\>**猪脚**\</a\>**  <br>        **\<a** **href**="https://www.prokyhoof.com" @**click.prevent**="fun4()"**\>**猪脚**\</a\>**  <br>**\</template\>**  <br>**\<style\>**  <br>**\</style\>**|
+
+# 响应式基础
+
+数据模型发生变化时，自动更新DOM树内容，页面上显示的内容会进行同步变化，vue3的数据模型不是自动响应式的，需要我们做一些特殊处理
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8  <br>9  <br>10  <br>11  <br>12  <br>13  <br>14  <br>15  <br>16  <br>17  <br>18  <br>19  <br>20  <br>21  <br>22  <br>23  <br>24  <br>25  <br>26  <br>27  <br>28  <br>29  <br>30  <br>31  <br>32  <br>33  <br>34  <br>35  <br>36  <br>37  <br>38  <br>39  <br>40  <br>41  <br>42  <br>43  <br>44  <br>45  <br>46|//App.vue  <br>**\<script** setup**\>**  <br>        import {ref, reactive, toRef, toRefs} from "vue"  <br>          <br>        // 让一个普通数据转换为响应式数据  <br>        // **1** ref函数                        更适合单个变量  <br>        //         在script标签中操作ref响应式数据要通过.value  <br>        //         在template中操作ref响应式数据则无需.value  <br>        // **2** reactive函数                更适合对象  <br>        //         在script template 操作reactive响应式数据都直接使用对象名，属性名的  <br>        //         方式即可  <br>        let counter = ref(**0**);  <br>        let person = reactive({  <br>                name:"",  <br>                age:**10**  <br>        })  <br>        function increAge() {  <br>                person.age++;  <br>        }  <br>        function incre() {  <br>                counter.value++;  <br>        }  <br>        // toRef函数        将reactive响应式数据中的某个属性转换为ref响应式数据  <br>        // toRefs函数        同时将reactive响应式数据中的多个属性转换为ref响应式数据  <br>        let pAge = toRef(person, "age");  <br>        function increRefAge() {  <br>                pAge.value++;  <br>        }  <br>        let {name, age} = toRefs(person);  <br>        function increRefsAge() {  <br>                age.value++;  <br>        }  <br>**\</script\>**  <br>**\<template\>**  <br>        **\<div\>**  <br>         **\<button** @**click**="incre()"**\>**+**\</button\>**  <br>        **\<button** @**click**="counter++"**\>**+**\</button\>**  <br>        {{counter}}  <br>        **\<button** @**click**="increAge()"**\>**+**\</button\>**  <br>        **\<button** @**click**="person.age++"**\>**+**\</button\>**  <br>        {{person.age}}  <br>        **\</div\>**  <br>**\</template\>**<br><br>  <br><br>**\<style\>**  <br>**\</style\>**|
+
+# 条件和列表渲染
+
+## 条件渲染
+
+v-if 条件渲染  
+v-show 条件渲染扩展
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8  <br>9  <br>10  <br>11  <br>12  <br>13  <br>14  <br>15  <br>16  <br>17  <br>18  <br>19  <br>20|// App.vue  <br>**\<script** setup**\>**  <br>        import {ref} from "vue"  <br>        let flag = ref(true);  <br>          <br>        // **v-if**="表达式/数据为true则当前元素会渲染进入DOM树"  <br>        // v-else 自动和当前一个v-if做取反操作  <br>        // v-show ""数据为true元素则展示在页面上，否则不展示  <br>          <br>        // v-if 数据为false时，元素则不在DOM树中了  <br>        // v-show 数据为false时，元素仍在DOM树中，通过display的css样式控制元素隐藏  <br>**\</script\>**  <br>**\<template\>**  <br>        **\<div\>**  <br>                **\<h1** **v-if**="flag"**\>**vue is awesome!**\</h1\>**  <br>                **\<h1** v-else**\>**oh no**\</h1\>**  <br>                **\<button** @**click**="flag = !flag"**\>**toggle**\</button\>**  <br>        **\</div\>**  <br>**\</template\>**  <br>**\<style\>\</style\>**|
+
+1 v-if是“真实的”按条件渲染，因为它确保了在切换时，条件区块内的时间监听器和子组件都会被销毁与重建  
+2 v-if也是惰性的：如果在初次渲染时条件值为false，则不会做任何事。条件区块只有当条件首次变为true时才被渲染  
+3 相比之下，v-show简单许多，元素无论初始条件如何，始终会被渲染，只有css display属性会被切换  
+4 总的来说，v-if有更高的切换开销，而v-show有更高的初始渲染开销。因此，如果需要频繁切换，则使用v-show较好；如果在运行时绑定条件很少改变，则v-if会更合适
+
+## 列表渲染
+
+我们可以使用v-for指令基于一个数组来渲染一个列表  
+1 v-for指令的值需要使用item in items形式的特殊语法，其中items是源数据的数组，而item是迭代项的别名  
+2 在v-for块中可以完整地访问父作用域内的属性和变量。v-for也支持使用可选的第二个参数表示当前项的位置索引
+ 
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8  <br>9  <br>10  <br>11  <br>12  <br>13  <br>14  <br>15  <br>16  <br>17  <br>18  <br>19  <br>20  <br>21  <br>22  <br>23  <br>24  <br>25  <br>26  <br>27  <br>28  <br>29  <br>30  <br>31  <br>32  <br>33  <br>34  <br>35  <br>36  <br>37  <br>38  <br>39  <br>40  <br>41  <br>42  <br>43  <br>44  <br>45  <br>46  <br>47  <br>48  <br>49  <br>50  <br>51  <br>52  <br>53  <br>54  <br>55  <br>56  <br>57  <br>58  <br>59  <br>60  <br>61  <br>62  <br>63  <br>64  <br>65  <br>66  <br>67  <br>68  <br>69  <br>70  <br>71  <br>72  <br>73  <br>74  <br>75  <br>76  <br>77  <br>78  <br>79  <br>80  <br>81  <br>82  <br>83|**\<script** setup**\>**  <br>        import {ref, reactive} from "vue";  <br>        let pro = ref("产品");  <br>        let items = reactive([{  <br>                id:"item1",  <br>                message:"薯片"  <br>        },{  <br>                id:"item2",  <br>                message:"可乐"  <br>        },{  <br>                id:"item3",  <br>                message:"炸鸡"  <br>        }]);  <br>          <br>        let carts = reactive([{  <br>                name:"可乐",  <br>                price:**3**,  <br>                number:**10**  <br>        },{  <br>                name:"薯条",  <br>                price:**6**,  <br>                number:**12**  <br>        },{  <br>                name:"炸鸡",  <br>                price:**12**,  <br>                number:**2**  <br>        }]);  <br>          <br>        function compute() {  <br>                let total = **0**;  <br>                for (let index in carts) {  <br>                        total += carts[index].price * carts[index].number  <br>                }  <br>                return total;  <br>        }  <br>        function removeCart(index) {  <br>                carts.splice(index, **1**);  <br>        }  <br>        function clearCart() {  <br>                carts.splice(**0**, carts.length);  <br>        }  <br>**\</script\>**  <br>**\<template\>**  <br>        **\<div\>**  <br>                **\<h1\>**您的购物车如下**\</h1\>**  <br>                **\<table** **border**="1px"**\>**  <br>                        **\<thead\>**  <br>                                **\<tr\>**  <br>                                        **\<th\>**序号**\</th\>**  <br>                                        **\<th\>**名称**\</th\>**  <br>                                        **\<th\>**价格**\</th\>**  <br>                                        **\<th\>**数量**\</th\>**  <br>                                        **\<th\>**小计**\</th\>**  <br>                                        **\<th\>**操作**\</th\>**  <br>                                **\</tr\>**  <br>                        **\</thead\>**  <br>                        **\<tbody** **v-if**="carts.length \> 0"**\>**  <br>                                **\<tr** **v-for**="(cart, index) in carts"**\>**  <br>                                        **\<td** **v-text**="index + 1"**\>\</td\>**  <br>                                        **\<td** **v-text**="cart.name"**\>\</td\>**  <br>                                        **\<td** **v-text**="cart.price"**\>\</td\>**  <br>                                        **\<td** **v-text**="cart.number"**\>\</td\>**  <br>                                        **\<td** **v-text**="cart.price * cart.number"**\>\</td\>**  <br>                                        **\<td\>\<button** @**click**="removeCart(index)"**\>**删除**\</button\>\</td\>**  <br>                                **\</tr\>**  <br>                        **\</tbody\>**  <br>                        **\<tbody** v-else**\>**  <br>                                **\<tr\>**  <br>                                        **\<td** **colspan**="6"**\>**购物车空了**\</td\>**  <br>                                **\</tr\>**  <br>                        **\</tbody\>**  <br>                **\</table\>**  <br>                **\<button** @**click**="clearCart()"**\>**一键清空购物车**\</button\>**  <br>                购物车总金额{{compute()}}元  <br>                  <br>                **\<ul\>**  <br>                        **\<li** **v-for**="(item, index) in items" **v-bind:key**="item.id"**\>**  <br>                                {{pro}} {{index + **1**}} {{item.message}}  <br>                        **\</li\>**  <br>                **\</ul\>**  <br>        **\</div\>**  <br>**\</template\>**  <br>**\<style** scoped**\>\</style\>**|
+
+# 双向绑定
+
+单向绑定和双向绑定  
+1 单向绑定：响应式数据的变化会更新DOM树上用户的操作造成的数据改变不是同步更新到响应式数据  
+2 双向绑定：响应式数据的变化会更新DOM树上用户的操作造成的数据改变会同步更新到响应式数据  
+1 用户通过表单标签才能够输入数据，所以双向绑定都是应用到表单标签上的其他标签不行  
+2 v-model专门用于双向绑定表单标签的value属性，语法为v-model:value=""，可以简写为v-model=""  
+3 v-model还可以用于各种不同类型的输入，\<textarea\>、\<select\>元素
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8  <br>9  <br>10  <br>11  <br>12  <br>13  <br>14  <br>15  <br>16  <br>17  <br>18  <br>19  <br>20  <br>21  <br>22  <br>23  <br>24  <br>25  <br>26  <br>27  <br>28  <br>29  <br>30  <br>31  <br>32  <br>33  <br>34  <br>35  <br>36  <br>37  <br>38  <br>39  <br>40  <br>41  <br>42  <br>43  <br>44  <br>45  <br>46  <br>47  <br>48  <br>49  <br>50  <br>51  <br>52|**\<script** setup**\>**  <br>        // 单向绑定        v-bind 响应式数据发生变化，更新DOM树        用户的操作如果造成页面内容的  <br>        //                         改变不会影响响应式数据  <br>        // 双向绑定        v-model 页面上的数据由于用户的操作造成了改变，也会同步修改对应的响应  <br>        //                         式数据  <br>        //                         双向绑定一般都用于表单标签  <br>        //                         双向绑定也有人称呼手机表单信息的命令  <br>        //                         **v-model:value**="数据" 双向绑定  <br>        //                         v-model:value 一般都省略 :value  <br>        import {ref,reactive} from "vue";  <br>        let user = reactive({  <br>                username:"",  <br>                userPwd:"",  <br>                intro:"",  <br>                pro:""  <br>        });  <br>        let hbs = ref([]);  <br>          <br>        function clearForm() {  <br>                **user.username**="";  <br>                **user.userPwd**="";  <br>                **user.intro**="";  <br>                **user.pro**="";  <br>                hbs.value.splice(**0**, hbs.value.length);  <br>        }  <br>**\</script\>**  <br>**\<template\>**  <br>        **\<div\>**  <br>                **\<input** **type**="text" **v-model**="user.username"**\>**  <br>                **\<br\>**  <br>                **\<input** **type**="password" **v-model**="user.uerPwd"**\>**  <br>                爱好：  <br>                唱 **\<input** **type**="checkbox" **v-model**="hbs" **value**="sing"**\>**  <br>                跳 **\<input** **type**="checkbox" **v-model**="hbs" **value**="dance"**\>**  <br>                rap **\<input** **type**="checkbox" **v-model**="hbs" **value**="rap"**\>**  <br>                **\<br\>**  <br>                简介：**\<textarea** **v-model**="user.intro"**\>\</textarea\>**  <br>                **\<br\>**  <br>                籍贯：  <br>                **\<select** **v-model**="user.pro"**\>**  <br>                        **\<option** **value**="1"**\>**京**\</option\>**  <br>                        **\<option** **value**="2"**\>**津**\</option\>**  <br>                        **\<option** **value**="3"**\>**冀**\</option\>**  <br>                **\</select\>**  <br>                  <br>                **\<button** @**click**="clearForm()"**\>**清空**\</button\>**  <br>                **\<br\>**  <br>                {{user}}**\<br\>**  <br>                {{hbs}}  <br>        **\</div\>**  <br>**\</template\>**  <br>**\<style** scoped**\>\</style\>**|
+
+# 属性计算
+
+模板中的表达式虽然方便，但也只能用来做简单的操作，如果在模板中写太多逻辑，会让模板变得臃肿，难以维护。
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8  <br>9  <br>10  <br>11  <br>12  <br>13  <br>14  <br>15  <br>16  <br>17  <br>18  <br>19  <br>20  <br>21  <br>22  <br>23  <br>24  <br>25|// App.vue  <br>**\<script** setup**\>**  <br>        import {reactive, computed} from "vue";  <br>        const author = reactive({  <br>            name:"张三",  <br>                book:["Java", "算法", "MySQL"]  <br>        });  <br>               // 通过方法返回数据 每使用一次 执行一次  <br>        function hasbooks() {  <br>                return author.books.length **\>** **0** ? "是" : "否";  <br>        }  <br>        // 通过计算属性获得数据 每次使用时，如果和上次使用时，数据没有发生变化，  <br>        // 则直接使用上一次的结果  <br>        let bookMessage = computed(() =**\>** {  <br>                return author.books.length **\>** **0** ? "是" : "否";  <br>        });  <br>**\</script\>**  <br>**\<template\>**  <br>        **\<div\>**  <br>                **\<p\>**作者{{author.name}}**\</p\>**  <br>                是否出版过图书：{{hasbooks()}} **\<br\>**  <br>                是否出版过图书：{{bookMessage}} **\<br\>**  <br>        **\</div\>**  <br>**\</template\>**  <br>**\<style\>\</style\>**|
+
+# 数据监听器
+
+watch主要用于以下场景：  
+1 当数据变化时需要执行相应的操作  
+2 监听数据变化，当满足一定条件时触发相应操作  
+3 在异步操作前或操作后需要执行响应的操作
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8  <br>9  <br>10  <br>11  <br>12  <br>13  <br>14  <br>15  <br>16  <br>17  <br>18  <br>19  <br>20  <br>21  <br>22  <br>23  <br>24  <br>25  <br>26  <br>27  <br>28  <br>29  <br>30  <br>31  <br>32  <br>33  <br>34  <br>35  <br>36  <br>37  <br>38|// App.vue  <br>**\<script** setup**\>**  <br>        import {ref, reactive, watch, watchEffect} from "vue";  <br>        let fullname = ref("");  <br>        let firstname = ref("");  <br>        let lastname = reactive({  <br>                name:""  <br>        });  <br>        // watch函数监听一个ref的响应式数据  <br>        watch(firstname, (newValue, oldValue) =**\>** {  <br>                console.log(`${oldValue}变为${newValue}`);  <br>                fullname.value = newValue + lastname.name;  <br>        });  <br>        // watch函数监听一个reactive的响应式数据 当个属性  <br>        watch(() =**\>** {lastname.name}, (newValue, oldValue) =**\>** {  <br>                console.log(`${oldValue}变为${newValue}`);  <br>                fullname.value = firstname.value + newValue;  <br>        });  <br>        // watch函数监听一个reactive响应式数据 所以属性  <br>        watch(() =**\>** {lastname}, (newValue, oldValue) =**\>** {  <br>                // newValue和oldValue都一样，都是lastname  <br>                fullname = firstname.value + lastname.name;  <br>        }, {deep:true, immediate:true});  <br>        // 任何的响应式数据，如果想监听，直接监听即可，无需将要监听的响应式数据作为  <br>        // 参数  <br>        watchEffect(() =**\>** {  <br>                fullname.value = firstname.value + lastname.name;  <br>        });  <br>**\</script\>**  <br>**\<template\>**  <br>        **\<div\>**  <br>                姓氏：**\<input** **type**="text" **v-model**="firstname"**\> \<br\>**  <br>                名字：**\<input** **type**="text" **v-model**="lastname"**\> \<br\>**  <br>                全名：{{fullname}}  <br>        **\</div\>**  <br>**\</template\>**  <br>**\<style** scoped**\>**  <br>**\</style\>**|
+
+# Vue生命周期
+
+### 生命周期简介
+
+每个Vue组件实例在创建时都需要经历一系列的初始化步骤，比如设置好数据侦听，编译模板，挂载实例到DOM，以及在数据改变时更新DOM。在此过程中，它也会运行被称为生命周期钩子的函数，让开发者有机会在待定阶段运行自己的代码。  
+onBeforeMount()  
+onMount()  
+onBeforeUpdate()  
+onUpdate()
+
+# Vue组件
+
+## 组件基础
+
+组件允许我们将UI划分为独立的，可重用的部分，并且可以对每个部分进：行单独的思考。组件就是实现应用中局部功能代码和资源的集合！  
+在实际应用中，组件常常被阻止成层层嵌套的树状结构。  
+组件中的参数传递：  
+1 父传子  
+2 子传父  
+3 兄弟互传
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8  <br>9  <br>10  <br>11  <br>12  <br>13  <br>14  <br>15  <br>16  <br>17  <br>18  <br>19  <br>20  <br>21  <br>22  <br>23  <br>24  <br>25  <br>26  <br>27  <br>28  <br>29  <br>30  <br>31  <br>32  <br>33  <br>34  <br>35  <br>36  <br>37  <br>38  <br>39  <br>40  <br>41  <br>42  <br>43  <br>44  <br>45  <br>46  <br>47  <br>48  <br>49  <br>50  <br>51  <br>52  <br>53  <br>54  <br>55  <br>56  <br>57  <br>58|// 子组件 Navigator.vue  <br>**\<script** setup**\>**  <br>        // 向父组件发送参数  <br>        // defineEmits用于定义向父组件提交数据的事件以及正式的提交数据  <br>        import {defineEmits} from "vue";  <br>        // 定义一个向父组件提交数据的事件，事件名称自定义  <br>        const emits = defineEmits(["sendMenu"]);  <br>        // 提交数据的方法  <br>        function send(data) {  <br>                emits("sendMenu", data);  <br>        }  <br>**\</script\>**  <br>**\<template\>**  <br>        **\<div\>**  <br>                **\<ul\>**  <br>                        **\<li** @**click**="send('学员管理')"**\>**学员管理**\</li\>**  <br>                        **\<li** @**click**="send('图书管理')"**\>**图书管理**\</li\>**  <br>                        **\<li** @**click**="send('请假管理')"**\>**请假管理**\</li\>**  <br>                        **\<li** @**click**="send('考试管理')"**\>**考试管理**\</li\>**  <br>                        **\<li** @**click**="send('班级管理')"**\>**班级管理**\</li\>**  <br>                        **\<li** @**click**="send('教师管理')"**\>**教师管理**\</li\>**  <br>                **\</ul\>**  <br>        **\</div\>**  <br>**\</template\>**  <br>**\<style** scoped**\>\</style\>**<br><br>  <br><br>// 父组件 App.vue  <br>**\<script\>**  <br>        **import** Navigator **from** "./components/Navigator"**;**  <br>        **import** Content **from** "./components/Content"**;**  <br>        **import** **{**ref**}** **from** "vue"**;**  <br>        **let** menu **=** ref**(**""**);**  <br>        **function** receiver**(**data**) {**  <br>                menu**.**value **=** data**;**  <br>        **}**  <br>**\</script\>**  <br>**\<template\>**  <br>        **\<div\>**  <br>                **\<Navigator** @**sendMenu**="receiver"**\>\</Navigator\>**  <br>                **\<Content** **:message**="menu"**\>\</Content\>**  <br>        **\</div\>**  <br>**\</template\>**  <br>**\<style** scoped**\>\</style\>**<br><br>  <br><br>// 子组件 Content.vue  <br>**\<script** setup**\>**  <br>        // 接收父组件的参数  <br>        import {defineProps} from "vue";  <br>        defineProps({  <br>                message:String  <br>        });  <br>**\</script\>**  <br>**\<template\>**  <br>        **\<div\>**  <br>                {{message}}  <br>        **\</div\>**  <br>**\</template\>**  <br>**\<style** scoped**\>\</style\>**|
+
+# Vue3路由机制router
+
+## 路由简介
+
+1 定义：路由就是根据不同的URL地址展示不同的内容或页面  
+2 通俗理解：路由就像一个地图，我们要去不同的地方，需要通过不同的路线进行导航  
+路由的作用：￼1 单击应用程序（SPA）中，路由可以实现不同视图之间的无刷新切换，提升用户体验  
+2 路由还可以实现页面的认证和权限控制，保护用户的隐私和安全  
+3 路由还可以利用浏览器的前进与后退，帮助用户更好地回到之前访问过的页面
+
+## 路由入门案例
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4|// 创建项目和导入路由依赖  <br>npm create vite // 创建项目cd项目文件夹 进入项目文件夹  <br>npm install // 安装项目需求依赖  <br>npm install vue-router4 // 安装全局的vue-router **4**版本|
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8  <br>9  <br>10  <br>11  <br>12  <br>13  <br>14  <br>15  <br>16  <br>17  <br>18  <br>19  <br>20  <br>21  <br>22  <br>23  <br>24  <br>25  <br>26  <br>27  <br>28  <br>29  <br>30  <br>31  <br>32  <br>33  <br>34  <br>35  <br>36  <br>37  <br>38  <br>39  <br>40  <br>41  <br>42  <br>43  <br>44  <br>45  <br>46  <br>47  <br>48  <br>49  <br>50  <br>51  <br>52  <br>53  <br>54  <br>55  <br>56  <br>57  <br>58  <br>59  <br>60  <br>61  <br>62  <br>63  <br>64  <br>65  <br>66  <br>67  <br>68  <br>69  <br>70  <br>71  <br>72  <br>73  <br>74  <br>75  <br>76  <br>77  <br>78  <br>79  <br>80  <br>81  <br>82|// App.vue  <br>**\<script** setup**\>\</script\>**  <br>**\<template\>**  <br>        **\<div\>**  <br>                App 开头的内容  <br>                **\<router-link** **to**="/home"**\>**Home页**\</router-link\> \<br\>**  <br>                **\<router-link** **to**="/list"**\>**List页**\</router-link\> \<br\>**  <br>                **\<router-link** **to**="/updata"**\>**Updata页**\</router-link\> \<br\>**  <br>                **\<router-link** **to**="/add"**\>**Add页**\</router-link\> \<br\>**  <br>                          <br>                **\<hr\>**  <br>                // 该标签会被替换成具体的.vue  <br>                // 一个视图上是可以同时存在多个router-view  <br>                // 每个router-view都可以设置专门用展示哪个组件  <br>                **\<router-view\>\</router-view\>**  <br>                **\<hr\>**  <br>                home_page**\<router-view** **name**="homeView"**\>\</router-view\>**  <br>                **\<hr\>**  <br>                list_page**\<router-view** **name**="listView"**\>\</router-view\>**  <br>                **\<hr\>**  <br>                updata_page**\<router-view** **name**="updataView"**\>\</router-view\>**  <br>                **\<hr\>**  <br>                add_page**\<router-view** **name**="addView"**\>\</router-view\>**  <br>                **\<hr\>**  <br>                App 结尾的内容  <br>        **\</div\>**  <br>**\</template\>**  <br>**\<style** scoped**\>\</style\>**<br><br>  <br><br>// src/routers/router.js  <br>// 导入创建路由对象需要使用的函数  <br>import {createRouter, createWebHashHistory} from "vue-router";  <br>// 导入.vue组件  <br>import Home from "../components/Home.vue";  <br>import List from "../components/List.vue";  <br>import Updata from "../components/Updata.vue";  <br>import Add from "../components/Add.vue";  <br>// 创建一个路由对象  <br>const router = createRouter({  <br>        // history属性用于记录路由的历史  <br>        history:createWebHashHistory(),  <br>        // 用于定义多个不同的路径和组件之间的对应关系  <br>        routes:[{  <br>                path:"/home",  <br>                component:{  <br>                        homeView:Home  <br>                }  <br>        }, {  <br>                path:"/list",  <br>                component:{  <br>                        listView:List  <br>                }  <br>        }, {  <br>                path:"/updata",  <br>                component:{  <br>                        updataView:Updata  <br>                }  <br>        }, {  <br>                path:"/add",  <br>                component:{  <br>                        addView:Add  <br>                }  <br>        }, {  <br>                path:"/",  <br>                component:Home  <br>        }, {  <br>                        path:"/showAll",  <br>                        redirect:"/list"  <br>        }]  <br>          <br>});  <br>// 向外暴露router  <br>export default router;<br><br>  <br><br>// main.js  <br>import {createApp} from "vue";  <br>import App from "./App.vue";  <br>// 在整个App.vue中可以使用路由  <br>import router from "./routers/router.js"  <br>const app = createApp(App);  <br>app.use(router);  <br>mount("#app");|
+
+## 编程式路由（useRouter）
+
+编程式路由：  
+1 通过useRouter，动态决定向那个组件切换到路由  
+2 在Vue 3和Vue Router 4中，你可以使用useRouter来实现动态路由（编程式路由）  
+3 这里的useRouter方法返回的是一个router对象，你可以用它来做如导航到新页面，返回上一页面等操作
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8  <br>9  <br>10  <br>11  <br>12  <br>13  <br>14  <br>15  <br>16  <br>17  <br>18  <br>19  <br>20  <br>21  <br>22  <br>23  <br>24  <br>25  <br>26  <br>27  <br>28  <br>29  <br>30  <br>31  <br>32  <br>33  <br>34  <br>35  <br>36  <br>37  <br>38  <br>39  <br>40  <br>41  <br>42  <br>43  <br>44  <br>45  <br>46  <br>47  <br>48  <br>49  <br>50  <br>51  <br>52  <br>53  <br>54  <br>55  <br>56  <br>57  <br>58  <br>59  <br>60  <br>61  <br>62  <br>63  <br>64  <br>65  <br>66  <br>67  <br>68  <br>69  <br>70  <br>71|// src/routers/router.js  <br>// 导入路由的相关方法  <br>import {createRouter, createWebHashHistory} from "vue-router";<br><br>  <br><br>// 导入.vue组件  <br>import Home from "../components/Home.vue";  <br>import List from "../components/List.vue";  <br>import Updata from "../components/Updata.vue";  <br>import Add from "../components/Add.vue";<br><br>  <br><br>const router = createRouter({  <br>        history:createWebHashHistory(),  <br>        routes:[{  <br>                path:"/",  <br>                component:Home  <br>        }, {  <br>                path:"/home",  <br>                component:Home  <br>        }, {  <br>                path:"/list",  <br>                component:List  <br>        }, {  <br>                path:"/updata",  <br>                component:Updata  <br>        }, {  <br>                path:"/add",  <br>                component:"Add"  <br>        }]  <br>})  <br>export default router;<br><br>  <br><br>// main.js  <br>import {createApp} from "vue";  <br>import App from "./App.vue"  <br>// 导入路由对象  <br>import router from "./routers/router.js"  <br>// 使用路由对象  <br>const app = createApp(App);  <br>app.use(router);  <br>app.mount(#app);<br><br>  <br><br>// App.vue  <br>**\<script** setup**\>**  <br>        import {useRouter} from "vue-router";  <br>        import {ref} from "vue";  <br>        const router = useRouter();  <br>        function showList() {  <br>                // 编程式路由实现页面跳转  <br>                // router.push("/list");  <br>                router.push({path:"/list"});  <br>        }  <br>        let myPath = ref("");  <br>        function goMyPage() {  <br>                router.push(myPath.value);  <br>        }  <br>**\</script\>**  <br>**\<template\>**  <br>        **\<div\>**  <br>                // 声明式路由  <br>                **\<router-link** **to**="/home"**\>**home**\</router-link\> \<br\>**  <br>                **\<router-link** **to**="/list"**\>**list**\</router-link\> \<br\>**  <br>                **\<router-link** **to**="/updata"**\>**updata**\</router-link\> \<br\>**  <br>                **\<router-link** **to**="/add"**\>**add**\</router-link\> \<br\>**  <br>                // 编程式路由  <br>               **\<button** @**click**="showList()"**\>**list**\</button\>**  <br>                **\<button** @**click**="goMyPage()"**\>**Go**\<button\>**  <br>                **\<input** **type**="text" **v-model**="myPath"**\>**  <br>            **\<router-view\>\<router-view\>**  <br>        **\</div\>**  <br>**\</template\>**  <br>**\<style** scoped**\>\</style\>**|
+
+## 路由传参
+
+路径参数  
+1 在路径中使用一个动态字段来实现，我们称之为路径参数  
+1 例如：查看数据详情/showDetail/1，1就是要查看详情的id，可以动态添值  
+键值对参数  
+1 类似于get值请求通过url参数，数据是键值对形式的  
+1 例如：查看数据详情/showDetail?hid=1，hid=1就是要传递的键值对参数  
+2 在Vue 3和Vue Router 4中，你可以使用useRoute这个函数从Vue的组合式API中获取路由对象  
+3 useRoute方法返回的当前的route对象，你可以用它来获取关于当前路由的信息，如当前的路径，查询参数等
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8  <br>9  <br>10  <br>11  <br>12  <br>13  <br>14  <br>15  <br>16  <br>17  <br>18  <br>19  <br>20  <br>21  <br>22  <br>23  <br>24  <br>25  <br>26  <br>27  <br>28  <br>29  <br>30  <br>31  <br>32  <br>33  <br>34  <br>35  <br>36  <br>37  <br>38  <br>39  <br>40  <br>41  <br>42  <br>43  <br>44  <br>45  <br>46  <br>47  <br>48  <br>49  <br>50  <br>51  <br>52  <br>53  <br>54  <br>55  <br>56  <br>57  <br>58  <br>59  <br>60  <br>61  <br>62  <br>63  <br>64  <br>65  <br>66  <br>67  <br>68  <br>69  <br>70  <br>71  <br>72  <br>73  <br>74  <br>75  <br>76  <br>77  <br>78  <br>79  <br>80  <br>81  <br>82  <br>83  <br>84  <br>85  <br>86  <br>87  <br>88  <br>89  <br>90  <br>91  <br>92  <br>93  <br>94  <br>95  <br>96  <br>97  <br>98  <br>99  <br>100  <br>101  <br>102  <br>103  <br>104  <br>105  <br>106  <br>107  <br>108  <br>109  <br>110  <br>111  <br>112  <br>113  <br>114  <br>115  <br>116  <br>117  <br>118  <br>119  <br>120  <br>121  <br>122  <br>123|// App.vue  <br>**\<script** setup**\>**  <br>        import {useRouter} from "vue-router";  <br>        import {ref} from "vue";  <br>        const router = useRouter();  <br>        function showDetail(id, language) {  <br>                router.push(`/showDetail/${id}/${language}`);  <br>        }  <br>        function showDetail2(id, language) {  <br>                // router.push(``/showDetail2?id=${id}&language=${language}`);  <br>                router.push({path:"/showDetail2", query:{id:id, language:language}});  <br>        }  <br>**\</script\>**  <br>**\<template\>**  <br>        **\<div\>**  <br>                **\<router-link** **to**="/home"**\>**home**\</router-link\>**  <br>                **\<router-link** **to**="/list"**\>**list**\</router-link\>**  <br>                **\<router-link** **to**="/updata"**\>**updata**\</router-link\>**  <br>                **\<router-link** **to**="/add"**\>**add**\</router-link\>**  <br>                **\<router-link** **to**="/showDetail/1/java"**\>**声明式路由路径传参**\</router-link\>**  <br>                **\<button** @**click**="showDetail(2, 'PHP')"**\>**编程式路由路径传参**\</button\>**  <br>                **\<hr\>**  <br>                **\<router-link** **to**="/showDetail2?id=1&language=java"**\>**声明式路由键值对传参**\</router-link\>**  <br>                **\<router-link** **v-bind:to**="{path:'/showDetail2', query:{id:2, language:'php'}}"**\>**声明式路由键值对传参**\</router-link\>**  <br>                **\<button** @**click**="showDetail2(3, 'Python')"**\>**编程式路由键值对传参**\</button\>**  <br>                **\<hr\>**  <br>                **\<router-view\>\</router-view\>**  <br>        **\</div\>**  <br>**\</template\>**  <br>**\<style** scoped**\>\</style\>**<br><br>  <br><br>// src/routers/router.js  <br>import {createRouter, createWebHashHistory} from "vue-router";  <br>import Home from "../component/Home.vue";  <br>import List from "../component/List.vue";  <br>import Updata from "../component/Updata.vue";  <br>import Add from "../component/Add.vue";  <br>import ShowDetail from "../component/ShowDetail.vue";  <br>import ShowDetail2 from "../component/ShowDetail2.vue";  <br>const router = createRouter({  <br>        history:createWebHashHistory();  <br>        routes:[{  <br>                path:"/home",  <br>                component:Home  <br>        }, {  <br>                path:"/list",  <br>                component:List  <br>        }, {  <br>                path:"/updata",  <br>                component:Updata  <br>        }, {  <br>                path:"/add",  <br>                component:Add  <br>        }, {  <br>                path:"/",  <br>                component:Home  <br>        }, {  <br>                path:"/showDetail/:id/:language",  <br>                component:ShowDetail  <br>        }, {  <br>                path:"/showDetail2",  <br>                component:ShowDetail2  <br>        }];  <br>});  <br>export default router;<br><br>  <br><br>// main.js  <br>import {createApp} from "vue";  <br>import App from "./App.vue";  <br>import router from "./routers/router.js";  <br>const app = createApp(app);  <br>app.use(router);  <br>app.mount(#app);<br><br>  <br><br>// src/component/ShowDetail.vue  <br>**\<script** setup**\>**  <br>        // 接收传递过来的路径参数  <br>        // useRoute函数是用来接收参数  <br>        // route.params表示路径参数  <br>        import {useRoute} from "vue-router"  <br>        import {ref, onUpdated} from "vue";  <br>        let route = useRoute();  <br>        let languageId = ref(**0**);  <br>        let languageName = ref("");  <br>        languageId.value = route.params.id;  <br>        languageName.value = route.params.language;  <br>        onUpdated(() =**\>** {  <br>                languageId.value = route.params.id;  <br>                languageName.value = route.params.language;  <br>        });  <br>**\</script\>**  <br>**\<template\>**  <br>        **\<div\>**  <br>                **\<h1\>**ShowDetail接收路径参数**\</h1\>**  <br>                **\<h3\>**{{languageId}}{{languageName}}是世界上最好的语言**\</h3\>**  <br>        **\</div\>**  <br>**\</template\>**  <br>**\<style** scoped**\>\</style\>**<br><br>  <br><br>// src/component/ShowDetail2.vue  <br>**\<script** setup**\>**  <br>        // 接收传递过来的路径参数  <br>        // useRoute函数是用来接收参数  <br>        // route.query表示键值对参数  <br>        import {useRoute} from "vue-router"  <br>        import {ref, onUpdated} from "vue";  <br>        let route = useRoute();  <br>        let languageId = ref(**0**);  <br>        let languageName = ref("");  <br>        languageId.value = route.query.id;  <br>        languageName.value = route.query.language;  <br>        onUpdated(() =**\>** {  <br>                languageId.value = route.query.id;  <br>                languageName.value = route.query.language;  <br>        });  <br>**\</script\>**  <br>**\<template\>**  <br>        **\<div\>**  <br>                **\<h1\>**ShowDetail2接收键值对参数**\</h1\>**  <br>                **\<h3\>**{{languageId}}{{languageName}}是世界上最好的语言**\</h3\>**  <br>        **\</div\>**  <br>**\</template\>**  <br>**\<style** scoped**\>\</style\>**|
+
+## 路由守卫
+
+在Vue 3中，路由守卫是用于在路由切换期间进行一些待定任务的回调函数，路由守卫可以用于许多任务，例如验证用户是否已登录，在路由切换前提供确认提示，请求数据等。Vue 3为路由守卫提供了全面的支持。  
+1 全局路由守卫：在路由切换前被调用，可以用于验证用户是否已登录、中断导航、请求数据等  
+2 全局后置守卫：在路由切换之后被调用，可以用于处理数据、操作DOM、记录日志等  
+3 守卫代码的位置：在router.js中
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8  <br>9  <br>10  <br>11  <br>12  <br>13  <br>14  <br>15  <br>16  <br>17  <br>18  <br>19  <br>20  <br>21  <br>22  <br>23|// src/routers/router.js  <br>// 设置全局前置守卫  <br>// 每次路由切换页面，都会执行beforeEach中的回调函数  <br>router.beforeEach({  <br>        (to, from, next) =**\>** {  <br>                // to 下一个页面 到哪里去  <br>                // from 上一个页面 从哪里来  <br>                // next 放行的方法，只有执行了该方法，才会放行路由 filterChain.doFilter  <br>                // next() 放行  <br>                // next("/路径") 路由的重定向  <br>                console.log(from.path);  <br>                console.log(to.path);  <br>                next();  <br>        }  <br>});<br><br>  <br><br>// 设置全局后置守卫  <br>// 每次路由切换页面后，都会执行afterEach中的回调函数  <br>router.afterEach(  <br>        (to, from) =**\>** {  <br>                  <br>        }  <br>);|
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8  <br>9  <br>10  <br>11  <br>12  <br>13  <br>14  <br>15  <br>16  <br>17  <br>18  <br>19  <br>20  <br>21  <br>22  <br>23  <br>24  <br>25  <br>26  <br>27  <br>28  <br>29  <br>30  <br>31  <br>32  <br>33  <br>34  <br>35  <br>36  <br>37  <br>38  <br>39  <br>40  <br>41  <br>42  <br>43  <br>44  <br>45  <br>46  <br>47  <br>48  <br>49  <br>50  <br>51  <br>52  <br>53  <br>54  <br>55  <br>56  <br>57  <br>58  <br>59  <br>60  <br>61  <br>62  <br>63  <br>64  <br>65  <br>66  <br>67  <br>68  <br>69  <br>70  <br>71  <br>72  <br>73  <br>74  <br>75  <br>76  <br>77  <br>78  <br>79  <br>80  <br>81  <br>82  <br>83  <br>84  <br>85  <br>86  <br>87  <br>88  <br>89  <br>90  <br>91  <br>92  <br>93  <br>94  <br>95  <br>96  <br>97  <br>98  <br>99  <br>100  <br>101  <br>102|// src/components/Home.vue  <br>**\<script** setup**\>**  <br>import {ref} from "vue";  <br>import {useRouter} from "vue-router";  <br>let router = useRouter();  <br>let username = ref("");  <br>username.value = window.sessionStorage.getItem("username");  <br>function loginOut() {  <br>// **1** 清除sessionStorage中的用户登录的信息  <br>window.sessionStorage.removeItem("username");  <br>// **2** 跳转到login视图  <br>router.push("/login");  <br>}  <br>**\</script\>**  <br>**\<template\>**  <br>**\<div\>**  <br>**\<h1\>**home页面**\</h1\>**  <br>**\<h3\>**欢迎{{username}}登录**\</h3\>**  <br>**\<button** @**click**="loginOut()"**\>**退出登录**\</button\>**  <br>**\</div\>**  <br>**\<template\>**  <br>**\<style** scoped**\>\</style\>**<br><br>  <br><br>// src/components/Login.vue  <br>**\<script** setup**\>**  <br>import {ref} from "vue";  <br>impott {useRouter} from "vue-router"  <br>let router = useRouter();  <br>let username = ref("");  <br>let userPwd = ref("");  <br>function login() {  <br>// 获取用户名和密码 校验 用户名如果是root并且密码是**123456** 则登录成功  <br>// 登录成功则自动跳转到 /home  <br>// 登录失败，不跳转页面 提示  <br>if (username.value == "root" && userPwd.value == "123456") {  <br>// 路由跳转 /home  <br>// 将用户名保存在浏览器上 sessionStorage localStorage  <br>window.sessionStorage.setItem("username", username.value);  <br>// 路由跳转 /home  <br>router.push("/home");  <br>} else {  <br>alert("用户名或者密码有误");  <br>}  <br>}  <br>**\</script\>**  <br>**\<template\>**  <br>**\<div\>**  <br>账号：**\<input** **type**="text" **v-model**="username"**\> \<br\>**  <br>密码：**\<input** **type**="password" **v-model**="userPwd"**\> \<br\>**  <br>**\<button** @**click**="login()"**\>**登录**\</button\>**  <br>**\</div\>**  <br>**\<template\>**  <br>**\<style** scoped**\>\</style\>**<br><br>  <br><br>// src/routers/router.js  <br>import {createRouter, createWebHashHistory} from "vue-router";  <br>import Home from "../components/Home.vue";  <br>import Login from "../components/Login.vue";  <br>const router = createRouter({  <br>history:createWebHashHistory(),  <br>routes:[{  <br>path:"/home",  <br>component:Home  <br>}, {  <br>path:"/login",  <br>copmonent:Login  <br>}]  <br>});  <br>// 通过路由的前置守卫校验登录  <br>router.beforeEach((to, from, next) =**\>** {  <br>if (to.path == "/login") {  <br>// 判断如果要去登录视图，直接放行即可  <br>next();  <br>} else {  <br>// 如果是其他任何资源，都要在登录之后才会放行，则重定向到登录视图  <br>const username = window.sessionStorage.getItem("username");  <br>if (null != username) {  <br>next();  <br>} else {  <br>next("/login");  <br>}  <br>}  <br>});<br><br>  <br><br>export default router;<br><br>  <br><br>// src/main.js  <br>import {createApp} from "vue";  <br>import App from "./App.vue";  <br>import router from "./routers/router.js";  <br>const app = createApp(App);  <br>app.use(router);  <br>app.mount("#app");<br><br>  <br><br>// src/App.vue  <br>**\<script** setup**\>\</script\>**  <br>**\<template\>**  <br>**\<div\>**  <br>**\<router-view\>\</router-view\>**  <br>**\</div\>**  <br>**\<template\>**  <br>**\<style** scoped**\>\</style\>**|
+
+# Vue 3数据交互axios
+
+## promise
+
+### 普通函数和回调函数
+
+回调函数是一种基于事件的，自动调用函数  
+回调函数其他的代码不会等待回调函数执行完毕
+
+### promise简介
+
+前端中的异步编程技术，类似Java中的多线程 + 线程结果回调  
+所谓Promise，简单说是一个容器，里面保存着某个未来才会结束的事件（通常是一个异步操作）的结果。从语法上说，Promise是一个对象，从它可以获取异步操作的消息。Promise提供统一的API，各种异步操作都可以用同样的方法进行处理  
+Promise对象的两个特点  
+1 Promise对象代表一个异步操作，有三个状态，Pending（进行中）、Resolved（已完成，又称Fulfilled）和Rejected（已失败）。只有异步操作的结束，可以决定当前的是哪一种状态，任何其他操作都无法改变这个状态  
+2 一旦状态改变，就不会再变，任何时候都可以得到这个结果。Promise对象的状态改变，只有两种可能，从Pending变为Resolved和从Pending变为Rejected，只要这两种情况发生，状态就凝固了，不会再变了，会一直保持这个结果
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8  <br>9  <br>10  <br>11  <br>12  <br>13  <br>14  <br>15  <br>16  <br>17  <br>18  <br>19  <br>20  <br>21  <br>22|// resolve函数，在回调函数中如果调用resolve方法，promise会由pending转换为resolved  <br>// reject函数，在回调函数中如果调用reject方法，promise会由pending转换为rejected<br><br>  <br><br>let promise = new Promise(function(resolve, reject) {  <br>console.log("function invoked");  <br>resolve();  <br>});  <br>promise.then(  <br>function() {  <br>// promise转换为resolved状态时 会执行的函数  <br>console.log("promise success");  <br>},  <br>function() {  <br>// promise转换为rejected状态时 会执行的函数  <br>console.log("promise fail");  <br>}  <br>).catch(  <br>function(value) {  <br>// 当promise状态 变为rejected或者promise出现异常时，会执行的函数  <br>console.log("promise catch " + value);  <br>}  <br>);|
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8  <br>9  <br>10  <br>11  <br>12  <br>13  <br>14  <br>15  <br>16  <br>17  <br>18  <br>19  <br>20  <br>21  <br>22  <br>23  <br>24  <br>25|// async 帮助我们使用简洁的语法获得一个promise对象  <br>// **1** async用户标识函数的 async函数返回的结果就是一个promise  <br>// **2** 方法如果正常return结果，promise状态就是resolved return后的结果就是成功状态的返回值  <br>// **3** 方法中出现了异常，则返回的promise就是一个失败状态  <br>// **4** async函数返回的结果如果是一个promise，则状态由内部的promise决定<br><br>  <br><br>**\<script\>**  <br>async **function** fun1**() {**  <br>// return 10;  <br>// throw new Error("something wrong");  <br>**let** promise **=** Promise**.**reject**(**"heihei"**);**  <br>**return** promise**;**  <br>**}**  <br>  <br>**let** promise **=** fun1**();**  <br>promise**.**then**(**  <br>**function****(**value**) {**  <br>console**.**log**(**"success:" **+** value**);**  <br>**}**  <br>**).****catch****(**  <br>**function****(**value**) {**  <br>console**.**log**(**"fail:" **+** value**);**  <br>**}**  <br>**);**  <br>**\</script\>**|
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5|// await 帮助我们获取promise成功状态的返回值的关键字  <br>// **1** await右边如果是一个普通值，则直接返回该值 如果右边是promise，返回promise成功状态的结果  <br>// **2** await右边如果是一个失败状态的promise 那么await会直接抛出异常  <br>// **3** await关键字必须在async修饰的函数中使用，async函数中可以没有await  <br>// **4** await后边的代码会等待await执行完毕后继续运行|
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8  <br>9  <br>10  <br>11  <br>12  <br>13  <br>14  <br>15  <br>16  <br>17  <br>18  <br>19  <br>20  <br>21  <br>22  <br>23  <br>24  <br>25  <br>26  <br>27  <br>28  <br>29  <br>30  <br>31  <br>32  <br>33  <br>34  <br>35  <br>36  <br>37  <br>38  <br>39  <br>40  <br>41  <br>42  <br>43  <br>44  <br>45  <br>46  <br>47|**\<script** setup**\>**  <br>import axios from "axios";  <br>import {ref} from "vue"  <br>  <br>let message = ref("");  <br>  <br>function getLoveMessage() {  <br>// axios（设置请求的参数） 请求三要素 **1** url **2** 请求的方式 **3** 请求的参数  <br>let promise = axios(  <br>method: "get",  <br>url: "[https://api.uomg.com/api/rand.qinghua?format=json](https://api.uomg.com/api/rand.qinghua?format=json)",  <br>data: {  <br>// 如果请求方法是get 需要通过params进行发送  <br>// 如果请求方式是post 并且data中数据会以JSON形式放入请求体  <br>},  <br>params: {  <br>// 都是以键值对的形式将数据放入url后  <br>format: "json"  <br>}  <br>);  <br>  <br>promise.then(  <br>function(response) {  <br>console.log(response);  <br>// response 响应结果对象  <br>// data 服务器响应回来的数据 JSON -**\>** 对象{code: **1**, content: ""}  <br>// status 响应状态码 **200**  <br>// statusText 响应状态描述 OK  <br>// header 本次响应的所有响应头  <br>// config 本次请求的配置信息  <br>// request 本次请求发送时所使用XMLHttpRequest对象  <br>message.value = response.data.content;  <br>}  <br>).catch(  <br>function() {  <br>  <br>}  <br>);  <br>}  <br>**\</script\>**  <br>**\<template\>**  <br>**\<div\>**  <br>**\<h1\>**{{message}}**\</h1\>**  <br>**\<button** @**click**="getLoveMessage()"**\>\</button\>**  <br>**\</div\>**  <br>**\</template\>**  <br>**\<style** scoped**\>\<style\>**|
+
+## Axios get和post方法
+
+## Axios 拦截器
+
+如果想在axios发送请求之前，或者是数据响应回来在执行then方法之前做一些额外的工作，可以通过拦截器完成
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8  <br>9  <br>10  <br>11  <br>12  <br>13  <br>14  <br>15  <br>16  <br>17  <br>18  <br>19  <br>20  <br>21  <br>22  <br>23  <br>24  <br>25  <br>26  <br>27  <br>28  <br>29  <br>30  <br>31  <br>32  <br>33  <br>34  <br>35  <br>36  <br>37  <br>38  <br>39  <br>40  <br>41|**import** axios **from** "axios"**;**<br><br>  <br><br>// 使用axios函数创建一个可以发送请求的实例对象  <br>**const** instance **=** axios**.**create**({**  <br>// 请求的基础路径  <br>baseURL**:**"https//api.uomg.com/"**,**  <br>timeout**:****10000**  <br>**});**<br><br>  <br><br>// 设置请求拦截器  <br>instance**.**interceptors**.**request**.****use****(**  <br>**function****(**config**) {**  <br>// 请求之前，设置请求信息的方法  <br>config**.**headers**.**Accept **=** "application/json, text/plain, text/html, */*"**;**  <br>// 设置完毕之后，必须返回config  <br>**return** config**;**  <br>**},**  <br>**function****(**error**) {**  <br>// 返回一个失败状态的promise  <br>**return** Promise**.**reject**(**"something wrong"**);**  <br>**}**  <br>**);**<br><br>  <br><br>instance**.**interceptors**.**response**.****use****(**  <br>**function****(**response**) {**  <br>// 响应状态码为200要执行的方法  <br>// 处理相应数据  <br>// 最后要返回response  <br>console**.**log**(**"response success:" **+** response**);**  <br>**return** response**;**  <br>**},**  <br>**function****(**error**) {**  <br>console**.**log**(**"response fail:" **+** error**);**  <br>// 最后一定要响应一个promise  <br>**return** Promise**.**reject**(**"something wrong"**);**  <br>  <br>**}**  <br>**);**<br><br>  <br><br>// 使用默认导出暴露instance  <br>**export default** instance**;**|
+
+# Vue3状态管理Pinia
+
+## Pinia介绍
+
+如何实现多个组件之间的数据传参  
+1 组件传参  
+2 路由传参  
+3 通过pinia状态管理定义共享数据  
+当我们有多个组件共享一个共同的状态（数据库）时，多个视图可以都依赖于同一份状态。  
+1 更强的团队协作约定  
+2 与Vue DevTools集成，包括时间轴、组件内部审查和时间旅行调式  
+3 模块热更新（HMR）  
+4 服务端渲染支持  
+Pinia就是一个实现实现了上述需要的状态管理库，由Vue核心团队维护，对vue2和vue3都可用。
+
+|   |   |
+|---|---|
+|1  <br>2|**//** 安装pinia  <br>npm install pinia|
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4  <br>5  <br>6  <br>7  <br>8  <br>9  <br>10  <br>11  <br>12  <br>13  <br>14  <br>15  <br>16  <br>17  <br>18  <br>19  <br>20  <br>21  <br>22  <br>23  <br>24  <br>25  <br>26  <br>27  <br>28  <br>29  <br>30  <br>31  <br>32  <br>33  <br>34  <br>35  <br>36  <br>37  <br>38  <br>39  <br>40  <br>41  <br>42  <br>43  <br>44  <br>45|// store.js  <br>// 定义共享的pinia数据  <br>**import** **{**defineStore**}** **from** "pinia"**;**<br><br>  <br><br>// 定义一个Person共享  <br>**export const** definedPerson **=** defineStore**({**  <br>// 当前数据的id必须全局统一  <br>id**:** "personPinia"**,**  <br>// 状态，其实就是响应式数据  <br>state**: () =\> {**  <br>**return** **{**  <br>username**:** "prokyhoof"**,**  <br>age**:** "18"**,**  <br>hobbies**: [**"sing"**,** "dance"**]**  <br>**}**  <br>**},**  <br>// 专门定义一个获得数据或者是使用数据计算结果的一些函数，这里函数不要修改数据  <br>getters**: {**  <br>getAge**() {**  <br>**return this****.**age**;**  <br>**},**  <br>getHobbiesCount**() {**  <br>**return this****.**hobbies**.**length**;**  <br>**}**  <br>**},**  <br>// 专门定义一些修改数据的函数  <br>actions**: {**  <br>doubleAge**(**age**) {**  <br>**this****.**age **=** **this****.**age ***** **2****;**  <br>**}**  <br>**}**  <br>**});**<br><br>  <br><br>// main.js  <br>// 开启全局的Pinia功能  <br>**import** **{**createPinia**}** **from** "pinia"**;**  <br>**let** pinia **=** createPinia**();**<br><br>  <br><br>**let** app **=** createApp**(**App**);**  <br>app**.****use****(**pinia**);**<br><br>  <br><br>// Operate.vue  <br>// 导入pinia定义的数据  <br>**import** **{**definedPerson**}** **from** "../store/store.js"**;**  <br>**let** person **=** definedPerson**();**|
+
+|   |   |
+|---|---|
+|1  <br>2  <br>3  <br>4|// 恢复默认值  <br>Person共享.$reset();  <br>// 一次性修改多个属性值  <br>Person共享.$patch({key: "value", ...});|
+
+## Pinia其他细节
+
+1 State（状态）在大多数情况下，state都是你的store的核心，人们通常会先定义能代表他们App的state。在Pinia中，state被定义为一个返回初始状态的函数  
+2 Getter完全等同于state的state的计算值。可以通过defineStore()中的getters属性来定义他们。推荐使用箭头函数，并且它将接收state作为第一个参数  
+3 Action相当于组件中的method。它们可以通过defineStore()中的actions属性来定义，并且它们也是定义业务逻辑的完美选择。类似getter，action也可通过this访问整个store实例，并支持完整的类型标准（以及自动补全），不同的是，action可以是异步的，你可以在它们里面await调用任何API，以及其他action
+    
+# Element-plus组件库
+
+## Element-plus介绍
+
+Element Plus是一套基于Vue 3的开源UI组件库，是由饿了么前端团队开发的升级版本Element UI。Element Plus提供了丰富的UI组件、易于使用的API接口和灵活的主题定制功能，可以帮助开发者快速构建高质量的Web应用程序  
+官网：[一个 Vue 3 UI 框架 | Element Plus](https://element-plus.org/zh-CN/)
+
+|   |   |
+|---|---|
+|1  <br>2|**//** 安装element-plus  <br>npm install element-plus|
