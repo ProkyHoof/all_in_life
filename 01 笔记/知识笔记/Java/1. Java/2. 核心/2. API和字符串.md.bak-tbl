@@ -1,4 +1,4 @@
-﻿---
+---
 tags:
   - 知识
 类型: 计算机
@@ -34,9 +34,12 @@ String name = "猪脚";
 
 2. new：  
 
-```vtable
-{"rows":[[{"t":"构造方法","rs":1,"cs":1},{"t":"说明","rs":1,"cs":1}],[{"t":"public String()","rs":1,"cs":1},{"t":"创建空白字符串，不含任何内容","rs":1,"cs":1}],[{"t":"public String(String original)","rs":1,"cs":1},{"t":"根据传入的字符串，创建字符串对象","rs":1,"cs":1}],[{"t":"public String(char[] chs)","rs":1,"cs":1},{"t":"根据字符数组，创建字符串对象","rs":1,"cs":1}],[{"t":"public String(byte[] chs)","rs":1,"cs":1},{"t":"根据字节数组，创建字符串对象（通过 ASCII 码表将数字进行转换，然后拼接）","rs":1,"cs":1}]]}
-```
+| 构造方法 | 说明 |
+|---|---|
+| public String() | 创建空白字符串，不含任何内容 |
+| public String(String original) | 根据传入的字符串，创建字符串对象 |
+| public String(char[] chs) | 根据字符数组，创建字符串对象 |
+| public String(byte[] chs) | 根据字节数组，创建字符串对象（通过 ASCII 码表将数字进行转换，然后拼接） |
 
 注：如果将字符串变成字符数组，可以使用 toCharArray()，返回值为 char[]。  
 
@@ -55,17 +58,21 @@ StringTable（串池）在 JDK 7 版本开始，从方法区中挪到了堆区�
 
 字符串内容的比较：  
 
-```vtable
-{"rows":[[{"t":"方法","rs":1,"cs":1},{"t":"说明","rs":1,"cs":1}],[{"t":"boolean equals(要比较的字符串)","rs":1,"cs":1},{"t":"全部一样结果才是 true，否则为 false","rs":1,"cs":1}],[{"t":"boolean equalsIgnoreCase(要比较的字符串)","rs":1,"cs":1},{"t":"忽略大小写的比较","rs":1,"cs":1}]]}
-```
+| 方法 | 说明 |
+|---|---|
+| boolean equals(要比较的字符串) | 全部一样结果才是 true，否则为 false |
+| boolean equalsIgnoreCase(要比较的字符串) | 忽略大小写的比较 |
 
 注意：键盘录入的字符串是在堆区域中 new 出来的地址值。  
 
 ## 2.5 遍历字符串
 
-```vtable
-{"rows":[[{"t":"方法","rs":1,"cs":1},{"t":"说明","rs":1,"cs":1}],[{"t":"public char charAt(int index)","rs":1,"cs":1},{"t":"根据索引返回字符","rs":1,"cs":1}],[{"t":"public int length()","rs":1,"cs":1},{"t":"返回此字符串的长度","rs":1,"cs":1}],[{"t":"数组的长度","rs":1,"cs":1},{"t":"数组名.length","rs":1,"cs":1}],[{"t":"字符串的长度","rs":1,"cs":1},{"t":"字符串对象.length()","rs":1,"cs":1}]]}
-```
+| 方法 | 说明 |
+|---|---|
+| public char charAt(int index) | 根据索引返回字符 |
+| public int length() | 返回此字符串的长度 |
+| 数组的长度 | 数组名.length |
+| 字符串的长度 | 字符串对象.length() |
 
 ## 2.6 截取字符串
 `String substring(int beginIndex, int endIndex)` 截取。  
@@ -83,20 +90,24 @@ StringBuilder 可以看成是一个容器，创建之后里面的内容是可变
 
 ## 3.2 StringBuilder 构造方法
 
-```vtable
-{"rows":[[{"t":"方法名","rs":1,"cs":1},{"t":"说明","rs":1,"cs":1}],[{"t":"public StringBuilder()","rs":1,"cs":1},{"t":"创建一个空白可变字符串对象，不含有任何内容","rs":1,"cs":1}],[{"t":"public StringBuilder(String str)","rs":1,"cs":1},{"t":"根据字符串的内容，来创建可变字符串对象","rs":1,"cs":1}]]}
-```
+| 方法名 | 说明 |
+|---|---|
+| public StringBuilder() | 创建一个空白可变字符串对象，不含有任何内容 |
+| public StringBuilder(String str) | 根据字符串的内容，来创建可变字符串对象 |
 
 ## 3.3 StringBuilder 常用方法
 
-```vtable
-{"rows":[[{"t":"方法名","rs":1,"cs":1},{"t":"说明","rs":1,"cs":1}],[{"t":"public StringBuilder append(任意类型)","rs":1,"cs":1},{"t":"添加数据，并返回对象本身","rs":1,"cs":1}],[{"t":"public StringBuilder reverse()","rs":1,"cs":1},{"t":"反转容器中的内容","rs":1,"cs":1}],[{"t":"public int length()","rs":1,"cs":1},{"t":"返回长度（字符出现的个数）","rs":1,"cs":1}],[{"t":"public String toString()","rs":1,"cs":1},{"t":"通过 toString() 就可以实现把 StringBuilder 转换为 String","rs":1,"cs":1}]]}
-```
+| 方法名 | 说明 |
+|---|---|
+| public StringBuilder append(任意类型) | 添加数据，并返回对象本身 |
+| public StringBuilder reverse() | 反转容器中的内容 |
+| public int length() | 返回长度（字符出现的个数） |
+| public String toString() | 通过 toString() 就可以实现把 StringBuilder 转换为 String |
 
 注意：因为 StringBuilder 是 Java 已经写好的类，Java 在底层对它做了一些特殊处理，打印对象不是地址值。  
 链式编程：当我们在调用一个方法的时候，不需要用变量接收他的结果，可以继续调用其他方法。  
 
-示例：  
+示例：【补充】  
 
 ```java
 StringBuilder sb = new StringBuilder();
@@ -114,17 +125,20 @@ System.out.println(result); // aaabbbccc
 
 ## 4.2 StringJoiner 的构造方法
 
-```vtable
-{"rows":[[{"t":"方法名","rs":1,"cs":1},{"t":"说明","rs":1,"cs":1}],[{"t":"public StringJoiner(间隔符号)","rs":1,"cs":1},{"t":"创建一个 StringJoiner 对象，指定拼接时的间隔符号","rs":1,"cs":1}],[{"t":"public StringJoiner(间隔符号, 开始符号, 结束符号)","rs":1,"cs":1},{"t":"创建一个 StringJoiner 对象，指定间隔符号、开始符号、结束符号","rs":1,"cs":1}]]}
-```
+| 方法名 | 说明 |
+|---|---|
+| public StringJoiner(间隔符号) | 创建一个 StringJoiner 对象，指定拼接时的间隔符号 |
+| public StringJoiner(间隔符号, 开始符号, 结束符号) | 创建一个 StringJoiner 对象，指定间隔符号、开始符号、结束符号 |
 
 ## 4.3 StringJoiner 的成员方法
 
-```vtable
-{"rows":[[{"t":"方法名","rs":1,"cs":1},{"t":"说明","rs":1,"cs":1}],[{"t":"public StringJoiner add(添加内容)","rs":1,"cs":1},{"t":"添加数据，并返回对象本身","rs":1,"cs":1}],[{"t":"public int length()","rs":1,"cs":1},{"t":"返回长度（字符出现的个数）","rs":1,"cs":1}],[{"t":"public String toString()","rs":1,"cs":1},{"t":"返回一个字符串（该字符串就是拼接之后的结果）","rs":1,"cs":1}]]}
-```
+| 方法名 | 说明 |
+|---|---|
+| public StringJoiner add(添加内容) | 添加数据，并返回对象本身 |
+| public int length() | 返回长度（字符出现的个数） |
+| public String toString() | 返回一个字符串（该字符串就是拼接之后的结果） |
 
-示例：  
+示例：【补充】  
 
 ```java
 StringJoiner sj = new StringJoiner("---", "[", "]");
@@ -157,7 +171,7 @@ StringBuilder 源码分析：
 
 # 6 综合练习
 
-练习：键盘录入一个字符串，统计其中大写字母、小写字母、数字分别有多少个。  
+练习：键盘录入一个字符串，统计其中大写字母、小写字母、数字分别有多少个。【补充】  
 
 ```java
 import java.util.Scanner;

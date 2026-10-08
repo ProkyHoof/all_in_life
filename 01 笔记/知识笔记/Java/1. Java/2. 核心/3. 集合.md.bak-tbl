@@ -1,0 +1,92 @@
+---
+tags:
+  - 知识
+类型: 计算机
+领域: Java_核心
+来源: "[黑马程序员Java零基础视频教程_上部(Java入门，含斯坦福大学练习题+力扣算法题和大厂java面试题）](https://www.bilibili.com/video/BV17F411T7Ao?vd_source=aae3c81bc41fca87a978ef4700fc0a91)"
+日期: 2026-10-08
+关联:
+---
+
+# 1 集合的概念
+
+## 1.1 集合和数组的对比
+
+| 对比项 | 数组 | 集合 |
+|---|---|---|
+| 长度 | 固定 | 可变 |
+| 存储类型 | 可以存基本数据类型和引用数据类型 | 只能存引用数据类型 |
+
+## 1.2 ArrayList
+泛型：限定集合中存储数据的类型。  
+注意：创建的是 ArrayList 的对象，而 ArrayList 是 Java 已经写好的类。  
+这个类在底层做了一些处理，打印对象不是地址值，而是集合中存储的数据内容。  
+在展示的时候会拿 [] 把所有的数据进行包裹。  
+
+创建集合的格式：【补充】  
+
+```java
+ArrayList<String> list = new ArrayList<>();
+```
+
+## 1.3 ArrayList 成员方法
+
+| 方法名 | 说明 |
+|---|---|
+| boolean add(E e) | 添加元素，返回值表示是否添加成功 |
+| boolean remove(E e) | 删除指定元素，返回值表示是否删除成功 |
+| E remove(int index) | 删除指定索引的元素，返回被删除元素 |
+| E set(int index, E e) | 修改指定索引下的元素，返回原来的元素 |
+| E get(int index) | 获取指定索引的元素 |
+| int size() | 集合的长度，也就是集合中元素的个数 |
+
+使用示例：【补充】  
+
+```java
+import java.util.ArrayList;
+
+public class Test {
+    public static void main(String[] args) {
+        ArrayList<String> list = new ArrayList<>();
+
+        list.add("张三");
+        list.add("李四");
+        list.add("王五");
+
+        System.out.println(list); // [张三, 李四, 王五]
+
+        list.remove(1); // 删除索引 1 的元素
+        list.set(0, "赵六"); // 把索引 0 的元素改为 赵六
+
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println(list.get(i));
+        }
+    }
+}
+```
+
+## 1.4 基本数据类型的包装类
+集合只能存储引用数据类型，所以基本数据类型需要用到对应的包装类。  
+
+| 基本数据类型 | 包装类 |
+|---|---|
+| byte | Byte |
+| short | Short |
+| char | Character |
+| int | Integer |
+| long | Long |
+| float | Float |
+| double | Double |
+| boolean | Boolean |
+
+注意：  
+- 在 JDK 5 之后，有了自动装箱和自动拆箱机制，基本数据类型和包装类之间可以自动转换。【补充】  
+- Integer 会在内部缓存 -128 ~ 127 之间的数据，重复使用时不会创建新对象。【补充】  
+
+示例：【补充】  
+
+```java
+ArrayList<Integer> list = new ArrayList<>();
+list.add(10); // 自动装箱：int -> Integer
+int num = list.get(0); // 自动拆箱：Integer -> int
+```

@@ -282,9 +282,16 @@ quickSort(arr, start + 1, j);
 
 操作数组的工具类
 
-```vtable
-{"rows":[[{"t":"方法名","rs":1,"cs":1},{"t":"说明","rs":1,"cs":1}],[{"t":"public static String toString(数组)","rs":1,"cs":1},{"t":"把数组拼接成一个字符串","rs":1,"cs":1}],[{"t":"public static int binarySearch(数组， 查找的元素)","rs":1,"cs":1},{"t":"二分查找法查找元素","rs":1,"cs":1}],[{"t":"public static int[] copyOf(原数组， 新数组长度)","rs":1,"cs":1},{"t":"拷贝数组","rs":1,"cs":1}],[{"t":"public static int[] copyOfRange(原数组，起始索引，结束索引)","rs":1,"cs":1},{"t":"拷贝数组（指定范围）","rs":1,"cs":1}],[{"t":"public static void fill(数组， 元素)","rs":1,"cs":1},{"t":"填充数组","rs":1,"cs":1}],[{"t":"public static void sort(数组)","rs":1,"cs":1},{"t":"按照默认方式进行数组排序","rs":1,"cs":1}],[{"t":"public static void sort(数组, 排序规则)","rs":1,"cs":1},{"t":"按照指定的规则排序","rs":1,"cs":1}]]}
-```
+|   |   |
+|---|---|
+|方法名|说明|
+|public static String toString(数组)|把数组拼接成一个字符串|
+|public static int binarySearch(数组， 查找的元素)|二分查找法查找元素|
+|public static int[] copyOf(原数组， 新数组长度)|拷贝数组|
+|public static int[] copyOfRange(原数组，起始索引，结束索引)|拷贝数组（指定范围）|
+|public static void fill(数组， 元素)|填充数组|
+|public static void sort(数组)|按照默认方式进行数组排序|
+|public static void sort(数组, 排序规则)|按照指定的规则排序|
 
 注意：在 sort 方法中，第二个参数是一个接口，所以在调用方法的时候，需要传递这个接口的实现类对象，作为排序的规则。但是这个实现类，我们只要使用一次，所以就没有必要单独的去写一个类，直接采取匿名内部类的方式就可以了。
 
