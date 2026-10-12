@@ -61,6 +61,18 @@ pip freeze > requirements.txt
 pip install -r requirements.txt
 ```
 
+## 1.3 配置 API Key  
+在根目录创建 `.env` 文件：  
+
+```text
+DEEPSEEK_API_KEY=你的真实key
+```
+
+再创建 `.env.example`：  
+
+```text
+DEEPSEEK_API_KEY=your_api_key_here
+```
 
 
 
