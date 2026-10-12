@@ -14,6 +14,31 @@ tags:
 
 # 1 day 01  
 ## 1.1 确认 Git 推送成功  
+配置 `.gitignore` 文件：  
+
+```text
+# Python  
+.venv/  
+__pycache__/  
+*.pyc  
+*.pyo  
+.pytest_cache/  
+  
+# 环境变量  
+.env  
+  
+# 数据库文件  
+*.db  
+*.sqlite3  
+  
+# Pycharm  
+.idea/  
+  
+# 系统文件  
+.DS_Store  
+Thumb.db
+```
+
 
 ``` bash
 git add .
@@ -73,6 +98,10 @@ DEEPSEEK_API_KEY=你的真实key
 ```text
 DEEPSEEK_API_KEY=your_api_key_here
 ```
+
+> `.env` 是自己用，`.env.example` 是他人用，将 `.env` 改为 `.env.example` ，填写 `api_key` 就可以使用。  
+
+## 1.4 验证 API  
 
 
 
