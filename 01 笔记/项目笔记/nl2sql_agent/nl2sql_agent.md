@@ -150,7 +150,7 @@ print("Database created: shop.db")
 ```
 
 **外键是一张表的字段，指向另一张表的主键。它保证引用完整性——不能引用不存在的记录。在 NL 2 SQL 场景中，外键关系告诉模型两张表怎么关联，是生成 JOIN 语句的关键信息。**
-### 2.1.1
+### 2.1.1 占位符
 
 ```python
 cursor.executemany("INSERT OR IGNORE INTO products VALUES (?,?,?,?,?)", [...])
@@ -164,5 +164,8 @@ cursor.executemany("INSERT OR IGNORE INTO products VALUES (?,?,?,?,?)", [...])
 **面试考点**：什么是 SQL 注入？怎么防止？
 
 > 标准答案：**SQL 注入是攻击者通过输入恶意 SQL 片段，改变原 SQL 的语义。防止方法是使用参数化查询（占位符 `?`），让数据库驱动处理值的转义，而不是字符串拼接。**
+
+# 3 day 03  
+## 3.1 一个最小的 NL 2 SQL 流程  
 
 
