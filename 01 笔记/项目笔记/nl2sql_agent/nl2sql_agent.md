@@ -101,11 +101,68 @@ DEEPSEEK_API_KEY=your_api_key_here
 
 > `.env` 是自己用，`.env.example` 是他人用，将 `.env` 改为 `.env.example` ，填写 `api_key` 就可以使用。  
 
-## 1.4 验证 API  
+# 2 day 02  
+## 2.1 写 init_db.py 创建数据库  
 
+```python
+import sqlite3
 
+conn = sqlite3.connect("shop.db")
+cursor = conn.cursor()
 
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS products (
+    id INTEGER PRIMARY KEY,
+    name TEXT NOT NULL,
+    category TEXT,
+    price REAL,
+    stock INTEGER
+)
+""")
 
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS orders (
+    id INTEGER PRIMARY KEY,
+    product_id INTEGER,
+    quantity INTEGER,
+    order_date TEXT,
+    FOREIGN KEY (product_id) REFERENCES products(id)
+)
+""")
 
+cursor.executemany("INSERT OR IGNORE INTO products VALUES (?,?,?,?,?)", [
+    (1, "iPhone 15", "电子产品", 5999.0, 100),
+    (2, "MacBook Pro", "电子产品", 12999.0, 50),
+    (3, "Python编程书", "图书", 89.0, 200),
+    (4, "机械键盘", "配件", 399.0, 80),
+])
+
+cursor.executemany("INSERT OR IGNORE INTO orders VALUES (?,?,?,?)", [
+    (1, 1, 2, "2025-01-15"),
+    (2, 2, 1, "2025-01-20"),
+    (3, 3, 5, "2025-02-01"),
+    (4, 4, 3, "2025-02-10"),
+])
+
+conn.commit()
+conn.close()
+print("Database created: shop.db")
+```
+
+**外键是一张表的字段，指向另一张表的主键。它保证引用完整性——不能引用不存在的记录。在 NL 2 SQL 场景中，外键关系告诉模型两张表怎么关联，是生成 JOIN 语句的关键信息。**
+### 2.1.1
+
+```python
+cursor.executemany("INSERT OR IGNORE INTO products VALUES (?,?,?,?,?)", [...])
+```
+
+**为什么用 `executemany` 而不是 `execute` **：`executemany` 一次插入多条记录，比循环调用 `execute` 更高效。  
+**为什么用 `?` 占位符**：这是**参数化查询**。不要把值直接拼进 SQL 字符串，因为：  
+1. **安全**：防止 SQL 注入。如果用户输入包含 `'; DROP TABLE products; --`，拼接字符串会把表删掉。
+2. **省事**：不用手动处理引号和转义。
+
+**面试考点**：什么是 SQL 注入？怎么防止？
+
+> 标准答案：**SQL 注入是攻击者通过输入恶意 SQL 片段，改变原 SQL 的语义。防止方法是使用参数化查询（占位符 `?`），让数据库驱动处理值的转义，而不是字符串拼接。**
 
 
