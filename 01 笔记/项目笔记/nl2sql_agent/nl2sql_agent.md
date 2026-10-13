@@ -8,7 +8,7 @@ tags:
 关联知识:
 关联资源:
 ---
-
+[Drawing 2026-10-13 13.21.07.excalidraw](../../../03%20附件/Excalidraw/项目/nl2sql_agent/Drawing%202026-10-13%2013.21.07.excalidraw.md)[Drawing 2026-10-13 13.21.07.excalidraw](../../../03%20附件/Excalidraw/项目/nl2sql_agent/Drawing%202026-10-13%2013.21.07.excalidraw.md)
 # 1 README  
 
 
@@ -167,5 +167,8 @@ cursor.executemany("INSERT OR IGNORE INTO products VALUES (?,?,?,?,?)", [...])
 
 # 3 day 03  
 ## 3.1 一个最小的 NL 2 SQL 流程  
+
+![Drawing 2026-10-13 13.21.07.excalidraw](../../../03%20附件/Excalidraw/项目/nl2sql_agent/Drawing%202026-10-13%2013.21.07.excalidraw.md)
+
 
 
