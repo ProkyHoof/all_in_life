@@ -288,18 +288,18 @@ def nl2sql_with_retry(question: str, schema: str, db_path: str, max_retries: int
         else:
             fix_prompt = f"""之前生成的SQL执行失败，请修正。
 
-原问题：{question}
-
-数据库表结构：
-{schema}
-
-失败的SQL：{last_sql}
-
-错误信息：{last_error}
-
-请生成修正后的SQL，只输出JSON：
-{{"sql": "修正后的SQL", "explanation": "说明修改了什么"}}
-"""
+				原问题：{question}
+				
+				数据库表结构：
+				{schema}
+				
+				失败的SQL：{last_sql}
+				
+				错误信息：{last_error}
+				
+				请生成修正后的SQL，只输出JSON：
+				{{"sql": "修正后的SQL", "explanation": "说明修改了什么"}}
+				"""
             response = client.chat.completions.create(
                 model="deepseek-chat",
                 messages=[{"role": "user", "content": fix_prompt}],
@@ -322,5 +322,15 @@ def nl2sql_with_retry(question: str, schema: str, db_path: str, max_retries: int
     return result, [], [("重试失败", f"已尝试 {max_retries} 次，最后一次错误：{last_error}")]
 ```
 
-其实不是一个
+`for attempt in range(max_retries)` **：循环最多 3 次。  
+`if attempt == 0` **：第一次用正常的 Prompt。之后用修正 Prompt。  
+`fix_prompt` **：包含四样信息——原问题、Schema、失败的 SQL、错误信息。  
+`if columns and columns[0] != "SQL执行错误"` **：判断执行是否成功。`execute_sql` 失败时返回的列名是 `"SQL执行错误"`，成功时返回真实列名。  
+`last_sql` 和 `last_error` **：记录失败信息，传给下一次循环。
+
+# 6 day 06 把结果翻译成自然语言  
+## 6.1 如何实现  
+核心思路：把用户问题、执行的 SQL、查询结果一起发给模型，让它生成自然语言回答。  
+关键约束：必须基于真实数据，不能编造。  
+
 
