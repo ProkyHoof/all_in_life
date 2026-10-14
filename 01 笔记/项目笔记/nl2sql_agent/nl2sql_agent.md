@@ -191,6 +191,7 @@ class SQLOutput(BaseModel):
 `BaseModel` 是什么：Pydantic 提供的基类。继承它，就获得自动校验能力。如果模型返回的 JSON 缺少 `sql` 字段，Pydantic 会立刻报错，不会让你拿到脏数据。  
 
 ## 4.2 get_schema  
+获取数据库的字段结构：  
 
 ```python
 def get_schema(db_path: str) -> str:
@@ -200,8 +201,10 @@ def get_schema(db_path: str) -> str:
     tables = [row[0] for row in cursor.fetchall()]
     schema_parts = []
     for table in tables:
+    	# 对每张表，用 PRAGMA table_info 查出它的字段信息。返回的每一行包含字段名、类型等。
         cursor.execute(f"PRAGMA table_info({table})")
         columns = cursor.fetchall()
+        # c[1] 是字段名，c[2] 是类型。这行把它们拼成 id INTEGER, name TEXT, price REAL 这样的字符串。
         cols = ", ".join(f"{c[1]} {c[2]}" for c in columns)
         schema_parts.append(f"表 {table}: {cols}")
     conn.close()
@@ -211,5 +214,26 @@ def get_schema(db_path: str) -> str:
 `sqlite_master` 是 SQLite 内置的表，存着所有表的元信息。这行查出所有表名，存进 `tables` 列表。比如 `['products', 'orders']`。  
 `cursor.fetchall()`：获取上面 SQL 查询返回的所有结果。它返回的是一个元组列表，类似这样：`[('users',), ('orders',), ('products',)]`。  
 
+## 4.3 generate_sql —— 让模型写 SQL
 
+```python
+def generate_sql(question: str, schema: str) -> SQLOutput:
+    prompt = f"""你是一个SQL专家。根据以下数据库表结构，将用户的问题转换为SQL查询。
+
+数据库表结构：
+{schema}
+
+用户问题：{question}
+
+只输出JSON，格式为：
+{{"sql": "你的SQL语句", "explanation": "简要说明"}}
+"""
+    response = client.chat.completions.create(
+        model="deepseek-chat",
+        messages=[{"role": "user", "content": prompt}],
+        response_format={"type": "json_object"},
+    )
+    raw = response.choices[0].message.content
+    return SQLOutput(**json.loads(raw))
+```
 
