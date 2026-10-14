@@ -237,3 +237,5 @@ def generate_sql(question: str, schema: str) -> SQLOutput:
     return SQLOutput(**json.loads(raw))
 ```
 
+从返回结果里取出模型说的话。`choices[0]` 是第一个回答，`message.content` 是文本内容。  
+`json.loads(raw)` 把 JSON 字符串转成 Python 字典。`SQLOutput(**dict)` 把字典转成 `SQLOutput` 对象。如果字段缺失或类型不对，Pydantic 会报错。  
