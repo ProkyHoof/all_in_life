@@ -277,4 +277,50 @@ def execute_sql(sql: str, db_path: str):
 
 ## 5.3 在 `minimal_nl2sql.py` 基础上改造  
 
+```python
+def nl2sql_with_retry(question: str, schema: str, db_path: str, max_retries: int = 3):
+    last_error = None
+    last_sql = None
+
+    for attempt in range(max_retries):
+        if attempt == 0:
+            result = generate_sql(question, schema)
+        else:
+            fix_prompt = f"""之前生成的SQL执行失败，请修正。
+
+原问题：{question}
+
+数据库表结构：
+{schema}
+
+失败的SQL：{last_sql}
+
+错误信息：{last_error}
+
+请生成修正后的SQL，只输出JSON：
+{{"sql": "修正后的SQL", "explanation": "说明修改了什么"}}
+"""
+            response = client.chat.completions.create(
+                model="deepseek-chat",
+                messages=[{"role": "user", "content": fix_prompt}],
+                response_format={"type": "json_object"},
+            )
+            raw = response.choices[0].message.content
+            result = SQLOutput(**json.loads(raw))
+
+        columns, rows = execute_sql(result.sql, db_path)
+
+        # 判断是否执行成功：如果第一列是"SQL执行错误"，说明失败
+        if columns and columns[0] != "SQL执行错误":
+            return result, columns, rows
+
+        # 记录失败信息，用于下一次重试
+        last_sql = result.sql
+        last_error = str(rows)
+
+    # 所有重试都失败
+    return result, [], [("重试失败", f"已尝试 {max_retries} 次，最后一次错误：{last_error}")]
+```
+
+其实不是一个
 
