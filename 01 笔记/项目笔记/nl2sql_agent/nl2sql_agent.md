@@ -39,7 +39,6 @@ __pycache__/
 Thumb.db
 ```
 
-
 ``` bash
 git add .
 git commit -m "chore: 初始化项目结构"
