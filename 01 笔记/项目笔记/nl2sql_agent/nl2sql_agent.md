@@ -239,7 +239,27 @@ def generate_sql(question: str, schema: str) -> SQLOutput:
 
 从返回结果里取出模型说的话。`choices[0]` 是第一个回答，`message.content` 是文本内容。  
 `json.loads(raw)` 把 JSON 字符串转成 Python 字典。`SQLOutput(**dict)` 把字典转成 `SQLOutput` 对象。如果字段缺失或类型不对，Pydantic 会报错。  
+## 4.4 `execute_sql` 执行 SQL 拿结果  
 
+```python
+def execute_sql(sql: str, db_path: str):
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+    try:
+        cursor.execute(sql)
+        columns = [desc[0] for desc in cursor.description] if cursor.description else []
+        rows = cursor.fetchall()
+        return columns, rows
+    except Exception as e:
+        return [], [("SQL执行错误", str(e))]
+    finally:
+        conn.close()
+```
+
+- `cursor.description` 包含列名信息，提取出来。  
+- `cursor.fetchall()` 取出所有数据行。  
+
+返回列名和数据
 # 5 day 05  错误处理与重试循环
 当 SQL 执行失败时，把错误信息喂回模型，让它重新生成 SQL。  
 ## 5.1 为什么需要重试  
