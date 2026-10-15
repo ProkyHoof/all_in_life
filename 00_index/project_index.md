@@ -1,4 +1,4 @@
-# [项目索引](1_all_in_life_index.md)  
+# [project_index](1_all_in_life_index.md)  
 
 ``` dataview
 TABLE 状态, 开始日期, 截止日期, 关联知识, 关联灵感
