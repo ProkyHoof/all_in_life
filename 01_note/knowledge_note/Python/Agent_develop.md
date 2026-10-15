@@ -32,12 +32,19 @@ start_date: 2026-10-15
 ## 2-2 API 文档
 [官网](https://reference.langchain.com/)  
 [Github](https://github.com/langchain-ai)
-
-[英文文档]
+[英文文档](https://docs.langchain.com/oss/python/deepagents/overview)
+[中文文档](https://langchain-zh.cn/oss/python/langchain/overview)
 [API 文档](https://reference.langchain.com/python/langchain/overview)
 
-## 2-2 LangChain 生态四大支柱  
+# 3 LangChain 生态四大支柱  
+
 LangChain 技术生态的四大核心支柱构成：`LangChain`，`LangGraph`，`Deep Agent`，`LangSmith`。  
-官方文档的解释： https://docs.LangChain.com/oss/python/concepts/products
+[官方解释](https://docs.langchain.com/oss/python/concepts/products)
+
+
+Deep Agent
+$\down$ (高级 Agent Harness)
+LangChain
+LangGraph
 
 
