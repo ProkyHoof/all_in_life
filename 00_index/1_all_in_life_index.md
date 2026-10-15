@@ -1,5 +1,5 @@
 
-# 🧭 我的人生仪表盘
+# 我的人生仪表盘
 
 > 最后更新：`= dateformat(date(today), "yyyy-MM-dd")`
 
