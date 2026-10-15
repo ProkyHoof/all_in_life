@@ -41,10 +41,6 @@ start_date: 2026-10-15
 LangChain 技术生态的四大核心支柱构成：`LangChain`，`LangGraph`，`Deep Agent`，`LangSmith`。  
 [官方解释](https://docs.langchain.com/oss/python/concepts/products)
 
-
-Deep Agent
-$\down$ (高级 Agent Harness)
-LangChain
-LangGraph
+![Drawing 2026-10-15 16.35.06.excalidraw](../../../03_attachments/Excalidraw/Python/Drawing%202026-10-15%2016.35.06.excalidraw.md)
 
 
