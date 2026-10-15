@@ -5,7 +5,7 @@ introduction: ssm 基础
 start_date: 2026-10-15
 ---
 
-# 1-Maven
+# 1 Maven
 ## 1-1 简介和入门
 ### 1-1-1 Maven 介绍
 Maven 就是个款为 Java 项目构建管理、依赖管理的工具（软件），使用 Maven 可以自动化构建、测试、打包和发布项目，大大提高了开发效率和质量。  
@@ -207,7 +207,7 @@ Maven 聚合是指将多个项目组织到一个父级项目中，通过被触�
 </modules>
 ```
 
-# 2-SpringFramework
+# 2 SpringFramework
 ## 2-1 技术体系结构
 ### 2-1-1 总体技术体系
 1. 单一架构：  
@@ -1801,7 +1801,7 @@ propagation 属性的可选值由 org.springframework.transaction.Propagation �
 
 > 注意：在同一个类中，对于 @Transactional 注解的方法调用，事务传播行为不会生效。这是因为 Spring 框架中使用代理模式实现事务机制，在同一个类中的方法调用并不经过代理，而是通过对象的方法调用，因此 @Transactional 注解的设置不会被代理捕获，也就不会产生任何事务传播行为的效果。
 
-# 3-MyBatis
+# 3 MyBatis
 ## 3-1 MyBatis 简介
 ### 3-1-1 简介
 MyBatis 是一款优秀的持久层框架，它支持自定义 SQL、存储过程以及高级映射。MyBatis 免除了几乎所有的 JDBC 代码以及设置参数和获取结果集的工作。MyBatis 可以通过简单的 XML 或注解来配置和映射原始类型、接口和 POJO（Plain Old Java Objects，普通老式 Java 对象）为数据库中的记录。  
@@ -2449,7 +2449,7 @@ MyBatis 的逆向工程有两种方式：
 MyBatisX 是一个 MyBatis 的代码生成插件，可以通过简单的配置和操作快速生成 MyBatis Mapper、pojo 类和 Mapper.xml 文件。  
 在 IDEA 中安装 MyBatisX 插件后，在 Mapper 接口的方法上可以直接跳转到对应的 Mapper.xml 中的 SQL 语句，也可以在数据库表上右键选择 Generate MyBatis 快速生成实体类、Mapper 接口和 Mapper.xml。
 
-# 4-SpringMVC
+# 4 SpringMVC
 ## 4-1 SpringMVC 简介
 ### 4-1-1 介绍
 Spring Web MVC 是基于 Servlet API 构建的原始 Web 框架，从一开始就包含在 Spring Framework 中。正式名称"Spring Web MVC"来自其源模块的名称（spring-webmvc），但它通常被称为"Spring MVC"。  
@@ -2838,7 +2838,7 @@ public Result save(@Validated @RequestBody Employee employee, BindingResult resu
 }
 ```
 
-# 5-SpringBoot3
+# 5 SpringBoot3
 ## 5-1 SpringBoot 介绍
 SpringBoot 帮我们简单、快速地创建一个独立的、生产级别的 Spring 应用（说明：SpringBoot 底层是 Spring），大多数 SpringBoot 应用只需要编写少量配置即可快速整合 Spring 平台及第三方技术。  
 SpringBoot 的核心优势：  

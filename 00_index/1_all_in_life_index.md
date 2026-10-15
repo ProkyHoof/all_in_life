@@ -12,7 +12,7 @@ SORT 创建日期 DESC
 LIMIT 3
 ```
 
-## 📚 [最近知识输入](knowledge_index.md)  
+## 📚 [knowledge](knowledge_index.md)  
 
 ``` dataview
 TABLE introduction, start_date
@@ -21,7 +21,7 @@ SORT 日期 DESC
 LIMIT 5
 ```
 
-## 🧰 [新增资源](tool_index.md)  
+## 🧰 [tool](tool_index.md)  
 
 ``` dataview
 TABLE 分类, 日期
@@ -30,16 +30,7 @@ SORT 日期 DESC
 LIMIT 5
 ```
 
-## 🌱 [生活片段](生活索引.md)  
-
-``` dataview
-TABLE 领域, 日期
-FROM #生活
-SORT 日期 DESC
-LIMIT 5
-```
-
-## 🚀 [项目进展](project_index.md)  
+## 🚀 [project](project_index.md)  
 
 ``` dataview
 TABLE 状态, 开始日期, 截止日期, 关联知识

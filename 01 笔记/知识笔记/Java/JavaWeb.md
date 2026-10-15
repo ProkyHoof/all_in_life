@@ -5,7 +5,7 @@ introduction: JavaWeb 基础
 start_date: 2026-10-15
 ---
 
-# 1-Web前端
+# 1 Web前端
 ## 1-1 HTML
 ### 1-1-1 HTML 的定义
 超文本标记语言。  
@@ -103,7 +103,7 @@ HTTP 超文本传输协议（Hyper Text transfer protocol），是一个属于�
 ![](../../../../03%20附件/attachments/知识附件/Java/2.%20JavaWeb/Web前端%20image%20ed6049813540f336.png)
 
 
-# 2-Servlet
+# 2 Servlet
 
 ## 2-1 简介
 静态资源：无需在程序运行时通过代码运行生成的资源，在程序运行之前就写好的资源。例如 html、css、js、img、音频文件和视频文件。  
@@ -270,7 +270,7 @@ MVC（Model View Controller）是软件工程中的一种软件架构模式，�
 ![](../../../../03%20附件/attachments/知识附件/Java/2.%20JavaWeb/Servlet%20image%2003a7a4f584510c19.png)
 
 
-# 3-会话_过滤器_监听器
+# 3 会话_过滤器_监听器
 
 ## 3-1 会话
 ### 3-1-1 HTTP 是无状态协议
@@ -503,7 +503,7 @@ public class MyApplicationListener implements ServletContextListener {
 }
 ```
 
-# 4-Ajax
+# 4 Ajax
 
 ## 4-1 什么是 AJAX
 ### 4-1-1 AJAX 的概念
@@ -558,7 +558,7 @@ function getMessage() {
 
 3. 校验不通过，无法阻止表单提交问题。
 
-# 5-前端工程化
+# 5 前端工程化
 ## 5-1 前端工程化
 前端工程化是使用软件工程的方法来单独解决前端的开发流程中模块化、组件化、规范化、自动化的问题，其主要目的是为了提高效率和降低成本。  
 ## 5-2 ECMA6Script
