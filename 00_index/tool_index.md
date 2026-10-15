@@ -1,4 +1,4 @@
-# [资源索引](1.%20人生仪表盘.md)  
+# [资源索引](1_all_in_life_index.md)  
 
 ``` dataview
 TABLE 分类, 日期

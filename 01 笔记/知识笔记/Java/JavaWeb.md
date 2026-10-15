@@ -1,18 +1,570 @@
-﻿---
-tags:
-  - 知识
-类型: 计算机
-领域: JavaWeb
-来源: "[黑马程序员Java零基础视频教程_上部(Java入门，含斯坦福大学练习题+力扣算法题和大厂java面试题）](https://www.bilibili.com/video/BV17F411T7Ao?vd_source=aae3c81bc41fca87a978ef4700fc0a91)"
-日期: 2026-10-08
-关联:
 ---
-# 1 前端工程化
+tags:
+  - knowledge
+introduction: JavaWeb 基础
+start_date: 2026-10-15
+---
+
+# 1-Web前端
+## 1-1 HTML
+### 1-1-1 HTML 的定义
+超文本标记语言。  
+1. html 文件是浏览器负责解析和展示。  
+2. html 文件是纯文本文件，普通编辑工具都可以编辑。  
+
+### 1-1-2 html 文件的根结构
+1. html 文件的根标签是 `<html></html>`。  
+2. html 根标签下有两个一级子标签 `<head></head>` 和 `<body></body>`。  
+
+head 头标签：定义那些不直接展示在页面主体上，但是又很重要的内容（字符集、CSS 引入、JS 引入）。  
+body 体标签：定义要展示到页面主体的标签。  
+### 1-1-3 专业词汇
+
+```vtable
+{"rows":[[{"t":"词汇","rs":1,"cs":1},{"t":"英文","rs":1,"cs":1},{"t":"含义","rs":1,"cs":1}],[{"t":"标签","rs":1,"cs":1},{"t":"tag","rs":1,"cs":1},{"t":"页面的一对<>","rs":1,"cs":1}],[{"t":"属性","rs":1,"cs":1},{"t":"attribute","rs":1,"cs":1},{"t":"对标签特征进行设置的一种方式，一般在开始标签中定义","rs":1,"cs":1}],[{"t":"文本","rs":1,"cs":1},{"t":"text","rs":1,"cs":1},{"t":"双标签中间的文字","rs":1,"cs":1}],[{"t":"元素","rs":1,"cs":1},{"t":"element","rs":1,"cs":1},{"t":"开始标签 + 属性 + 文本 + 结束标签 称为一个元素","rs":1,"cs":1}]]}
+```
+
+### 1-1-4 html 更多的语法细节
+- 标签有且只能有一个。  
+- 无论是双标签还是单标签都需要正确关闭。  
+- 标签可以嵌套但不能交叉嵌套。  
+- 注释语法为 <!-- -->，注意不能嵌套。  
+- 属性必须有值，值必须加引号，H5 中属性名和值相同时可以省略属性值。  
+- HTML 中不严格区分字符串使用单双引号。  
+- HTML 标签不严格区分大小写，但是不能大小写混用。  
+- HTML 中不允许自定义标签名，强行自定义则无效。  
+
+## 1-2 JSON 格式
+一个特定的字符串语法结构，JSON 格式的字符串在后端都可以很方便的和对象之间进行转换。  
+## 1-3 BOM 编程
+BOM 是 Browser Object Model 的简写，即浏览器对象模型。  
+BOM 由一系列对象组成，是访问、控制、修改浏览器的属性和方法（通过 window 对象及属性的一系列方法控制浏览器行为的一种编程）。  
+BOM 没有统一的标准（每种客户端都可以自定标准）。  
+BOM 编程是将浏览器窗口的各个组成部分抽象成各个对象，通过各个对象的 API 操作组件行为的一种编程。  
+window 对象的属性：  
+- history：历史。  
+- location：地址栏。  
+- document：浏览器打开的 html 文档。  
+- console：F12 开发者工具的控制台。  
+- screen：屏幕。  
+- navigator：浏览器软件本身。  
+- sessionStorage：会话级存储。  
+- localStorage：持久级存储。  
+
+window 对象 API：通过 window 对象及其属性的 API 控制浏览器的属性和行为。  
+## 1-4 DOM 编程
+简单来说：DOM（Document Object Model）编程就是使用 document 对象的 API 完成对网页 HTML 文档进行动态修改，以实现网页数据和样式动态变化效果的编程。  
+逻辑结构是一种树型结构的对象。  
+dom 树上的结点类型：  
+1. 元素结点 element：标签。  
+2. 属性结点 attribute：属性。  
+3. 文本结点 text：双标签中间的文字。  
+
+## 1-5 正则表达式
+简介：正则表达式是描述字符模式的对象。正则表达式用于对字符串模式匹配及检索替换，是对字符串执行匹配的强大工具。  
+## 1-6 XML
+XML 是 EXtensible Markup Language 的缩写，翻译过来就是可扩展标记语言，所以很明显，XML 和 HTML 一样都是标记语言，也就是说它们的基本语法都是标签。  
+## 1-7 Tomcat10
+项目上下文路径（项目访问目录）与项目部署目录（webapps）不一样。  
+### 1-7-1 Webapps 的标准项目结构
+- html  
+- static（js、css、img）  
+- WEB-INF（WEB-INF 目录下的资源是受保护的资源，是不可以通过浏览器直接访问的资源）  
+  - classes：字节码根路径。  
+  - lib：依赖的存放路径。  
+  - web.xml：项目的配置文件。  
+
+### 1-7-2 Tomcat 和 IDEA 的关联
+1. 建立 Tomcat 和 idea 的关联。  
+2. 使用 idea 创建一个 javaWeb 工程。  
+3. 使用 idea 将工程构建成一个可以发布的 app。  
+4. 使用 idea 将构建好的 app 部署到 Tomcat 中，启动运行。  
+
+Tomcat 副本中存放的仅仅是和要部署的项目相关的配置文件。  
+## 1-8 HTTP 协议
+HTTP 超文本传输协议（Hyper Text transfer protocol），是一个属于应用层的面向对象的协议。它是一种详细规定了浏览器和万维网服务器之间互相通信的规则。客户端发送给服务器的称为"请求报文"，服务器发送给客户端的称为"响应报文"。  
+1. 客户端和服务端交互的方式：请求永远都是客户端向服务端发送；响应永远都是服务端向客户端返回。  
+2. 客户端和服务端交互数据的格式：请求时发送的数据称之为请求报文；响应时返回的数据称之为响应报文。报文规定的格式：行、头、报文主体。  
+3. http 长连接和短连接问题。  
+
+协议层级：http 应用层协议；tcp 传输层协议；ip 网络层协议。  
+### 1-8-1 请求报文格式
+1. 请求首行（请求行）：GET/POST 资源路径?参数 HTTP/1.1。  
+2. 请求头信息（请求头）。  
+3. 空行。  
+4. 请求体：POST 请求才有请求体。  
+
+### 1-8-2 请求头
+
+![](../../../../03%20附件/attachments/知识附件/Java/2.%20JavaWeb/Web前端%20image%2070097b5101bdbd82.png)  
+
+### 1-8-3 响应状态码
+
+![](../../../../03%20附件/attachments/知识附件/Java/2.%20JavaWeb/Web前端%20image%20ed6049813540f336.png)
+
+
+# 2-Servlet
+
+## 2-1 简介
+静态资源：无需在程序运行时通过代码运行生成的资源，在程序运行之前就写好的资源。例如 html、css、js、img、音频文件和视频文件。  
+动态资源：需要在程序运行时通过代码运行生成的资源，在程序运行之前无法确定的数据，运行时动态生成。例如 Servlet、Thymeleaf。动态资源指的不是视图上的动画效果或者是简单的人机交互效果。  
+不是所有的 Java 类都能用于处理客户端请求，能处理客户端请求并做出响应的一套技术标准就是 Servlet。  
+Servlet 是运行在服务端的，所以 Servlet 必须在 Web 项目中开发且在 Tomcat 这样的服务容器中运行。  
+1. Tomcat 接收到请求后，会将请求报文的信息转换成一个 HttpServletRequest 对象，该对象中包含了请求中的所有信息（请求行、请求头、请求体）。  
+2. Tomcat 同时创建了一个 HttpServletResponse 对象，该对象用于承装要响应给客户端的信息，后面，该对象会被转换成响应的报文（响应行、响应头、响应体）。  
+3. Tomcat 根据请求中的资源路径找到对应的 servlet，将 servlet 实例化，调用 service 方法，同时将 HttpServletRequest 和 HttpServletResponse 对象传入。  
+
+service 方法：  
+1. 从 request 对象中获取请求的所有信息（参数）。  
+2. 根据参数生成要响应给客户端的数据。  
+3. 将响应的数据放入 response 对象。  
+
+conf/web.xml 记录了几乎所有的文件类型对应的 MIME 类型。  
+## 2-2 Servlet 生命周期
+应用程序中的对象不仅在空间上有层次结构的关系，在时间上也会因为处于程序运行过程中的不同阶段而表现出不同状态和不同行为——这就是对象的生命周期。  
+简单的叙述生命周期，就是对象在容器中从开始创建到销毁的过程。  
+1. 实例化：构造器。第一次请求/服务启动，1 次。  
+2. 初始化：init。构造完毕，1 次。  
+3. 接收请求，处理需求：service。每次请求，多次。  
+4. 销毁：destroy。关闭服务，1 次。  
+
+Servlet 在 Tomcat 中是单例的。  
+Servlet 的成员变量在多个线程之中是共享的。  
+不建议在 servlet 方法中修改成员变量，在并发请求时，会引发线程安全问题。  
+
+```xml
+<load-on-startup>6</load-on-startup>
+```
+
+默认值是 -1，含义是 Tomcat 启动时不会实例化 servlet。  
+其他正整数，含义是 Tomcat 在启动时，实例化该 servlet 的顺序。  
+如果序号冲突了，Tomcat 会自动协调启动顺序。  
+defaultServlet 是响应静态资源的 servlet。  
+## 2-3 Servlet 继承结构
+### 2-3-1 顶级 Servlet 接口
+
+```vtable
+{"rows":[[{"t":"方法","rs":1,"cs":1},{"t":"说明","rs":1,"cs":1}],[{"t":"init()","rs":1,"cs":1},{"t":"初始化方法，构造完毕后，由 Tomcat 自动调用初始化功能的方法","rs":1,"cs":1}],[{"t":"getServletConfig()","rs":1,"cs":1},{"t":"获得 ServletConfig 对象的方法","rs":1,"cs":1}],[{"t":"service()","rs":1,"cs":1},{"t":"接收用户请求，向用户响应信息的方法","rs":1,"cs":1}],[{"t":"getServletInfo()","rs":1,"cs":1},{"t":"返回 Servlet 字符串形式描述信息的方法","rs":1,"cs":1}],[{"t":"destroy()","rs":1,"cs":1},{"t":"Servlet 在回收前，由 Tomcat 调用的销毁方法，往往用于做资源的释放工作","rs":1,"cs":1}]]}
+```
+
+### 2-3-2 GenericsServlet 抽象类
+侧重除了 service 方法以外的其他方法的基础处理。  
+
+```vtable
+{"rows":[[{"t":"方法","rs":1,"cs":1},{"t":"说明","rs":1,"cs":1}],[{"t":"destroy()","rs":1,"cs":1},{"t":"将抽象方法，重写为普通方法，在方法内部没有任何的实现代码（平庸实现）","rs":1,"cs":1}],[{"t":"init(参数)","rs":1,"cs":1},{"t":"Tomcat 在调用 init 方法时，会读取配置信息进入一个 ServletConfig 对象并将该对象传入 init 方法","rs":1,"cs":1}],[{"t":"init()","rs":1,"cs":1},{"t":"重载的初始化方法，我们重写初始化方法时对应的方法","rs":1,"cs":1}],[{"t":"getServletConfig()","rs":1,"cs":1},{"t":"返回 ServletConfig 的方法","rs":1,"cs":1}],[{"t":"service()","rs":1,"cs":1},{"t":"再次抽象声明 service 方法","rs":1,"cs":1}]]}
+```
+
+### 2-3-3 HttpServlet 抽象类
+侧重 service 方法的处理。  
+### 2-3-4 自定义 Servlet
+1. 部分程序员推荐在 servlet 中重写 do 方法处理请求。  
+2. 目前直接重写 service 方法也没有什么问题。  
+3. 后续使用了 SpringMVC 框架后，我们无需继承 HttpServlet，处理请求的方法也无需是 do 或者是 service。  
+4. 如果 doGet 和 doPost 方法中，我们定义的代码都一样，可以让一个方法直接调用另一个方法。  
+
+掌握的技能：继承 HttpServlet 后，要么重写 service 方法，要么重写 doGet/doPost 方法。  
+## 2-4 ServletConfig
+注解方式：  
+
+```java
+@WebServlet(
+    urlPatterns = "",
+    initParams = {@WebInitParam(name = "", value = "")}
+)
+```
+
+## 2-5 ServletContext
+getRealPath()  
+getContextPath()  
+1. 域对象：一些用于存储数据和传递数据的对象，传递数据不同的范围，我们称为不同的域，不同的域对象代表不同的域，共享数据的范围不同。  
+2. ServletContext 代表应用，所有 ServletContext 域也叫作应用域，是 webapp 中最大的域，可以在本应用内实现数据的共享和传递。  
+3. webapp 中的三大域对象，分别是应用域、会话域、请求域。  
+
+![](../../../../03%20附件/attachments/知识附件/Java/2.%20JavaWeb/Servlet%20image%206fd3ff51cf6c40b9.png)  
+
+## 2-6 HttpServletRequest
+URI 统一资源标识符：interface URI()，资源定位的要求和规范。  
+URL 统一资源定位符：class URL implements URI()，一个具体的资源路径。  
+form 表单标签提交 GET 请求时，参数以键值对形式放在 url 后，不放在请求体里，GET 方式的请求也是可以有请求体的。  
+## 2-7 请求转发和响应重定向
+1. 请求转发和响应重定向是 web 应用中间接访问项目资源的两种手段，也是 Servlet 控制页面跳转的两种手段。  
+2. 请求转发通过 HttpServletRequest 实现，响应重定向通过 HttpServletResponse 实现。  
+
+### 2-7-1 请求转发的特性
+1. 请求转发时，请求和响应对象会继续传递给下一个资源。  
+2. 请求中的参数可以继续向下传递。  
+3. 请求转发是服务器内部的行为，客户端是不知道的。  
+4. 客户端只产生了一次请求。  
+5. 客户端的地址栏是不变的。  
+6. 目标资源可以是 servlet 动态资源，也可以是 html 静态资源。  
+7. 目标资源可以是 WEB-INF 下的受保护的资源，该方法也是 WEB-INF 下的资源的唯一访问方式。  
+8. 目标资源不可以是外部的资源。  
+
+### 2-7-2 响应重定向
+
+![](../../../../03%20附件/attachments/知识附件/Java/2.%20JavaWeb/Servlet%20image%20ab909d44de2e8e72.png)  
+
+特点：  
+1. 重定向是通过 HttpServletResponse 对象实现的。  
+2. 响应重定向是在服务器提示下的客户端行为。  
+3. 客户端的地址栏是变化的，客户端至少发送了两次请求，客户端产生了多次请求。  
+4. 请求产生了多次，后端就会有多个 request 对象，此时请求中的参数不能继续自动传递。  
+5. 目标资源可以是视图资源。  
+6. 目标资源不可以是 WEB-INF 下的资源。  
+7. 目标资源可以是外部资源。  
+
+重点：同样能够实现页面跳转，优先使用响应重定向。  
+## 2-8 web 乱码和路径问题
+### 2-8-1 请求乱码问题
+乱码产生的根本原因：  
+1. 数据的编码和解码使用的不是同一个字符集。  
+2. 使用了不支持某个语言文字的字符集。  
+
+tomcat10 默认以 UTF-8 为请求体的解码字符解码。  
+客户端提交数据时，要是以其他字符集对请求体中的数据进行编码则会出现乱码。  
+
+```java
+req.setCharacterEncoding("GBK");
+```
+
+GET 乱码问题：GET 方式时，form 表单提交的参数会放在 uri 后面，编码受到 charset 的影响。server.xml connector URIEncoding="";  
+POST 乱码问题：POST 方式时，form 表单提交的参数会放在请求体中，编码受到 charset 影响。req.setCharacterEncoding("");  
+### 2-8-2 响应乱码问题
+tomcat10 中，响应体默认的编码字符集使用的是 UTF-8。  
+解决思路：  
+1. 可以设置响应体的编码字符集和客户端的保持一致。不推荐，客户端解析的字符集是无法预测的。  
+2. 可以告诉客户端使用指定的字符集进行解码，通过设置 Content-Type 响应头。  
+
+```java
+resp.setContentType("text/html;charset=UTF-8");
+```
+
+> 注意：明确响应体的编码，然后再设置 Content-Type。  
+
+### 2-8-3 路径问题
+相对路径：以当前资源的所在路径为出发点去找目标资源。  
+缺点：目标资源路径受到当前资源路径的影响，不同的位置，相对路径写法不同。  
+绝对路径：始终以固定的路径作为出发点去找目标资源，和当前资源的所在路径没有关系。  
+优点：目标资源路径的写法不会受到当前资源路径的影响，不同的位置，绝对路径写法一致。  
+缺点：绝对路径要补充项目的上下文，项目上下文是可以改变的。  
+通过 head>base>href 属性，定义相对路径公共前缀，通过公共前缀把一个相对路径转换为绝对路径。  
+### 2-8-4 重定向中的路径问题
+相对路径：和前端的相对路径规则一致。  
+绝对路径：http://localhost:8080/  
+### 2-8-5 请求转发的路径问题
+相对路径写法一致。  
+绝对路径：请求转发到绝对路径是不需要添加项目上下文的。  
+请求转发的 / 代表的路径是 http://localhost:8080/d05/  
+## 2-9 MVC 架构模式
+MVC（Model View Controller）是软件工程中的一种软件架构模式，他把软件系统分为模型、视图和控制器三个基本部分。用一种业务逻辑、数据、界面显示分离的方法组织代码，将业务逻辑聚集到一个部件里面，在改进和个性化定制界面及用户交互的同时，不需要重新编写业务逻辑。  
+1. Model 模型层，具体功能如下：  
+   - 存放和数据库对象的实体类以及一些用于存储非数据库表完整相关的 VO 对象。  
+   - 存放一些对数据进行逻辑运算操作的一些业务处理代码。  
+2. View 视图层，具体功能如下：  
+   - 存放一些视图文件相关的代码，html、css、js 等。  
+   - 在前后端分离的项目中，后端已经没有视图文件，该层次已经衍化成独立的前端项目。  
+3. Controller 控制层，具体功能如下：  
+   - 接收客户端请求，获得请求数据。  
+   - 将准备好的数据响应给客户端。  
+
+![](../../../../03%20附件/attachments/知识附件/Java/2.%20JavaWeb/Servlet%20image%2003a7a4f584510c19.png)
+
+
+# 3-会话_过滤器_监听器
+
+## 3-1 会话
+### 3-1-1 HTTP 是无状态协议
+1. 无状态就是不保存状态，即无状态协议（stateless），HTTP 协议自身不对请求和响应之间的通信状态进行保存，也就是说在 HTTP 协议这个级别，协议对于发送过的请求或者响应都不做持久化处理。  
+2. 简单理解：浏览器发送请求，服务器接收并响应，但是服务器不记录请求是否来自哪个浏览器，服务器没记录浏览器的特征，就是客户端的状态。  
+
+### 3-1-2 Cookie
+Cookie 是一种客户端会话技术，Cookie 由服务端产生，它是服务器放在浏览器的一小份数据，浏览器以后每次访问服务器的时候都会将这小份数据携带到服务器去。  
+
+```java
+// 创建Cookie
+Cookie cookie = new Cookie("key", "value");
+resp.addCookie(cookie);
+
+// 获取请求中携带的cookie
+Cookie[] cookies = req.getCookies();
+// 请求中的多个cookie会进入该数组，请求中如果没有cookie，cookie数组是null
+if (null != cookies) {
+    for (Cookie cookie : cookies) {
+        System.out.println(cookie.getName() + "=" + cookie.getValue());
+    }
+}
+```
+
+默认情况下 Cookie 有效期是一次会话范围内，我们可以通过 cookie 的 setMaxAge() 方法让 Cookie 持久化保存到浏览器上。  
+#### 3-1-2-1 会话级 Cookie
+1. 服务器端并没有明确指定 Cookie 的存在时间。  
+2. 在浏览器端，Cookie 数据存在于内存中。  
+3. 只要浏览器还在开着，Cookie 数据就一直都在。  
+4. 浏览器关闭，内存中的 Cookie 数据就会被释放。  
+
+#### 3-1-2-2 持久化 Cookie
+1. 服务器端明确设置了 Cookie 的存在时间。  
+2. 在浏览器端，Cookie 数据会被保存到硬盘上。  
+3. Cookie 在硬盘上存在的时间根据服务器端限定的时间来管控，不受浏览器关闭的影响。  
+4. 持久化 Cookie 到达了预设的时间会被释放。  
+
+cookie.setMaxAge(int expiry) 参数单位是秒，表示 cookie 的持久化时间，如果设置参数为 0，表示将浏览器中保存的该 cookie 删除。  
+
+```java
+cookie.setMaxAge(60 * 5);
+```
+
+#### 3-1-2-3 Cookie 的提交路径
+访问互联网资源时不能每次都需要把所有 Cookie 带上，访问不同的资源时，可以携带不同的 cookie，我们可以通过 cookie 的 setPath(String path) 对 cookie 的路径进行设置。  
+
+```java
+cookie.setPath("/schedule/servlet1");
+```
+
+## 3-2 Session
+### 3-2-1 HttpSession 概述
+HttpSession 是一种保留更多信息在服务端的一种技术，服务器会为每一个客户端开启一块内存空间，即 session 对象，客户端在发送请求时，都可以使用自己的 session，这样服务端就可以通过 session 来记录某个客户端的状态了。  
+1. 服务端在为客户端创建 session 时，会同时将 session 对象的 id，即 JSESSIONID 以 cookie 的形式放入响应对象。  
+2. 后端创建完 session 后，客户端会收到一个特殊的 cookie，叫作 JSESSIONID。  
+3. 客户端下一次请求时携带 JSESSIONID，后端收到后，根据 JSESSIONID 找到对应的 session 对象。  
+4. 通过该机制，服务端通过 session 就可以存储一些专门针对某个客户端的信息了。  
+5. session 也是域对象。  
+
+```java
+// 接收请求中的username参数
+String username = req.getParameter("username");
+// 获得session对象
+HttpSession session = req.getSession();
+// 判断请求中有没有一个特殊的cookie JSESSIONID值
+// 有
+// 根据JSESSIONID找到对应的session对象
+// 有 返回之前的session
+// 没有 创建一个新的session返回，并且向response对象中存放一个JSESSIONID的cookie
+// 没有
+// 创建一个新的session返回，并且向response对象中放入一个JSESSIONID的cookie
+
+// 获取session的id
+System.out.println(session.getId());
+// 判断session是否是新的
+System.out.println(session.isNew());
+// 将username存入session
+session.setAttribute("username", username);
+```
+
+### 3-2-2 HttpSession 时效性
+为什么要设置 session 时效性：  
+1. 用户量很大之后，Session 对象相应的也要创建很多。如果一味创建不释放，那么服务器端的内存迟早要被耗尽。  
+2. 客户端关闭行为无法被服务端直接侦测，或者客户端较长时间不操作也经常出现，类似这些的情况，就需要对 session 的时限进行设置了。  
+
+```xml
+<session-config>
+    <session-timeout>30</session-timeout>
+</session-config>
+```
+
+也可以通过 HttpSession 的 API 对最大闲置时间进行设定。  
+
+```java
+// 设置最大闲置时间
+session.setMaxInactiveInterval(60);
+```
+
+也可以直接让 session 失效。  
+
+```java
+// 直接让session失效
+session.invalidate();
+```
+
+## 3-3 三大域对象
+### 3-3-1 域对象概述
+域对象：一些用于存储数据和传递数据的对象，传递数据不同的范围，称之为不同的域，不同的域对象代表不同的域，共享数据的范围也不同。  
+1. 请求域对象是 HttpServletRequest，传递数据的范围是一次请求之内及请求转发。  
+2. 会话域对象是 HttpSession，传递数据的范围是一次会话之内，可以跨多个请求。  
+3. 应用域对象是 ServletContext，传递数据的范围是本应用之内，可以跨多个会话。  
+
+![](../../../../03%20附件/attachments/知识附件/Java/2.%20JavaWeb/会话_过滤器_监听器%20image%2096a4344331d4c014.png)  
+
+### 3-3-2 域对象的使用
+域对象的 API：  
+
+![](../../../../03%20附件/attachments/知识附件/Java/2.%20JavaWeb/会话_过滤器_监听器%20image%20745371270cf79f24.png)  
+
+1. 请求转发时，请求域可以传递数据，请求域内一般放本次请求业务有关的数据，如：查询到的所有的部门信息。  
+2. 同一个会话内，不用请求转发，会话域可以传递数据，会话域内一般放本次会话的客户端有关的数据，如：当前客户端登录的用户。  
+3. 同一个 App 内，不同的客户端，应用域可以传递数据，应用域内一般放本程序应用有关的数据，如：Spring 框架的 IOC 容器。  
+
+## 3-4 过滤器
+### 3-4-1 过滤器概述
+Filter，即过滤器，是 JavaEE 技术规范之一，对目标资源的请求进行过滤的一套技术规范。  
+1. Filter 接口定义了过滤器的开发规范，所有的过滤器都要实现该接口。  
+2. Filter 的工作位置是项目中所有目标资源之前，容器在创建 HttpServletRequest 和 HttpServletResponse 对象后，会先调用 Filter 的 doFilter 方法。  
+3. Filter 的 doFilter 方法可以控制请求是否继续，如果放行，则请求继续，如果拒绝，则请求到此为止，由过滤器本身做出响应。  
+4. Filter 不仅可以对请求做出过滤，也可以在目标资源做出响应前，对响应再次进行处理。  
+5. Filter 是 GOF 中责任链模式的典型案例。  
+6. Filter 的常用应用包括但不限于，登录权限检查、解决网站乱码、过滤敏感字符、日志记录、性能分析… …  
+
+### 3-4-2 过滤器的使用
+
+![](../../../../03%20附件/attachments/知识附件/Java/2.%20JavaWeb/会话_过滤器_监听器%20image%205d785db2dad1eaa7.png)  
+
+doFilter 方法的作用：  
+1. 请求到达目标资源之前，先经过该方法。  
+2. 该方法有能力控制请求是否继续向后到达目标资源，可以在该方法内直接向客户端做响应处理。  
+3. 请求到达目标资源后，响应之前，还会经过该方法。  
+
+```java
+// 放行
+filterChain.doFilter(servletRequest, servletResponse);
+```
+
+```xml
+<!-- 配置过滤器 -->
+<filter>
+    <filter-name>loggingFilter</filter-name>
+    <filter-class>com.prokyhoof.filter.LoggingFilter</filter-class>
+</filter>
+<!-- 配置过滤器的过滤资源规则 路径 -->
+<filter-mapping>
+    <filter-name>loggingFilter</filter-name>
+    <!-- url-pattern 根据请求的资源路径 对指定的请求进行过滤
+         /* 过滤全部资源
+         /a/* 过滤以a开头的资源
+         *.html 过滤以html为后缀的资源
+         /servlet1 对servlet请求进行过滤
+         servlet-name 根据请求的servlet的别名，对指定的servlet资源进行过滤
+         一个filter-mapping中可以同时存在多个url-pattern和servlet-name -->
+    <url-pattern>/*</url-pattern>
+    <servlet-name>servlet1</servlet-name>
+</filter-mapping>
+```
+
+### 3-4-3 过滤器的生命周期
+1. 构造：构造器。  
+2. 初始化：init。  
+
+```xml
+<init-param>
+    <param-name>encoding</param-name>
+    <param-value>UTF-8</param-value>
+</init-param>
+```
+
+3. 过滤：doFilter。  
+4. 销毁：destroy。  
+
+### 3-4-4 过滤器链的使用
+
+![](../../../../03%20附件/attachments/知识附件/Java/2.%20JavaWeb/会话_过滤器_监听器%20image%205479b2833fc73e30.png)  
+
+```java
+@WebFilter("/*")
+```
+
+### 3-4-5 注解方式配置过滤器
+
+```java
+@WebFilter(
+    filterName = "loggingFilter",
+    initParams = {@WebInitParam(name = "dateTimePattern", value = "yyyy-MM-dd HH:mm:ss")},
+    urlPatterns = {"/servletA", "*.html"},
+    servletNames = {"servletBName"}
+)
+```
+
+## 3-5 监听器
+### 3-5-1 监听器概述
+监听器：专门用于对域对象身上发生的事件或状态改变进行监听和相应处理的对象。  
+监听器的分类：  
+按监听的对象划分：  
+1. application 域监听器：ServletContextListener、ServletContextAttributeListener。  
+2. session 域监听器：HttpSessionListener、HttpSessionAttributeListener、HttpSessionBindingListener、HttpSessionActivationListener。  
+3. request 域监听器：ServletRequestListener、ServletRequestAttributeListener。  
+
+按监听的事件分：  
+1. 域对象的创建和销毁监听器：ServletContextListener、HttpSessionListener、ServletRequestListener。  
+2. 域对象数据增删改事件监听器：ServletContextAttributeListener、HttpSessionAttributeListener、ServletRequestAttributeListener。  
+3. 其他监听器：HttpSessionBindingListener、HttpSessionActivationListener。  
+
+```java
+@WebListener
+public class MyApplicationListener implements ServletContextListener {
+    @Override
+    public void contextInitialized(ServletContextEvent sce) {
+        ServletContext application = sce.getServletContext();
+        System.out.println(application.hashCode() + "应用域初始化了");
+    }
+
+    @Override
+    public void contextDestroyed(ServletContextEvent sce) {
+        ServletContext application = sce.getServletContext();
+        System.out.println(application.hashCode() + "应用域销毁了");
+    }
+}
+```
+
+# 4-Ajax
+
+## 4-1 什么是 AJAX
+### 4-1-1 AJAX 的概念
+1. AJAX = Asynchronous JavaScript and XML（异步的 JavaScript 和 XML）。  
+2. AJAX 不是新的编程语言，而是一种使用现有标准的新方法。  
+3. AJAX 最大的优点是在不重新加载整个页面的情况下，可以与服务器交换数据并更新部分网页内容。  
+4. AJAX 不需要任何浏览器插件，但需要用户允许 JavaScript 在浏览器上执行。  
+5. XMLHttpRequest 只是实现 AJAX 的一种方式。  
+
+### 4-1-2 AJAX 的实现方式
+
+```html
+<script>
+function getMessage() {
+    // 实例化一个XMLHttpRequest
+    var request = new XMLHttpRequest();
+    // 设置XMLHttpRequest对象的回调函数
+    // request.readyState 1 2 3 4
+    // request.status 响应状态码 响应行状态码
+    request.onreadystatechange = function() {
+        if (request.readyState == 4 && request.status == 200) {
+            // 接收响应结果，处理结果
+            // request.responseText 后端响应回来的响应体中的数据
+            console.log(request.responseText);
+            // 将信息放到指定的位置
+            var inputEle = document.getElementById("message");
+            inputEle.value = request.responseText;
+        }
+    }
+    // 设置发送请求的方式和请求的资源路径
+    request.open("GET", "/hello?username=prokyhoof");
+    // 发送请求
+    request.send();
+}
+</script>
+
+<body>
+<button onclick="getMessage()">button</button>
+<input type="text" id="message">
+</body>
+```
+
+### 4-1-3 存在的问题
+1. 响应乱码问题。  
+2. 响应信息格式不规范，处理方式不规范。  
+
+后端响应回来的信息应当有一个统一的格式，前后端共同遵守。  
+响应一个 JSON 串：  
+- code：业务状态码，本次请求的业务是否成功？如果失败了，是什么原因失败的？不是响应报文中的响应码。  
+- message：业务状态码的补充说明/描述。  
+- data：本次响应的数据。  
+
+3. 校验不通过，无法阻止表单提交问题。
+
+# 5-前端工程化
+## 5-1 前端工程化
 前端工程化是使用软件工程的方法来单独解决前端的开发流程中模块化、组件化、规范化、自动化的问题，其主要目的是为了提高效率和降低成本。  
-# 2 ECMA6Script
-## 2.1 es6 的简介
+## 5-2 ECMA6Script
+### 5-2-1 es6 的简介
 是 JavaScript 语言的一次重大更新，是原来的 ECMAScript 标准的第六个版本。  
-## 2.2 es6 的变量和模板字符串
+### 5-2-2 es6 的变量和模板字符串
 let 和 var 的差别：  
 1. let 不能重复声明。  
 2. let 有块级作用域，非函数的花括号遇见 let 会有块级作用域，也就是只能在花括号里面访问。  
@@ -30,7 +582,7 @@ let city = "猪脚";
 let str = `zhu${city}jiao`;
 ```
 
-## 2.3 es6 的结构表达式
+### 5-2-3 es6 的结构表达式
 
 ```javascript
 let arr = [11, 22, 33, 44];
@@ -50,7 +602,7 @@ function showArr([a, b, c]) {
 }
 ```
 
-## 2.4 es6 中的箭头函数
+### 5-2-4 es6 中的箭头函数
 ES6 中的"箭头"函数，类似于 Java 中的 Lambda 表达式。  
 
 ```javascript
@@ -66,7 +618,7 @@ let fun6 = x => x + 1; // 方法体中，有且只有一行代码，这行代码
 > 箭头函数没有自己的 this。  
 > 箭头函数中的 this 是外层上下文环境中的 this。  
 
-## 2.5 rest 和 spread
+### 5-2-5 rest 和 spread
 rest 参数在形参上使用和 Java 中的可变参数几乎一样。  
 spread 参数在实参上使用 rest。  
 
@@ -95,7 +647,7 @@ let person2 = {age: 10};
 let person3 = {...person1, ...person2}
 ```
 
-## 2.6 分别导出
+### 5-2-6 分别导出
 
 ```javascript
 // module.js
@@ -133,7 +685,7 @@ import * as m1 from './module.js'
 console.log(m1.PI);
 ```
 
-## 2.7 统一导出
+### 5-2-7 统一导出
 
 ```javascript
 // module.js
@@ -169,7 +721,7 @@ console.log(PI);
 console.log(pi);
 ```
 
-## 2.8 默认导出
+### 5-2-8 默认导出
 
 ```javascript
 // module.js
@@ -207,7 +759,7 @@ import add from './module.js';
 console.log(add(10, 30));
 ```
 
-# 3 nodejs
+## 5-3 nodejs
 Node.js 是一个基于 Chrome V8 引擎的 JavaScript 运行时环境，可以使 JavaScript 运行在服务器端。  
 特点：  
 1. 单线程，但是采用了事件驱动、异步 I/O 模型，可以处理高并发请求。  
@@ -215,16 +767,16 @@ Node.js 是一个基于 Chrome V8 引擎的 JavaScript 运行时环境，可以�
 3. 模块化，Node.js 内置了大量模块、同时也可以通过第三方模块扩展功能。  
 4. 跨平台，可以在 Windows、Linux、Mac 等多个平台下运行。  
 
-# 4 npm
+## 5-4 npm
 NPM 全称 Node Package Manager，是 Node.js 包管理工具，是全球最大的模块生态系统，里面所有的模块都是开源免费的，也是 Node.js 的包管理工具，相当于后端的 Maven。  
 npm 软件：  
 1. 前端框架的下载工具。  
 2. 前端项目的管理工具。  
 
-## 4.1 npm 常用命令
+### 5-4-1 npm 常用命令
 
 ```bash
-# 1 项目初始化
+## 5-1 项目初始化
 npm init
 # 进入一个vscode创建好的项目中,执行npm init命令后,npm会引导您在命令行界面上
 # 回答一些问题,例如项目名称,版本号、作者、许可证等信息,并最终生成一个package.json
@@ -232,7 +784,7 @@ npm init
 npm init -y
 # 执行,-y yes的意思,所有信息使用当前文件夹的默认值!不用挨个写
 
-# 2 安装依赖 (https://www.npmjs.com)
+## 5-2 安装依赖 (https://www.npmjs.com)
 npm install 包名  或者  npm install 包名@版本号
 # 安装包或者指定版本的依赖包(安装到当前项目中)
 npm install -g 包名
@@ -240,20 +792,20 @@ npm install -g 包名
 npm install
 # 安装package.json中的所有记录的依赖
 
-# 3 升级依赖
+## 5-3 升级依赖
 npm update 包名
 # 将依赖升级到最新版本
 
-# 4 卸载依赖
+## 5-4 卸载依赖
 npm uninstall 包名
 
-# 5 查看依赖
+## 5-5 查看依赖
 npm ls
 # 查看项目依赖
 npm list -g
 # 查看全局依赖
 
-# 6 运行命令
+## 5-6 运行命令
 npm run
 # 命令是在执行npm脚本时使用的命令。npm脚本是一组在package.json文件中定义的可执行命令。
 # npm脚本可用于启动应用程序,运行测试,生成文档等,还可以自定义命令以及运行的脚本。
@@ -279,7 +831,7 @@ npm run
 在 package.json 文件中，scripts 字段是一个对象，其中包含一组键值对，键是要运行的脚本的名称，值是要执行的命令。  
 scripts 对象包含 start、test 和 build 三个脚本。当您运行 npm run start 时，将运行 node index.js，并启动应用程序。同样，运行 npm run test 时，将运行 Jest 测试套件，而 npm run build 将运行 webpack 命令以生成最终的构建输出。  
 总之，npm run 命令为您提供了一种在 package.json 文件中定义和管理一组指令的方式，可以在项目中快速且灵活地运行各种操作。  
-# 5 Vue3
+## 5-5 Vue3
 1. 声明式渲染：Vue 基于标准 HTML 拓展了一套模板语法，使得我们可以声明式地描述最终输出的 HTML 和 JavaScript 状态之间的关系。  
 2. 响应性：Vue 会自动跟踪 JavaScript 状态并在其发生变化时响应式地更新 DOM。  
 
@@ -310,8 +862,8 @@ app.mount("#app");
 </script>
 ```
 
-# 6 Vite
-## 6.1 Vite 创建 Vue3 工程化项目
+## 5-6 Vite
+### 5-6-1 Vite 创建 Vue3 工程化项目
 1. 使用命令行创建工程：  
    1. 在磁盘的合法位置上创建一个空目录用于存储多个前端项目。  
    2. 用 vscode 打开该目录。  
@@ -332,9 +884,9 @@ app.mount("#app");
    1. 查看项目下的 package.json。  
    2. npm run dev。  
 
-## 6.2 关于 JS 和 TS 选择的问题
+### 5-6-2 关于 JS 和 TS 选择的问题
 TS 是 JS 的一个超集，使用 TS 之后，JS 的语法更加的像 JAVA，实际开发中用的确实更多。  
-## 6.3 Vite + Vue3 项目的目录结构
+### 5-6-3 Vite + Vue3 项目的目录结构
 1. public/ 目录：用于存放一些公共资源，如 HTML 文件、图像、字体等，这些资源会被直接复制到构建出的目标目录中。  
 2. src/ 目录：存放项目的源代码，包括 JavaScript、CSS、Vue 组件、图像和字体等资源。在开发过程中，这些文件会被 Vite 实时编译和处理，并在浏览器中进行实时浏览和调试。以下是 src 内部划分建议：  
    1. assets/ 目录：用于存放一些项目中用到的静态资源，如图片、字体、样式文件等。  
@@ -346,7 +898,7 @@ TS 是 JS 的一个超集，使用 TS 之后，JS 的语法更加的像 JAVA，�
    7. store/ 目录：用于存放 Vuex 状态管理相关的文件，负责管理应用程序中的数据和状态，方便统一管理和共享数据，提高开发效率。  
    8. utils/ 目录：用于存放一些通用的工具函数，如日期处理函数、字符串操作函数等。  
 
-## 6.4 Vite + Vue3 项目组件（SFC）
+### 5-6-4 Vite + Vue3 项目组件（SFC）
 .vue 文件：  
 1. 传统的页面有 .html 文件、.css 文件和 .js 文件三个文件组成（多个组件）。  
 2. vue 将这文件合并成一个 .vue 文件（Single-File Component，简称 SFC，单文件组件）。  
@@ -398,7 +950,7 @@ css 样式的导入方式：
 
    3. 如果某个样式要在所有的 .vue 文件中生效，那么可以在 main.js 中导入。  
 
-## 6.5 Vite + Vue3 响应式入门和 setup 函数
+### 5-6-5 Vite + Vue3 响应式入门和 setup 函数
 
 ```javascript
 // App.vue
@@ -466,8 +1018,8 @@ function counterDecre() {
 </style>
 ```
 
-# 7 Vue3 视图渲染技术
-## 7.1 插值表达式和文本渲染
+## 5-7 Vue3 视图渲染技术
+### 5-7-1 插值表达式和文本渲染
 插值表达式语法：{{数据名称/函数/对象调用API}}。  
 插值表达式不依赖标签，没有标签可以单独使用的。  
 1. 插值表达式中可以调用函数，将函数的返回值渲染到指定的位置。  
@@ -483,11 +1035,11 @@ v- 开头的都是 vue 的指令：
 
 v-text：不识别 html 结构的文本。  
 v-html：识别文本中的 html 代码。  
-## 7.2 Attribute 属性渲染
+### 5-7-2 Attribute 属性渲染
 1. 由于插值表达式不能直接放在标签的属性中，所以要渲染元素的属性就应该使用 v-bind。  
 2. v-bind 可以用于渲染任何元素的属性，语法为 v-bind:属性名="数据名"，可以简写为 :属性名="数据名"。  
 
-## 7.3 事件的绑定
+### 5-7-3 事件的绑定
 我们可以使用 v-on 来监听 DOM 事件，并在事件触发时执行对应的 JavaScript 代码。  
 1. 用法：v-on:click="handler" 或简写为 @click="handler"。  
 2. vue 中的事件名 = 原生事件名去掉 on 前缀，如 onClick --> click。  
@@ -532,7 +1084,7 @@ function fun4() {
 </style>
 ```
 
-# 8 响应式基础
+## 5-8 响应式基础
 数据模型发生变化时，自动更新 DOM 树内容，页面上显示的内容会进行同步变化，vue3 的数据模型不是自动响应式的，需要我们做一些特殊处理。  
 
 ```javascript
@@ -581,8 +1133,8 @@ function increRefsAge() {
 </style>
 ```
 
-# 9 条件和列表渲染
-## 9.1 条件渲染
+## 5-9 条件和列表渲染
+### 5-9-1 条件渲染
 v-if 条件渲染。  
 v-show 条件渲染扩展。  
 
@@ -612,7 +1164,7 @@ let flag = ref(true);
 3. 相比之下，v-show 简单许多，元素无论初始条件如何，始终会被渲染，只有 css display 属性会被切换。  
 4. 总的来说，v-if 有更高的切换开销，而 v-show 有更高的初始渲染开销。因此，如果需要频繁切换，则使用 v-show 较好；如果在运行时绑定条件很少改变，则 v-if 会更合适。  
 
-## 9.2 列表渲染
+### 5-9-2 列表渲染
 我们可以使用 v-for 指令基于一个数组来渲染一个列表。  
 1. v-for 指令的值需要使用 item in items 形式的特殊语法，其中 items 是源数据的数组，而 item 是迭代项的别名。  
 2. 在 v-for 块中可以完整地访问父作用域内的属性和变量。v-for 也支持使用可选的第二个参数表示当前项的位置索引。  
@@ -700,7 +1252,7 @@ function clearCart() {
 <style scoped></style>
 ```
 
-# 10 双向绑定
+## 5-10 双向绑定
 单向绑定和双向绑定：  
 1. 单向绑定：响应式数据的变化会更新 DOM 树上，用户的操作造成的数据改变不是同步更新到响应式数据。  
 2. 双向绑定：响应式数据的变化会更新 DOM 树上，用户的操作造成的数据改变会同步更新到响应式数据。  
@@ -759,7 +1311,7 @@ function clearForm() {
 <style scoped></style>
 ```
 
-# 11 属性计算
+## 5-11 属性计算
 模板中的表达式虽然方便，但也只能用来做简单的操作，如果在模板中写太多逻辑，会让模板变得臃肿，难以维护。  
 
 ```javascript
@@ -789,7 +1341,7 @@ let bookMessage = computed(() => {
 <style></style>
 ```
 
-# 12 数据监听器
+## 5-12 数据监听器
 watch 主要用于以下场景：  
 1. 当数据变化时需要执行相应的操作。  
 2. 监听数据变化，当满足一定条件时触发相应操作。  
@@ -835,15 +1387,15 @@ watchEffect(() => {
 </style>
 ```
 
-# 13 Vue 生命周期
-## 13.1 生命周期简介
+## 5-13 Vue 生命周期
+### 5-13-1 生命周期简介
 每个 Vue 组件实例在创建时都需要经历一系列的初始化步骤，比如设置好数据侦听，编译模板，挂载实例到 DOM，以及在数据改变时更新 DOM。在此过程中，它也会运行被称为生命周期钩子的函数，让开发者有机会在特定阶段运行自己的代码。  
 onBeforeMount()  
 onMount()  
 onBeforeUpdate()  
 onUpdate()  
-# 14 Vue 组件
-## 14.1 组件基础
+## 5-14 Vue 组件
+### 5-14-1 组件基础
 组件允许我们将 UI 划分为独立的、可重用的部分，并且可以对每个部分进行单独的思考。组件就是实现应用中局部功能代码和资源的集合。  
 在实际应用中，组件常常被组织成层层嵌套的树状结构。  
 组件中的参数传递：  
@@ -912,8 +1464,8 @@ defineProps({
 <style scoped></style>
 ```
 
-# 15 Vue3 路由机制 router
-## 15.1 路由简介
+## 5-15 Vue3 路由机制 router
+### 5-15-1 路由简介
 1. 定义：路由就是根据不同的 URL 地址展示不同的内容或页面。  
 2. 通俗理解：路由就像一个地图，我们要去不同的地方，需要通过不同的路线进行导航。  
 
@@ -922,7 +1474,7 @@ defineProps({
 2. 路由还可以实现页面的认证和权限控制，保护用户的隐私和安全。  
 3. 路由还可以利用浏览器的前进与后退，帮助用户更好地回到之前访问过的页面。  
 
-## 15.2 路由入门案例
+### 5-15-2 路由入门案例
 
 ```bash
 // 创建项目和导入路由依赖
@@ -1015,7 +1567,7 @@ app.use(router);
 app.mount("#app");
 ```
 
-## 15.3 编程式路由（useRouter）
+### 5-15-3 编程式路由（useRouter）
 编程式路由：  
 1. 通过 useRouter，动态决定向哪个组件切换到路由。  
 2. 在 Vue 3 和 Vue Router 4 中，你可以使用 useRouter 来实现动态路由（编程式路由）。  
@@ -1093,7 +1645,7 @@ function goMyPage() {
 <style scoped></style>
 ```
 
-## 15.4 路由传参
+### 5-15-4 路由传参
 路径参数：  
 1. 在路径中使用一个动态字段来实现，我们称之为路径参数。  
    1. 例如：查看数据详情 /showDetail/1，1 就是要查看详情的 id，可以动态添值。  
@@ -1230,7 +1782,7 @@ onUpdated(() => {
 <style scoped></style>
 ```
 
-## 15.5 路由守卫
+### 5-15-5 路由守卫
 在 Vue 3 中，路由守卫是用于在路由切换期间进行一些特定任务的回调函数，路由守卫可以用于许多任务，例如验证用户是否已登录，在路由切换前提供确认提示，请求数据等。Vue 3 为路由守卫提供了全面的支持。  
 1. 全局前置守卫：在路由切换前被调用，可以用于验证用户是否已登录、中断导航、请求数据等。  
 2. 全局后置守卫：在路由切换之后被调用，可以用于处理数据、操作 DOM、记录日志等。  
@@ -1364,12 +1916,12 @@ app.mount("#app");
 <style scoped></style>
 ```
 
-# 16 Vue 3 数据交互 axios
-## 16.1 promise
-### 16.1.1 普通函数和回调函数
+## 5-16 Vue 3 数据交互 axios
+### 5-16-1 promise
+#### 5-16-1-1 普通函数和回调函数
 回调函数是一种基于事件的，自动调用函数。  
 回调函数其他的代码不会等待回调函数执行完毕。  
-### 16.1.2 promise 简介
+#### 5-16-1-2 promise 简介
 前端中的异步编程技术，类似 Java 中的多线程 + 线程结果回调。  
 所谓 Promise，简单说是一个容器，里面保存着某个未来才会结束的事件（通常是一个异步操作）的结果。从语法上说，Promise 是一个对象，从它可以获取异步操作的消息。Promise 提供统一的 API，各种异步操作都可以用同样的方法进行处理。  
 Promise 对象的两个特点：  
@@ -1434,7 +1986,7 @@ promise.then(
 // 4 await后边的代码会等待await执行完毕后继续运行
 ```
 
-## 16.2 Axios get 和 post 方法
+### 5-16-2 Axios get 和 post 方法
 
 ```javascript
 <script setup>
@@ -1482,7 +2034,7 @@ function getLoveMessage() {
 <style scoped></style>
 ```
 
-## 16.3 Axios 拦截器
+### 5-16-3 Axios 拦截器
 如果想在 axios 发送请求之前，或者是数据响应回来在执行 then 方法之前做一些额外的工作，可以通过拦截器完成。  
 
 ```javascript
@@ -1524,8 +2076,8 @@ instance.interceptors.response.use(
 export default instance;
 ```
 
-# 17 Vue3 状态管理 Pinia
-## 17.1 Pinia 介绍
+## 5-17 Vue3 状态管理 Pinia
+### 5-17-1 Pinia 介绍
 如何实现多个组件之间的数据传参：  
 1. 组件传参。  
 2. 路由传参。  
@@ -1597,13 +2149,13 @@ definedPerson.$reset();
 definedPerson.$patch({key: "value", ...});
 ```
 
-## 17.2 Pinia 其他细节
+### 5-17-2 Pinia 其他细节
 1. State（状态）：在大多数情况下，state 都是你的 store 的核心，人们通常会先定义能代表他们 App 的 state。在 Pinia 中，state 被定义为一个返回初始状态的函数。  
 2. Getter：完全等同于 state 的计算值。可以通过 defineStore() 中的 getters 属性来定义他们。推荐使用箭头函数，并且它将接收 state 作为第一个参数。  
 3. Action：相当于组件中的 method。它们可以通过 defineStore() 中的 actions 属性来定义，并且它们也是定义业务逻辑的完美选择。类似 getter，action 也可通过 this 访问整个 store 实例，并支持完整的类型标准（以及自动补全），不同的是，action 可以是异步的，你可以在它们里面 await 调用任何 API，以及其他 action。  
 
-# 18 Element-plus 组件库
-## 18.1 Element-plus 介绍
+## 5-18 Element-plus 组件库
+### 5-18-1 Element-plus 介绍
 Element Plus 是一套基于 Vue 3 的开源 UI 组件库，是由饿了么前端团队开发的升级版本 Element UI。Element Plus 提供了丰富的 UI 组件、易于使用的 API 接口和灵活的主题定制功能，可以帮助开发者快速构建高质量的 Web 应用程序。  
 官网：[一个 Vue 3 UI 框架 | Element Plus](https://element-plus.org/zh-CN/)  
 
@@ -1611,3 +2163,4 @@ Element Plus 是一套基于 Vue 3 的开源 UI 组件库，是由饿了么前�
 // 安装element-plus
 npm install element-plus
 ```
+

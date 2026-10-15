@@ -1,4 +1,4 @@
-# [知识索引](1.%20人生仪表盘.md)  
+# [knowledge_index](1_all_in_life_index.md)  
 
 ``` dataview
 TABLE 领域, 来源, 日期

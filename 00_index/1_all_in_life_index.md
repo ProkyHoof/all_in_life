@@ -1,12 +1,9 @@
----
-cssclass: dashboard
----
 
 # 🧭 我的人生仪表盘
 
 > 最后更新：`= dateformat(date(today), "yyyy-MM-dd")`
 
-## 🗺️ [路线图](路线图索引.md)  
+## 🗺️ [route](route_index.md)  
 
 ```dataview
 TABLE 年度, 愿景描述
@@ -15,16 +12,16 @@ SORT 创建日期 DESC
 LIMIT 3
 ```
 
-## 📚 [最近知识输入](知识索引.md)  
+## 📚 [最近知识输入](knowledge_index.md)  
 
 ``` dataview
-TABLE 领域, 来源, 日期
+TABLE introduction, start_date
 FROM #knowledge 
 SORT 日期 DESC
 LIMIT 5
 ```
 
-## 🧰 [新增资源](资源索引.md)  
+## 🧰 [新增资源](tool_index.md)  
 
 ``` dataview
 TABLE 分类, 日期
@@ -42,7 +39,7 @@ SORT 日期 DESC
 LIMIT 5
 ```
 
-## 🚀 [项目进展](项目索引.md)  
+## 🚀 [项目进展](project_index.md)  
 
 ``` dataview
 TABLE 状态, 开始日期, 截止日期, 关联知识
