@@ -43,4 +43,6 @@ LangChain 技术生态的四大核心支柱构成：`LangChain`，`LangGraph`，
 
 ![Drawing 2026-10-15 16.35.06.excalidraw](../../../03_attachments/Excalidraw/Python/Drawing%202026-10-15%2016.35.06.excalidraw.md)
 
-
+- LangChain：是整个生态的基础框架层，它统一了不同大模型的接口，并提供了工具、记忆、检索等模块化工具。
+- LangGraph：当任务变得复杂，需要多步骤、有状态的工作流时，就需要 LangGraph 这个编排运行时。它将工作流抽象为“状态图”，通过节点（步骤）和边（流转条件）来精确控制执行流程。
+- Deep Agent：是构建在 LangChain 和 LangGraph 之上的智能体执行框架（Agent Harness），它预先封装了构建复杂 Agent 所需的高级能力。
