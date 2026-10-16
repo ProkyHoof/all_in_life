@@ -76,6 +76,13 @@ Deep Agent 的核心能力如下：
 - 显式规划：自主生成、执行并动态调整多步任务计划。
 - 虚拟文件系统：为智能体提供结构化的中间结果与知识存储。
 - 子智能体：支持任务在多个智能体之间的分解与协作。
-- 长期记忆：通过与 LangGraph 
+- 长期记忆：通过与 LangGraph 状态存储的结合，实现跨对话的经验积累。
+
+[官方文档（三者对比）](https://docs.langchain.com/oss/python/langchain/overview)
+
+![](../../../03_attachments/Images/knowledge_images/Python/Agent_develop/Python_20261016_2.png)
+
+三个框架不是竞争关系，并非互斥，复杂项目完全可以同时用到这三层。  
+从 LangChain 快速搭建，用 LangGraph 
 
 
