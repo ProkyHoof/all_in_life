@@ -105,5 +105,5 @@ LangSmith 的引入使得智能体的开发、调用与运维形成了完整的�
 ### 4_1_1 代码管理方案  
 相较于全局环境（系统环境），各个虚拟环境都有自己独立的一套：Python 解释器、pip 命令、第三方依赖包，不和其他项目产生干扰。  
 1. 使用 conda：适合“Python + 非 Python 依赖”的复杂环境。
-	canda 不只是 Python 包管理工具，它还可以管理 Python 解释器、Python 包，以及很多非
+	canda 不只是 Python 包管理工具，它还可以管理 Python 解释器、Python 包，以及很多非 Python 依赖
 
