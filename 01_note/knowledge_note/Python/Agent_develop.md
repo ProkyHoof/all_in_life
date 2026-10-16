@@ -83,6 +83,18 @@ Deep Agent 的核心能力如下：
 ![](../../../03_attachments/Images/knowledge_images/Python/Agent_develop/Python_20261016_2.png)
 
 三个框架不是竞争关系，并非互斥，复杂项目完全可以同时用到这三层。  
-从 LangChain 快速搭建，用 LangGraph 
+从 LangChain 快速搭建，用 LangGraph 打磨生产稳定性，再用 Deep Agent 赋予 Agent 更强的自主能力——这才是完整的 LangChain 生态无法。  
+
+## 3_4 LangSmith  
+当智能体系统逐渐复杂时，单靠日志与打印输出（print）调试已无法满足调试与质量管理的需求。  
+LangSmith 是 LangChain 官方推出的可视化监控与测试平台，**用于跟踪、记录和分析智能体在运行过程中的完整调用链路**，让智能体的内部运行过程变得透明和可评估。  
+LangSmith 的核心目标如下：  
+- 全链路追踪：可视化追踪模型调用、提示词输入、结果输出、工具使用等行为。
+- 调试与优化：发现运行中智能体的异常行为与性能瓶颈。
+- 评测与质量控制：支持人工与自动化评测，量化智能体表现。
+- 团队协作：支持多人共享测试集与调用记录。
+
+[LongSmith 官方文档](https://docs.langchain.com/langsmith/langsmith-setup-overview)
+LangSmith 的引入使得智能体的开发、调用与运维形成了完整的质量闭环。  
 
 
