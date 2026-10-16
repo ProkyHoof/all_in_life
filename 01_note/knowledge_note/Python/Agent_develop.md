@@ -63,8 +63,19 @@ LangChain 是整个生态的核心与起点，为开发者提供了模型调用�
 
 通过这种图式结构，LangGraph 让智能体的工作流节点交互变得显式、可控、可观测。  
 
+> 官方也强调“快速起步用 LangChain，复杂控制用 LangGraph，二者并行协同”。  
 
+![](../../../03_attachments/Images/knowledge_images/Python/Agent_develop/Python_20261016_1.png)
 
+> LangChain = 能力抽象层（LLM / Tool / Message 标准化），负责“有什么能力”。  
+> LangGraph = 执行与编排层（状态机 / 工作流 / 多 Agent 系统），负责“怎么跑”。  
 
+## 3_3 Deep Agent  
+Deep Agent 是新推出的全新组件，被定位为 Agent Harness（智能体执行框架）。它构建于 LangChain 与 LangGraph 之上，增加了规划能力、文件系统、子 Agent 等高级功能。  旨在让开发者无须从零构建复杂的控制逻辑，即可创造具备深度规划、长期记忆与多专家协作能力的智能体。  
+Deep Agent 的核心能力如下：
+- 显式规划：自主生成、执行并动态调整多步任务计划。
+- 虚拟文件系统：为智能体提供结构化的中间结果与知识存储。
+- 子智能体：支持任务在多个智能体之间的分解与协作。
+- 长期记忆：通过与 LangGraph 
 
 
