@@ -121,5 +121,35 @@ python -m venv .venv
 
 > venv 不负责安装新的 Python 解释器，只能基于当前已经安装的 Python 解释器创建虚拟环境。同时，venv 也不负责管理 CUDA、系统库等非 Python 依赖。  
 
+### 4_1_2 Canda 安装  
+#### 4_1_2_1 Miniconda 下载与安装
+[Download_Miniconda](https://www.anaconda.com/download)
+#### 4_1_2_2 配置环境变量  
 
+![](../../../03_attachments/Images/knowledge_images/Python/Agent_develop/Python_20261019_1.png)  
+
+#### 4_1_2_3 常见 conda 命令  
+
+```bash
+# 创建一个名为 langchain1.2 的环境，指定 Python 版本是 3.13.12
+conda create --name langchain1.2 python=3.13.12
+
+# 查看 anconda 安装好的 python 环境
+conda env list
+
+# 初始化虚拟环境（执行完此指令、重新启动命令行窗口）
+conda init
+
+# 在命令行窗口切换到某 python 环境
+conda activate langchain1.2
+
+# 在命令行窗口退出 python 环境
+conda deactivate langchain1.2
+
+# 添加新的环境存储目录
+conda config --add envs_dirs your_new_dir_path
+
+# 添加新的包缓存目录
+conda config --add pkgs_dirs your_new_dir_path
+```
 
