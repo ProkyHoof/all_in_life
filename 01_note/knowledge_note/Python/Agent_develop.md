@@ -195,5 +195,27 @@ conda list
 2. 使用 pip 命令
 
 ```bash
+# 安装指定版本
+pip install langchain==1.2.12
 
+# 安装最新版（不推荐）
+pip install langchain
+
+# 使用指定源：-i
+pip install langchain==1.2.12 -i https://pypi.tuna.tsinghua.edu.cn/simple
+
+# 从旧版本升级到新版本
+pip install --upgrade langchain
+
+# 或者
+pip install -U langchain==1.2.12
+
+# 卸载包
+pip uninstall langchain
+
+# 查看已安装包
+pip list
 ```
+
+> 建议：优先 `conda install`，conda 没有，再用 `pip install`。  
+
