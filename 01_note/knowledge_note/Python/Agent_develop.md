@@ -107,5 +107,19 @@ LangSmith 的引入使得智能体的开发、调用与运维形成了完整的�
 1. 使用 conda：适合“Python + 非 Python 依赖”的复杂环境。
 	canda 不只是 Python 包管理工具，它还可以管理 Python 解释器、Python 包，以及很多非 Python 依赖，比如：`CUDA、编译器、系统库、数据库驱动、科学计算底层库` 等非 Python 依赖。
 
-> 注意：c
+> 注意：conda 环境中可以使用 pip，但建议先用 conda 装底层依赖，再用 pip 补充 Python 包，不再随意反复交替使用。  
+
+2. 使用 uv：使用 uv：适合“纯 Python 项目”的现代包管理
+uv 是一个现代 Python 包管理工具，主要管理 Python 生态依赖，不能像 conda 那样管理 CUDA、系统级数据库驱动、编译器这类通用非 Python 依赖。  
+如果项目主要是普通 Python 开发，这类项目通常可以优先考虑 uv。  
+3. 使用 venv: Python 自带的轻量级虚拟环境工具
+venv 是 Python 官方自带的虚拟环境工具，不需要额外安装。  
+
+```python
+python -m venv .venv
+```
+
+> venv 不负责安装新的 Python 解释器，只能基于当前已经安装的 Python 解释器创建虚拟环境。同时，venv 也不负责管理 CUDA、系统库等非 Python 依赖。  
+
+
 
