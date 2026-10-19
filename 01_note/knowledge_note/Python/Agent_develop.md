@@ -134,6 +134,9 @@ python -m venv .venv
 # 创建一个名为 langchain1.2 的环境，指定 Python 版本是 3.13.12
 conda create --name langchain1.2 python=3.13.12
 
+# 卸载虚拟环境
+conda remove --name langchain1.2 --all
+
 # 查看 anconda 安装好的 python 环境
 conda env list
 
@@ -151,5 +154,46 @@ conda config --add envs_dirs your_new_dir_path
 
 # 添加新的包缓存目录
 conda config --add pkgs_dirs your_new_dir_path
+
+# 移除一个 envs_dirs
+conda config --remove envs_dirs your_delete_dir_path
+
+# 移除一个 pkgs_dirs
+conda config --remove pkgs_dirs your_delete_dir_path
+
+# 查看 conda 配置信息
+conda config --show
 ```
 
+#### 4_1_2_4 下载 langchain 安装包  
+1. 使用 conda 指令
+
+```bash
+# 安装指定版本
+conda install langchain==1.2.12
+
+# 或者安装最新版本
+conda install langchain
+
+# 指定频道 conda-forge
+conda install -c conda-forge langchain==1.2.12
+
+# 更新包
+conda update langchain
+
+# 卸载包
+conda uninstall langchain
+
+# 查看已安装包
+conda list
+```
+
+> conda 包通常来自 defaults 或 conda-forge  
+> `-c`：是 `--channel` 的缩写，conda 用于指定包的安装来源渠道。  
+> `conda-forge`：该源比官方默认渠道更新更快、包更全。  
+
+2. 使用 pip 命令
+
+```bash
+
+```
