@@ -4,7 +4,7 @@ tags:
 introduction: 大模型应用开发
 start_date: 2026-10-15
 ---
-
+[Drawing 2026-10-22 17.24.11.excalidraw](../../../03_attachments/Excalidraw/Python/Drawing%202026-10-22%2017.24.11.excalidraw.md)
 # 1 LangChain 1.2 概述  
 
 ## 1_1 单一的大语言模型的局限性  
@@ -242,4 +242,12 @@ Agent = LLM + Planning + Tools + Memory + Action
 2. Agent + Function Calling
 3. RAG（Retrieval-Augmented Generation）
 4. Fine-tuning（精调/微调）
+
+![Drawing 2026-10-22 17.24.11.excalidraw](../../../03_attachments/Excalidraw/Python/Drawing%202026-10-22%2017.24.11.excalidraw.md)
+
+# 6 模型调用的准备工作  
+[Models - Docs by LangChain](https://docs.langchain.com/oss/python/langchain/models)
+## 6_1 大模型的调用  
+在 LangChain 
+
 
