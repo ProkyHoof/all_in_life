@@ -240,4 +240,6 @@ Agent = LLM + Planning + Tools + Memory + Action
 ## 5_3 大模型应用开发的 4 个场景  
 1. Prompt
 2. Agent + Function Calling
-3. RAG（Retrieval-）
+3. RAG（Retrieval-Augmented Generation）
+4. Fine-tuning（精调/微调）
+
