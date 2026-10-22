@@ -229,4 +229,16 @@ pip list
 
 > 1. 文件解析：如果是 pdf，内部包含文件、图片、表格、图片上还有文字，需要处理。  
 > 2. 文件切割：没有固定的格式。  
-> 3. 在 RAG 应用中，随着文档数量增加，召回准确率会下降，引入 `reranker`（重排器）可对初步召回
+> 3. 在 RAG 应用中，随着文档数量增加，召回准确率会下降，引入 `reranker`（重排器）可对初步召回的较多 `chunk` 进行精排，提高召回准确率，防止 LLM 处理无关信息，减少时间和成本。  
+> 此外，与基于矢量搜索的 RAG 相比，`reranker` 增强型 RAG 的成本更高，但与仅依靠 LLM 生成答案相比，它的成本低些。  
+
+## 5_2 Agent 开发  
+[2026硬核干货｜8大AI Agent主流架构全拆解：从基础ReAct到全自动自主智能体，一文吃透Agent技术底层逻辑✨ - 掘金](https://juejin.cn/post/7658567805047504937)  
+[万字长文讲透 AI Agent 架构设计：从 ReAct 到多 Agent 协作，附完整 Python 代码2026 年 - 掘金](https://juejin.cn/post/7654108355959029795)  
+
+Agent = LLM + Planning + Tools + Memory + Action  
+
+## 5_3 大模型应用开发的 4 个场景  
+1. Prompt
+2. Agent + Function Calling
+3. RAG（Retrieval-）
