@@ -248,6 +248,6 @@ Agent = LLM + Planning + Tools + Memory + Action
 # 6 模型调用的准备工作  
 [Models - Docs by LangChain](https://docs.langchain.com/oss/python/langchain/models)
 ## 6_1 大模型的调用  
-在 LangChain 
+在 LangChain v 0.3 版本中，提到了 Model I/O，包括输入提示（Format）、调用模型（Predict）、输出解析（Parse）。分别对应着 Prompt Template，Model 和 Output Parser。  
 
 
