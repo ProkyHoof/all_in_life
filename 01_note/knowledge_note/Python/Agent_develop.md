@@ -237,7 +237,6 @@ pip list
 [万字长文讲透 AI Agent 架构设计：从 ReAct 到多 Agent 协作，附完整 Python 代码2026 年 - 掘金](https://juejin.cn/post/7654108355959029795)  
 
 Agent = LLM + Planning + Tools + Memory + Action  
-
 ## 5_3 大模型应用开发的 4 个场景  
 1. Prompt
 2. Agent + Function Calling
