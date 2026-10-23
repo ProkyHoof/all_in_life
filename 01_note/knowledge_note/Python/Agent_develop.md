@@ -249,4 +249,22 @@ Agent = LLM + Planning + Tools + Memory + Action
 [Models - Docs by LangChain](https://docs.langchain.com/oss/python/langchain/models)
 ## 6_1 大模型的调用  
 在 LangChain v 0.3 版本中，提到了 Model I/O，包括输入提示（Format）、调用模型（Predict）、输出解析（Parse）。分别对应着 Prompt Template，Model 和 Output Parser。  
+## 6_2 模型初始化的分类方式  
+1. 调用谁家的 API。
+	- 使用模型提供的库。
+	- 使用 LangChain 统一方式。（推荐）
+2. 模型初始化时，几个重要参数（如 BASE_URL、API-KEY）的书写位置的不同。
+	- 使用配置文件。（推荐）
+	- 硬编码：卸载代码文件中。
+3. 调用的模型所在的位置。
+	- 在线部署的大模型。
+	- 本地部署的大模型。
 
+> LangChain 作为一个“工具”，不提供任何 LLMs，而是依赖于第三方集成各种大模型。这里就看大模型到底部署在哪里。  
+
+## 6_3 线上大模型服务平台  
+
+
+```vtable
+{"rows":[[{"t":"平台","rs":1,"cs":1},{"t":"网址","rs":1,"cs":1},{"t":"备注","rs":1,"cs":1}],[{"t":"OpenRouter","rs":1,"cs":1},{"t":"https://openrouter.ai/","rs":1,"cs":1},{"t":"全球主流，含国外模型","rs":1,"cs":1}],[{"t":"CloseAI","rs":1,"cs":1},{"t":"https://www.closeai-asia.com/","rs":1,"cs":1},{"t":"","rs":1,"cs":1}],[{"t":"","rs":1,"cs":1},{"t":"","rs":1,"cs":1},{"t":"","rs":1,"cs":1}],[{"t":"","rs":1,"cs":1},{"t":"","rs":1,"cs":1},{"t":"","rs":1,"cs":1}]]}
+```
