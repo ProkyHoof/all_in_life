@@ -266,5 +266,7 @@ Agent = LLM + Planning + Tools + Memory + Action
 
 
 ```vtable
-{"rows":[[{"t":"平台","rs":1,"cs":1},{"t":"网址","rs":1,"cs":1},{"t":"备注","rs":1,"cs":1}],[{"t":"OpenRouter","rs":1,"cs":1},{"t":"https://openrouter.ai/","rs":1,"cs":1},{"t":"全球主流，含国外模型","rs":1,"cs":1}],[{"t":"CloseAI","rs":1,"cs":1},{"t":"https://www.closeai-asia.com/","rs":1,"cs":1},{"t":"","rs":1,"cs":1}],[{"t":"","rs":1,"cs":1},{"t":"","rs":1,"cs":1},{"t":"","rs":1,"cs":1}],[{"t":"","rs":1,"cs":1},{"t":"","rs":1,"cs":1},{"t":"","rs":1,"cs":1}]]}
+{"rows":[[{"t":"平台","rs":1,"cs":1},{"t":"网址","rs":1,"cs":1},{"t":"备注","rs":1,"cs":1}],[{"t":"OpenRouter","rs":1,"cs":1},{"t":"https://openrouter.ai/","rs":1,"cs":1},{"t":"全球主流，含国外模型","rs":1,"cs":1}],[{"t":"CloseAI","rs":1,"cs":1},{"t":"https://www.closeai-asia.com/","rs":1,"cs":1},{"t":"亚洲最大，含国外模型","rs":1,"cs":1}],[{"t":"阿里云百炼","rs":1,"cs":1},{"t":"https://bailian.console.aliyun.com/","rs":1,"cs":1},{"t":"企业端友好","rs":1,"cs":1}],[{"t":"硅基流动","rs":1,"cs":1},{"t":"https://www.siliconflow.cn/","rs":1,"cs":1},{"t":"性价比高，适合个人","rs":1,"cs":1}],[{"t":"百度千帆","rs":1,"cs":1},{"t":"https://cloud.baidu.com/product-s/qianfan_home","rs":1,"cs":1},{"t":"主打百度生态","rs":1,"cs":1}],[{"t":"火山引擎","rs":1,"cs":1},{"t":"https://www.volcengine.com/product/ark","rs":1,"cs":1},{"t":"主打字节多模态生态","rs":1,"cs":1}]]}
 ```
+
+
