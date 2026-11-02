@@ -20,7 +20,7 @@ FastAPI 是一个基于 Python 的高性能 Web 框架，用于快速构建 API�
 传统同步接口在遇到耗时操作（如 time.sleep）时会阻塞线程，一个请求必须等前一个请求处理完才能开始；而异步接口可以在等待期间切换去处理其他请求，从而大幅提升并发处理能力。  
 下面以"处理 10 次耗时 1 秒的任务"为例，对比同步与异步的耗时差异。  
 
-![同步与异步对比](../../../03%20附件/attachments/知识附件/Python/FastAPI/ch1_sync_async.png)  
+![](../../../03_attachments/Images/knowledge_images/Python/FastAPI/ch1_access_project.png)  
 
 同步方式代码（串行执行）：  
 
@@ -46,9 +46,9 @@ async def main():
     await asyncio.gather(*[async_task(i) for i in range(10)])
 ```
 
-![同步流程](../../../03%20附件/attachments/知识附件/Python/FastAPI/ch1_sync_flow.png)  
+![同步流程](../../../03_attachments/Images/knowledge_images/Python/FastAPI/ch1_sync_flow.png)  
 
-![异步流程](../../../03%20附件/attachments/知识附件/Python/FastAPI/ch1_async_flow.png)  
+![异步流程](../../../03_attachments/Images/knowledge_images/Python/FastAPI/ch1_async_flow.png)  
 
 两种方式的耗时对比：  
 
@@ -71,7 +71,7 @@ async def main():
 使用 PyCharm 创建 FastAPI 项目：New Project → 选择 FastAPI → 虚拟环境选择 Virtualenv → 点击 Create 创建。  
 创建完成后，PyCharm 会自动安装 fastapi 与 uvicorn 等依赖。  
 
-![创建项目](../../../03%20附件/attachments/知识附件/Python/FastAPI/ch1_create_project.png)  
+![创建项目](../../../03_attachments/Images/knowledge_images/Python/FastAPI/ch1_create_project.png)  
 
 #### 1-1-2-2 运行项目
 
@@ -93,7 +93,7 @@ http://127.0.0.1:8000
 
 即可看到默认路由返回的内容；访问 http://127.0.0.1:8000/docs 可以打开 FastAPI 自动生成的交互式 API 文档，在页面上直接测试各个接口。  
 
-![访问项目](../../../03%20附件/attachments/知识附件/Python/FastAPI/ch1_access_project.png)  
+![访问项目](../../../03_attachments/Images/knowledge_images/Python/FastAPI/ch1_access_project.png)  
 
 #### 1-1-2-4 虚拟环境的作用
 
@@ -148,7 +148,7 @@ async def user_hello():
 
 HTTP 请求中的参数按位置与用途分为三类：路径参数、查询参数、请求体。  
 
-![参数分类](../../../03%20附件/attachments/知识附件/Python/FastAPI/ch1_param_types.png)  
+![参数分类](../../../03_attachments/Images/knowledge_images/Python/FastAPI/ch1_param_types.png)  
 
 ```vtable
 {"rows": [[{"t": "类型", "rs": 1, "cs": 1}, {"t": "位置", "rs": 1, "cs": 1}, {"t": "作用", "rs": 1, "cs": 1}, {"t": "方法", "rs": 1, "cs": 1}, {"t": "语法示例", "rs": 1, "cs": 1}], [{"t": "路径参数", "rs": 1, "cs": 1}, {"t": "URL 路径的一部分，如 /book/{id}", "rs": 1, "cs": 1}, {"t": "指向唯一的、特定的资源", "rs": 1, "cs": 1}, {"t": "GET", "rs": 1, "cs": 1}, {"t": "@app.get(“/book/{id}”)，访问 /book/1", "rs": 1, "cs": 1}], [{"t": "查询参数", "rs": 1, "cs": 1}, {"t": "URL? 之后，如 k1=v1&k2=v2", "rs": 1, "cs": 1}, {"t": "对资源集合进行过滤、排序、分页等操作", "rs": 1, "cs": 1}, {"t": "GET", "rs": 1, "cs": 1}, {"t": "/book?page=1&pageSize=10", "rs": 1, "cs": 1}], [{"t": "请求体", "rs": 1, "cs": 1}, {"t": "HTTP 请求的消息体（body）中", "rs": 1, "cs": 1}, {"t": "创建、更新资源，携带大量数据如 JSON", "rs": 1, "cs": 1}, {"t": "POST、PUT 等", "rs": 1, "cs": 1}, {"t": "请求体 {“title”: “标题”, “content”: “正文”}", "rs": 1, "cs": 1}]]}
@@ -431,7 +431,7 @@ async def get_news(id: int):
 中间件（Middleware）是一个在每次请求进入 FastAPI 应用时都会被执行的函数。  
 它在请求到达实际的路径操作（路由处理函数）之前运行，并且在响应返回给客户端之前再运行一次。  
 
-![中间件执行流程](../../../03%20附件/attachments/知识附件/Python/FastAPI/ch2_middleware_flow.png)  
+![中间件执行流程](../../../03_attachments/Images/knowledge_images/Python/FastAPI/ch2_middleware_flow.png)  
 
 请求进入后依次经过中间件 A、中间件 B，最终到达路由处理函数；响应则按相反路径逐级返回客户端，执行顺序为自下而上。  
 
@@ -508,7 +508,7 @@ async def get_category(
 
 #### 2-2-2-3 依赖注入的应用场景
 
-![依赖注入应用场景](../../../03%20附件/attachments/知识附件/Python/FastAPI/ch2_di_scene.png)  
+![依赖注入应用场景](../../../03_attachments/Images/knowledge_images/Python/FastAPI/ch2_di_scene.png)  
 
 ```vtable
 {"rows": [[{"t": "场景", "rs": 1, "cs": 1}, {"t": "说明", "rs": 1, "cs": 1}, {"t": "示例", "rs": 1, "cs": 1}], [{"t": "处理请求参数", "rs": 1, "cs": 1}, {"t": "从请求中提取和验证参数（路径参数、查询参数、请求体）", "rs": 1, "cs": 1}, {"t": "参数对象直接作为函数入参注入", "rs": 1, "cs": 1}], [{"t": "共享业务逻辑", "rs": 1, "cs": 1}, {"t": "抽取封装多个路由公用的逻辑代码", "rs": 1, "cs": 1}, {"t": "通用分页参数依赖 Query(1, ge=1)", "rs": 1, "cs": 1}], [{"t": "共享数据库连接", "rs": 1, "cs": 1}, {"t": "管理数据库会话的创建、使用、关闭", "rs": 1, "cs": 1}, {"t": "async with AsyncSessionLocal() 会话上下文", "rs": 1, "cs": 1}], [{"t": "安全和认证", "rs": 1, "cs": 1}, {"t": "验证用户身份、检查权限和角色要求等", "rs": 1, "cs": 1}, {"t": "get_current_user 依赖统一校验 Token", "rs": 1, "cs": 1}]]}
@@ -568,7 +568,7 @@ ORM 的优势：
 
 #### 2-2-3-3 ORM 使用流程
 
-![ORM 使用流程](../../../03%20附件/attachments/知识附件/Python/FastAPI/ch2_orm_flow.png)  
+![ORM 使用流程](../../../03_attachments/Images/knowledge_images/Python/FastAPI/ch2_orm_flow.png)  
 
 ORM 使用分三步：安装 → 建库、建表 → 操作数据（查询、新增、修改、删除）。  
 
@@ -808,7 +808,7 @@ await db.commit()
 AI 掘金头条是一个前后端分离的新闻资讯项目，后端使用 FastAPI 实现。  
 项目整体功能包含三大模块：新闻模块、用户模块、收藏和浏览历史模块，本笔记将分章节逐一实现。  
 
-![项目介绍](../../../03%20附件/attachments/知识附件/Python/FastAPI/ch3_project_intro.png)  
+![项目介绍](../../../03_attachments/Images/knowledge_images/Python/FastAPI/ch3_project_intro.png)  
 
 配套物料包括：前端 Vue 代码、接口规范文档、MySQL SQL 文件、设计说明文档。  
 前端运行方式：安装 Node 环境后，进入前端项目目录执行 npm run dev 启动开发服务器（默认端口 5173）。  
@@ -821,7 +821,7 @@ AI 掘金头条是一个前后端分离的新闻资讯项目，后端使用 Fast
 {"rows": [[{"t": "目录", "rs": 1, "cs": 1}, {"t": "职责", "rs": 1, "cs": 1}, {"t": "示例文件", "rs": 1, "cs": 1}], [{"t": "crud/", "rs": 1, "cs": 1}, {"t": "数据库增删改查逻辑", "rs": 1, "cs": 1}, {"t": "news_crud.py", "rs": 1, "cs": 1}], [{"t": "models/", "rs": 1, "cs": 1}, {"t": "SQLAlchemy ORM 模型类", "rs": 1, "cs": 1}, {"t": "news.py、user.py", "rs": 1, "cs": 1}], [{"t": "routers/", "rs": 1, "cs": 1}, {"t": "路由层，按模块拆分", "rs": 1, "cs": 1}, {"t": "news.py、user.py、favorite.py、history.py", "rs": 1, "cs": 1}], [{"t": "schemas/", "rs": 1, "cs": 1}, {"t": "Pydantic 数据验证模型", "rs": 1, "cs": 1}, {"t": "news_schema.py、user_schema.py", "rs": 1, "cs": 1}], [{"t": "utils/", "rs": 1, "cs": 1}, {"t": "工具类（通用响应封装等）", "rs": 1, "cs": 1}, {"t": "response.py", "rs": 1, "cs": 1}], [{"t": "config/db_conf.py", "rs": 1, "cs": 1}, {"t": "数据库配置（引擎、会话）", "rs": 1, "cs": 1}, {"t": "异步引擎与 get_db 依赖", "rs": 1, "cs": 1}], [{"t": "main.py", "rs": 1, "cs": 1}, {"t": "应用入口，注册各模块路由", "rs": 1, "cs": 1}, {"t": "include_router 汇总注册", "rs": 1, "cs": 1}], [{"t": "test_main.http", "rs": 1, "cs": 1}, {"t": "接口测试文件", "rs": 1, "cs": 1}, {"t": "IDEA 中直接运行请求", "rs": 1, "cs": 1}]]}
 ```
 
-![工程结构](../../../03%20附件/attachments/知识附件/Python/FastAPI/ch3_structure.png)  
+![工程结构](../../../03_attachments/Images/knowledge_images/Python/FastAPI/ch3_structure.png)  
 
 ### 3-3-3 模块化路由
 
@@ -861,7 +861,7 @@ pip install "sqlalchemy[asyncio]" aiomysql
 在 PyCharm 的 Database 面板中，通过 Run SQL Script 导入项目自带的 database.sql 文件。  
 数据库名为 news_app，包含 8 张表：ai_chat、favorite、history、news、news_category、related_news、user、user_token。  
 
-![导入 SQL 文件](../../../03%20附件/attachments/知识附件/Python/FastAPI/ch3_import_sql.png)  
+![导入 SQL 文件](../../../03_attachments/Images/knowledge_images/Python/FastAPI/ch3_import_sql.png)  
 
 #### 3-3-4-3 配置异步引擎与会话
 
@@ -1000,7 +1000,7 @@ GET /api/news/list?categoryId=1&page=2&pageSize=20
 }
 ```
 
-![获取新闻列表](../../../03%20附件/attachments/知识附件/Python/FastAPI/ch3_news_list_flow.png)  
+![获取新闻列表](../../../03_attachments/Images/knowledge_images/Python/FastAPI/ch3_news_list_flow.png)  
 
 #### 3-3-7-2 接口实现
 
@@ -1054,7 +1054,7 @@ async def get_news(
 接口文档：GET /api/news/detail?id=xxx。  
 业务流程：查询新闻 → 浏览量 +1（update 后通过 rowcount 判断是否命中）→ 查询相关推荐。  
 
-![获取新闻详情](../../../03%20附件/attachments/知识附件/Python/FastAPI/ch3_news_detail_flow.png)  
+![获取新闻详情](../../../03_attachments/Images/knowledge_images/Python/FastAPI/ch3_news_detail_flow.png)  
 
 ```python
 @router.get("/detail")
@@ -1106,7 +1106,7 @@ async def get_news_detail(
 跨域资源共享（CORS）是一种浏览器安全机制，用于允许运行在一个源（Origin）的 Web 应用，通过浏览器向另一个源的服务器发起跨域 HTTP 请求，并在服务器授权的前提下获取资源。  
 判断是否同源看三个条件：协议、域名、端口，三者完全一致才叫同源。  
 
-![跨域判断](../../../03%20附件/attachments/知识附件/Python/FastAPI/ch3_cors.png)  
+![跨域判断](../../../03_attachments/Images/knowledge_images/Python/FastAPI/ch3_cors.png)  
 
 ```vtable
 {"rows": [[{"t": "前端地址", "rs": 1, "cs": 1}, {"t": "后端地址", "rs": 1, "cs": 1}, {"t": "是否跨域", "rs": 1, "cs": 1}, {"t": "原因", "rs": 1, "cs": 1}], [{"t": "http://localhost:5173", "rs": 1, "cs": 1}, {"t": "http://localhost:8000", "rs": 1, "cs": 1}, {"t": "跨域", "rs": 1, "cs": 1}, {"t": "端口不同（5173 vs 8000）", "rs": 1, "cs": 1}], [{"t": "http://example.com", "rs": 1, "cs": 1}, {"t": "http://api.example.com", "rs": 1, "cs": 1}, {"t": "跨域", "rs": 1, "cs": 1}, {"t": "域名不同（example.com vs api.example.com）", "rs": 1, "cs": 1}], [{"t": "http://example.com", "rs": 1, "cs": 1}, {"t": "https://example.com", "rs": 1, "cs": 1}, {"t": "跨域", "rs": 1, "cs": 1}, {"t": "协议不同（http vs https）", "rs": 1, "cs": 1}], [{"t": "http://example.com", "rs": 1, "cs": 1}, {"t": "http://example.com", "rs": 1, "cs": 1}, {"t": "不跨域", "rs": 1, "cs": 1}, {"t": "协议、域名、端口三者完全一致", "rs": 1, "cs": 1}]]}
@@ -1148,7 +1148,7 @@ app.add_middleware(
 
 用户模块包含注册、登录、获取用户信息、修改用户信息、修改密码五个核心功能，并配套 Token 认证、passlib 密码加密、通用成功响应封装、全局异常处理等支撑组件。  
 
-![用户模块界面](../../../03%20附件/attachments/知识附件/Python/FastAPI/ch4_user_ui.png)  
+![用户模块界面](../../../03_attachments/Images/knowledge_images/Python/FastAPI/ch4_user_ui.png)  
 
 ### 4-4-2 用户注册
 
@@ -1167,7 +1167,7 @@ POST /api/user/register，请求体：
 
 #### 4-4-2-2 注册业务流程
 
-![注册业务流程](../../../03%20附件/attachments/知识附件/Python/FastAPI/ch4_register_flow.png)  
+![注册业务流程](../../../03_attachments/Images/knowledge_images/Python/FastAPI/ch4_register_flow.png)  
 
 注册流程分三步：先查询用户名是否已存在（查重）；不存在则创建用户（密码用 passlib 哈希加密后入库）；最后用 uuid 生成 Token 并返回给前端。  
 
@@ -1239,7 +1239,7 @@ Token 是服务器发给客户端的一串字符串，用于解决 HTTP 无状�
 
 Token 工作流程：  
 
-![Token 工作流程](../../../03%20附件/attachments/知识附件/Python/FastAPI/ch4_token_flow.png)  
+![Token 工作流程](../../../03_attachments/Images/knowledge_images/Python/FastAPI/ch4_token_flow.png)  
 
 登录/注册 → 后端生成 Token → 返回给前端 → 前端保存 → 每次请求携带 → 后端验证。  
 
@@ -1253,7 +1253,7 @@ Token 在请求头中的位置：Authorization: Bearer <token>。
 
 POST /api/user/login，业务流程：查用户 → 存在则用 CryptContext.verify 校验密码 → 密码不一致或用户不存在返回错误 → 校验通过生成 Token → 返回"登录成功"与 userInfo{nickname, avatar, bio}。  
 
-![登录业务流程](../../../03%20附件/attachments/知识附件/Python/FastAPI/ch4_login_flow.png)  
+![登录业务流程](../../../03_attachments/Images/knowledge_images/Python/FastAPI/ch4_login_flow.png)  
 
 ```python
 @router.post("/login")
@@ -1411,7 +1411,7 @@ return success_response(
 )
 ```
 
-![封装通用成功响应](../../../03%20附件/attachments/知识附件/Python/FastAPI/ch4_response_encap.png)  
+![封装通用成功响应](../../../03_attachments/Images/knowledge_images/Python/FastAPI/ch4_response_encap.png)  
 
 ### 4-4-8 全局异常处理器
 
@@ -1524,7 +1524,7 @@ async def remove_favorite(
 GET /api/favorite/list?page&pageSize，返回当前用户的收藏新闻列表，包含总量与 hasMore，列表项带收藏时间 favoriteTime。  
 实现要点是 ORM 联表查询：select(News).join(Favorite)。  
 
-![我的收藏界面](../../../03%20附件/attachments/知识附件/Python/FastAPI/ch5_favorite_ui.png)  
+![我的收藏界面](../../../03_attachments/Images/knowledge_images/Python/FastAPI/ch5_favorite_ui.png)  
 
 ```python
 @router.get("/list")
@@ -1621,7 +1621,7 @@ async def add_history(
 
 GET /api/history/list?page&pageSize，联表 select(News).join(History) 查询当前用户的浏览记录，列表项带浏览时间 viewTime，同样包含 total 与 hasMore。  
 
-![浏览历史界面](../../../03%20附件/attachments/知识附件/Python/FastAPI/ch5_history_ui.png)  
+![浏览历史界面](../../../03_attachments/Images/knowledge_images/Python/FastAPI/ch5_history_ui.png)  
 
 ```python
 @router.get("/list")
@@ -1702,7 +1702,7 @@ async def clear_history(
 
 ### 5-5-3 收藏 VS 浏览历史
 
-![收藏与浏览历史对比](../../../03%20附件/attachments/知识附件/Python/FastAPI/ch5_compare.png)  
+![收藏与浏览历史对比](../../../03_attachments/Images/knowledge_images/Python/FastAPI/ch5_compare.png)  
 
 ```vtable
 {"rows": [[{"t": "维度", "rs": 1, "cs": 1}, {"t": "收藏", "rs": 1, "cs": 1}, {"t": "浏览历史", "rs": 1, "cs": 1}], [{"t": "触发方式", "rs": 1, "cs": 1}, {"t": "用户主动点击收藏按钮", "rs": 1, "cs": 1}, {"t": "用户看过新闻即自动记录", "rs": 1, "cs": 1}], [{"t": "去重方式", "rs": 1, "cs": 1}, {"t": "user_id + news_id 唯一约束，重复收藏报错", "rs": 1, "cs": 1}, {"t": "重复浏览只更新浏览时间", "rs": 1, "cs": 1}], [{"t": "时间字段", "rs": 1, "cs": 1}, {"t": "favoriteTime（收藏时间）", "rs": 1, "cs": 1}, {"t": "viewTime（浏览时间）", "rs": 1, "cs": 1}], [{"t": "接口数量", "rs": 1, "cs": 1}, {"t": "5 个（check/add/remove/list/clear）", "rs": 1, "cs": 1}, {"t": "4 个（add/list/delete/clear）", "rs": 1, "cs": 1}], [{"t": "列表实现", "rs": 1, "cs": 1}, {"t": "select(News).join(Favorite) 联表查询", "rs": 1, "cs": 1}, {"t": "select(News).join(History) 联表查询", "rs": 1, "cs": 1}], [{"t": "删除粒度", "rs": 1, "cs": 1}, {"t": "单条 remove + 清空 clear", "rs": 1, "cs": 1}, {"t": "单条 delete/{history_id} + 清空 clear", "rs": 1, "cs": 1}], [{"t": "认证要求", "rs": 1, "cs": 1}, {"t": "全部接口 Depends(get_current_user)", "rs": 1, "cs": 1}, {"t": "全部接口 Depends(get_current_user)", "rs": 1, "cs": 1}]]}
@@ -1749,14 +1749,14 @@ class Favorite(Base):
 
 #### 6-6-1-2 缓存架构
 
-![缓存架构](../../../03%20附件/attachments/知识附件/Python/FastAPI/ch6_cache_arch.png)  
+![缓存架构](../../../03_attachments/Images/knowledge_images/Python/FastAPI/ch6_cache_arch.png)  
 
 用户/前端 → FastAPI 服务器（业务逻辑控制中心）→ 高速临时数据（取的快）+ 数据库（权威真实数据，存得住）。  
 缓存负责快速读取，数据库负责数据持久化，两者配合各取所长。  
 
 #### 6-6-1-3 项目中的缓存流程
 
-![项目中的缓存流程](../../../03%20附件/attachments/知识附件/Python/FastAPI/ch6_cache_flow.png)  
+![项目中的缓存流程](../../../03_attachments/Images/knowledge_images/Python/FastAPI/ch6_cache_flow.png)  
 
 前端请求数据 → 服务器先查缓存 → 有缓存则直接返回数据；无缓存则查询数据库 → 将数据写入缓存 → 再返回给前端。  
 
@@ -1767,13 +1767,13 @@ class Favorite(Base):
 Redis 是一种高性能的 Key-Value 存储系统，它将数据存储在内存中，因此读写速度极快，非常适合作为应用层的缓存服务。  
 在 FastAPI 这样的后端框架中，通常在应用层使用像 Redis 这样的内存数据存储作为缓存，默认端口号为 6379。  
 
-![Redis 四步总览](../../../03%20附件/attachments/知识附件/Python/FastAPI/ch6_redis_steps.png)  
+![Redis 四步总览](../../../03_attachments/Images/knowledge_images/Python/FastAPI/ch6_redis_steps.png)  
 
 使用 Redis 做缓存分四步：安装 Redis 服务端 → 配置 Redis 客户端 → 封装缓存操作 → 设计缓存策略。  
 
 #### 6-6-2-2 安装 Redis 服务端
 
-![安装 Redis 服务端](../../../03%20附件/attachments/知识附件/Python/FastAPI/ch6_redis_install.png)  
+![安装 Redis 服务端](../../../03_attachments/Images/knowledge_images/Python/FastAPI/ch6_redis_install.png)  
 
 Mac 系统：  
 
@@ -1811,7 +1811,7 @@ redis_client = redis.Redis(
 )
 ```
 
-![配置 Redis 客户端](../../../03%20附件/attachments/知识附件/Python/FastAPI/ch6_redis_client.png)  
+![配置 Redis 客户端](../../../03_attachments/Images/knowledge_images/Python/FastAPI/ch6_redis_client.png)  
 
 配置参数说明：  
 
@@ -1826,7 +1826,7 @@ redis_client = redis.Redis(
 缓存操作就是围绕 Redis 做"存、取、删、判断、过期"等操作，让数据访问更快、数据库压力更小。  
 Redis 存储数据的形式：key - value。  
 
-![封装缓存操作](../../../03%20附件/attachments/知识附件/Python/FastAPI/ch6_cache_ops.png)  
+![封装缓存操作](../../../03_attachments/Images/knowledge_images/Python/FastAPI/ch6_cache_ops.png)  
 
 ```vtable
 {"rows": [[{"t": "方法", "rs": 1, "cs": 1}, {"t": "参数", "rs": 1, "cs": 1}, {"t": "返回值", "rs": 1, "cs": 1}, {"t": "描述", "rs": 1, "cs": 1}], [{"t": "setex(key, expire, value)", "rs": 1, "cs": 1}, {"t": "key: str，expire: int（秒），value: str", "rs": 1, "cs": 1}, {"t": "无", "rs": 1, "cs": 1}, {"t": "设置缓存并指定过期时间（秒）", "rs": 1, "cs": 1}], [{"t": "get(key)", "rs": 1, "cs": 1}, {"t": "key: str", "rs": 1, "cs": 1}, {"t": "字符串或 None", "rs": 1, "cs": 1}, {"t": "获取缓存值，若缓存不存在返回 None", "rs": 1, "cs": 1}], [{"t": "delete(key)", "rs": 1, "cs": 1}, {"t": "key: str", "rs": 1, "cs": 1}, {"t": "删除的键数量（int）", "rs": 1, "cs": 1}, {"t": "删除指定的缓存键", "rs": 1, "cs": 1}], [{"t": "exists(key)", "rs": 1, "cs": 1}, {"t": "key: str", "rs": 1, "cs": 1}, {"t": "True / False", "rs": 1, "cs": 1}, {"t": "检查缓存键是否存在，返回布尔值", "rs": 1, "cs": 1}]]}
@@ -1856,7 +1856,7 @@ exists = await redis_client.exists("news:list:1:1:10")
 {"rows": [[{"t": "方向", "rs": 1, "cs": 1}, {"t": "流程", "rs": 1, "cs": 1}, {"t": "关键点", "rs": 1, "cs": 1}], [{"t": "读", "rs": 1, "cs": 1}, {"t": "先查缓存 → 命中直接返回；未命中 → 查数据库 → 写缓存 → 返回", "rs": 1, "cs": 1}, {"t": "未命中时先写缓存再返回，并设置过期时间 TTL", "rs": 1, "cs": 1}], [{"t": "写", "rs": 1, "cs": 1}, {"t": "更新数据库后，更新缓存或删除缓存", "rs": 1, "cs": 1}, {"t": "优先删除缓存，下次读取时重建，避免写脏数据", "rs": 1, "cs": 1}]]}
 ```
 
-![缓存策略](../../../03%20附件/attachments/知识附件/Python/FastAPI/ch6_cache_strategy.png)  
+![缓存策略](../../../03_attachments/Images/knowledge_images/Python/FastAPI/ch6_cache_strategy.png)  
 
 以新闻分类为例的完整流程：  
 
@@ -1878,7 +1878,7 @@ async def get_categories(db):
 
 不同类型的数据需要设置不同的缓存时间，否则会出现缓存雪崩；原则是数据越稳定缓存越久、数据变化越快缓存越短。  
 
-![缓存时长设计](../../../03%20附件/attachments/知识附件/Python/FastAPI/ch6_cache_ttl.png)  
+![缓存时长设计](../../../03_attachments/Images/knowledge_images/Python/FastAPI/ch6_cache_ttl.png)  
 
 ```vtable
 {"rows": [[{"t": "类型", "rs": 1, "cs": 1}, {"t": "时间", "rs": 1, "cs": 1}, {"t": "Key 示例", "rs": 1, "cs": 1}], [{"t": "分类、配置", "rs": 1, "cs": 1}, {"t": "7200（2小时）", "rs": 1, "cs": 1}, {"t": "news:category:list", "rs": 1, "cs": 1}], [{"t": "列表数据", "rs": 1, "cs": 1}, {"t": "600（10分钟）", "rs": 1, "cs": 1}, {"t": "news:list:1:1:10", "rs": 1, "cs": 1}], [{"t": "详情数据", "rs": 1, "cs": 1}, {"t": "1800（30分钟）", "rs": 1, "cs": 1}, {"t": "news:detail:101", "rs": 1, "cs": 1}], [{"t": "验证码", "rs": 1, "cs": 1}, {"t": "120（2分钟）", "rs": 1, "cs": 1}, {"t": "sms:code:13800001111", "rs": 1, "cs": 1}]]}
@@ -1912,7 +1912,7 @@ export const model = 'qwen3-max-preview'
 前端提供"首页 / AI 问答 / 我的"三个页面，AI 问答页支持与通义千问对话。  
 对话示例：用户提问"我想学习 FastAPI 相关内容"，AI 输出 FastAPI 的定义——基于 Starlette（ASGI 规范）和 Pydantic，性能接近 Node.js 和 Go。  
 
-![AI 问答界面](../../../03%20附件/attachments/知识附件/Python/FastAPI/ch6_ai_chat_ui.png)  
+![AI 问答界面](../../../03_attachments/Images/knowledge_images/Python/FastAPI/ch6_ai_chat_ui.png)  
 
 ### 6-6-4 本章总结
 
